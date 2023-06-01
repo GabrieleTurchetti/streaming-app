@@ -1,0 +1,365 @@
+:root {
+    --slider-items: 5;
+    --slider-gap: 1vw;
+    --red: #f94144;
+    --yellow: #f9c74f;
+    --green: #43aa8b;
+}
+
+#navbar {
+    background-color: var(--gray-700);
+}
+
+.navbar-section {
+    color: var(--gray-200);
+}
+
+.navbar-section-active {
+    color: white;
+}
+
+#search {
+    border-color: transparent;
+}
+
+.search-active {
+    border-color: var(--gray-400) !important;
+}
+
+#search-bar {
+    outline: none;
+}
+
+.search-bar-active {
+    width: 12rem;
+}
+
+#navbar-account-option-container {
+    background-color: var(--gray-600);
+    border-color: var(--gray-400);
+    display: none;
+}
+
+#navbar-profile-pic-container:hover #navbar-account-option-container, #navbar-profile-pic-container:hover #navbar-account-option-container-appendix {
+    display: block;
+}
+
+#navbar-account-option-container-appendix {
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-bottom: 9px solid var(--gray-400);
+    display: none;
+}
+
+.navbar-account-option:hover {
+    background-color: var(--gray-500);
+}
+
+#head {
+    box-shadow: inset 0 -100px 100px 0 var(--gray-800);
+}
+
+.head-over {
+    background-color: var(--gray-800);
+}
+
+.head-plot {
+    color: var(--gray-100);
+}
+
+#head-info {
+    background-color: var(--gray-400);
+}
+
+.slider {
+    width: calc(94vw + var(--slider-gap) * 2);
+}
+
+.slider-title {
+    color: var(--gray-100);
+    margin-left: calc(4vw + var(--slider-gap));
+    margin-right: calc(4vw + var(--slider-gap))
+}
+
+.slider-bar {
+    gap: var(--slider-gap);
+}
+
+.slider-center {
+    gap: var(--slider-gap);
+}
+
+.slider-cell {
+    min-width: calc((86vw - var(--slider-gap) * (var(--slider-items) - 1)) / var(--slider-items));
+}
+
+.slider-side {
+    height: calc((((86vw - var(--slider-gap) * (var(--slider-items) - 1)) / var(--slider-items)) / 16) * 9);
+}
+
+.slider-cell:hover .slider-cell-over {
+    visibility: visible;
+}
+
+@media (max-width: 1400px) {
+    :root {
+        --slider-items: 4;
+    }
+}
+
+@media (max-width: 1000px) {
+    :root {
+        --slider-items: 3;
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --slider-items: 2;
+    }
+}
+
+@keyframes rotate {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.circle {
+    stroke: var(--red);
+    fill: none;
+    stroke-width: 2.8;
+    stroke-linecap: round;
+}
+
+.percentage {
+    fill: white;
+    font-size: 0.6rem;
+    text-anchor: middle;
+}
+
+@keyframes progress {
+    0% {
+        stroke-dasharray: 0 100;
+    }
+}
+
+@keyframes svg-border-yellow {
+    100% {
+        stroke: var(--yellow);
+    }
+}
+
+@keyframes svg-border-yellow-green {
+    50% {
+        stroke: var(--yellow);
+    }
+    100% {
+        stroke: var(--green);
+    }
+}
+
+.title-section-text {
+    color: var(--gray-100);
+}
+
+#title-section-underline {
+    background-color: var(--yellow);
+}
+
+.title-details-col-header {
+    color: var(--gray-200)
+}
+
+#season-select, .season-option {
+    background-color: var(--gray-700);
+}
+
+#season-select, #season-option-container {
+    border-color: var(--gray-400);
+}
+
+.season-option:hover {
+    background-color: var(--gray-600);
+}
+
+.title-section-underline-0 {
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+}
+
+.title-section-underline-1 {
+    transform: translateX(7rem);
+    -webkit-transform: translateX(7rem);
+    -moz-transform: translateX(7rem);
+    -ms-transform: translateX(7rem);
+    -o-transform: translateX(7rem);
+}
+
+.title-section-underline-2 {
+    transform: translateX(14rem);
+    -webkit-transform: translateX(14rem);
+    -moz-transform: translateX(14rem);
+    -ms-transform: translateX(14rem);
+    -o-transform: translateX(14rem);
+}
+
+#profile-info-container, #account-container {
+    background-color: var(--gray-700);
+}
+
+.profile-info-header {
+    color: var(--gray-200)
+}
+
+#profile-info-linebreak, #account-linebreak {
+    background-color: var(--gray-600);
+}
+
+.profile-pic-filter-active {
+    opacity: 0.5;
+    visibility: visible;
+}
+
+.profile-pic-background-active {
+    visibility: visible;
+}
+
+.account-header {
+    color: var(--gray-100);
+}
+
+.account-input {
+    outline: none;
+    background-color: var(--gray-500);
+}
+
+#account-button {
+    background-color: var(--gray-400)
+}
+
+#account-registration {
+    color: var(--gray-100);
+}
+
+#account-registration:hover {
+    color: white;
+}
+
+#profile-pic-container {
+    background-color: var(--gray-600);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.profile-pic-container-active {
+    opacity: 1;
+    transform: translateY(-2rem);
+    -webkit-transform: translateY(-2rem);
+    -moz-transform: translateY(-2rem);
+    -ms-transform: translateY(-2rem);
+    -o-transform: translateY(-2rem);
+}
+
+.profile-pic-0 {
+    background-image: url("./images/profile-pic-0.png");
+    background-size: 101% 101%;
+    background-position: center;
+    border-radius: 50% 50%;
+    -webkit-border-radius: 50% 50%;
+    -moz-border-radius: 50% 50%;
+    -ms-border-radius: 50% 50%;
+    -o-border-radius: 50% 50%;
+}
+
+.profile-pic-1 {
+    background-image: url("./images/profile-pic-1.png");
+    background-size: 101% 101%;
+    background-position: center;
+    border-radius: 50% 50%;
+    -webkit-border-radius: 50% 50%;
+    -moz-border-radius: 50% 50%;
+    -ms-border-radius: 50% 50%;
+    -o-border-radius: 50% 50%;
+}
+
+.profile-pic-2 {
+    background-image: url("./images/profile-pic-2.png");
+    background-size: 102% 102%;
+    background-position: center;
+    border-radius: 50% 50%;
+    -webkit-border-radius: 50% 50%;
+    -moz-border-radius: 50% 50%;
+    -ms-border-radius: 50% 50%;
+    -o-border-radius: 50% 50%;
+}
+
+.profile-pic-3 {
+    background-image: url("./images/profile-pic-3.png");
+    background-size: 102% 102%;
+    background-position: center;
+    border-radius: 50% 50%;
+    -webkit-border-radius: 50% 50%;
+    -moz-border-radius: 50% 50%;
+    -ms-border-radius: 50% 50%;
+    -o-border-radius: 50% 50%;
+}
+
+.profile-pic-4 {
+    background-image: url("./images/profile-pic-4.png");
+    background-size: 102% 102%;
+    background-position: center;
+    border-radius: 50% 50%;
+    -webkit-border-radius: 50% 50%;
+    -moz-border-radius: 50% 50%;
+    -ms-border-radius: 50% 50%;
+    -o-border-radius: 50% 50%;
+}
+
+.profile-pic-5 {
+    background-image: url("./images/profile-pic-5.png");
+    background-size: 102% 102%;
+    background-position: center;
+    border-radius: 50% 50%;
+    -webkit-border-radius: 50% 50%;
+    -moz-border-radius: 50% 50%;
+    -ms-border-radius: 50% 50%;
+    -o-border-radius: 50% 50%;
+}
+
+.profile-pic-6 {
+    background-image: url("./images/profile-pic-6.png");
+    background-size: 102% 102%;
+    background-position: center;
+    border-radius: 50% 50%;
+    -webkit-border-radius: 50% 50%;
+    -moz-border-radius: 50% 50%;
+    -ms-border-radius: 50% 50%;
+    -o-border-radius: 50% 50%;
+}
+
+.profile-pic-7 {
+    background-image: url("./images/profile-pic-7.png");
+    background-size: 102% 102%;
+    background-position: center;
+    border-radius: 50% 50%;
+    -webkit-border-radius: 50% 50%;
+    -moz-border-radius: 50% 50%;
+    -ms-border-radius: 50% 50%;
+    -o-border-radius: 50% 50%;
+}
+
+.profile-pic-8 {
+    background-image: url("./images/profile-pic-8.png");
+    background-size: 102% 102%;
+    background-position: center;
+    border-radius: 50% 50%;
+    -webkit-border-radius: 50% 50%;
+    -moz-border-radius: 50% 50%;
+    -ms-border-radius: 50% 50%;
+    -o-border-radius: 50% 50%;
+}
