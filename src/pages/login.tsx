@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase.js'
+import { auth, db } from '../firebase'
+import { getDoc, doc } from 'firebase/firestore'
 
 interface Props {
-    changeUser: (user: any) => void
+    changeUser: (id: string, email: string, nickname: string, pic: number, saved: any, joined: string) => void
 }
 
 export default function Login({ changeUser }: Props) {
@@ -15,7 +16,7 @@ export default function Login({ changeUser }: Props) {
         password: ""
     })
 
-    function SignIn() {
+    function signIn() {
         const email = document.getElementById("account-input-email") as HTMLInputElement
         const password = document.getElementById("account-input-password") as HTMLInputElement
 
@@ -25,8 +26,16 @@ export default function Login({ changeUser }: Props) {
         })
 
         if (email.value.length > 0 && password.value.length > 0) {
-            signInWithEmailAndPassword(auth, email.value, password.value).then(userCredential => {
-                changeUser(userCredential.user)
+            signInWithEmailAndPassword(auth, email.value, password.value).then(async userCredential => {
+                const docRef = doc(db, "users", userCredential.user.uid)
+                const docSnap = await getDoc(docRef)
+
+                if (docSnap.exists()) {
+                    changeUser(userCredential.user.uid, docSnap.data().email, docSnap.data().nickname, docSnap.data().pic, docSnap.data().saved, docSnap.data().joined)
+                }
+                else {
+                    // error!!!
+                }
                 navigate("/")
             }).catch(error => {
                 switch (error.code) {
@@ -80,11 +89,11 @@ export default function Login({ changeUser }: Props) {
                         <input id="account-input-password" className="account-input h-9 px-3 w-full" type="password" />
                         {errorDisplay.password !== "" && <p className="text-red-600">{errorDisplay.password}</p>}
                     </div>
-                    <button id="account-button" className="w-full h-9 mt-6" onClick={SignIn}>
+                    <button id="account-button" className="w-full h-9 mt-6 transition-[background-color] duration-150" onClick={signIn}>
                         <p>Accedi</p>
                     </button>
                     <Link to="/register">
-                        <p id="account-registration" className="mt-6 cursor-pointer transition-[color] duration-150">E' la prima volta che passi di qui?</p>
+                        <p id="account-text-register" className="mt-6 cursor-pointer transition-[color] duration-150">E' la prima volta che passi di qui?</p>
                     </Link>
                 </div>
             </div>

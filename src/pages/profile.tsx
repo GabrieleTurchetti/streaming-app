@@ -1,15 +1,16 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { UserContext } from '../App'
 import Slider from '../components/slider'
 import pencil from '../images/pencil.svg'
 import check from '../images/check.svg'
 
 interface Props {
-    profilePicNumber: string
-    changeProfilePicNumber: (profilePicNumber: string) => void
+    changeProfilePicNumber: (profilePicNumber: number) => void
 }
 
-export default function Profile({ profilePicNumber, changeProfilePicNumber }: Props) {
+export default function Profile({ changeProfilePicNumber }: Props) {
     const [profilePicDisplay, setProfilePicDisplay] = useState(false)
+    const user = useContext(UserContext)
 
     return (
         <>
@@ -20,7 +21,7 @@ export default function Profile({ profilePicNumber, changeProfilePicNumber }: Pr
                         <div id="profile-info-linebreak" className="w-full h-[1px]"></div>
                         <div className="flex gap-14 p-10">
                             <div className="w-36 flex justify-center">
-                                <div className={`w-32 h-32 absolute profile-pic-${profilePicNumber}`} />
+                                <div className={`w-32 h-32 absolute profile-pic-${user.pic}`} />
                                 <div className="absolute w-32 h-32 opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {setProfilePicDisplay(!profilePicDisplay)}}>
                                     <img src={pencil} className="w-20" />
                                 </div>
@@ -62,56 +63,56 @@ export default function Profile({ profilePicNumber, changeProfilePicNumber }: Pr
             <div className={`w-full h-full invisible absolute flex justify-center items-center ${profilePicDisplay ? "profile-pic-background-active" : ""}`} onClick={() => {setProfilePicDisplay(!profilePicDisplay)}}>
                 <div id="profile-pic-container" className={`translate-y-[-6rem] p-4 rounded-md fixed w-[28rem] h-[28rem] transition-all duration-300 gap-4 opacity-0 ${profilePicDisplay ? "profile-pic-container-active" : ""}`}>
                     <div className="relative">
-                        <div className="profile-pic-0 absolute w-full h-full" />
-                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber("0")}}>
-                            <img src={check} className="w-24" />
-                        </div>
-                    </div>
-                    <div className="relative">
                         <div className="profile-pic-1 absolute w-full h-full" />
-                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber("1")}}>
+                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber(1)}}>
                             <img src={check} className="w-24" />
                         </div>
                     </div>
                     <div className="relative">
                         <div className="profile-pic-2 absolute w-full h-full" />
-                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber("2")}}>
+                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber(2)}}>
                             <img src={check} className="w-24" />
                         </div>
                     </div>
                     <div className="relative">
                         <div className="profile-pic-3 absolute w-full h-full" />
-                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber("3")}}>
+                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber(3)}}>
                             <img src={check} className="w-24" />
                         </div>
                     </div>
                     <div className="relative">
                         <div className="profile-pic-4 absolute w-full h-full" />
-                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber("4")}}>
+                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber(4)}}>
                             <img src={check} className="w-24" />
                         </div>
                     </div>
                     <div className="relative">
                         <div className="profile-pic-5 absolute w-full h-full" />
-                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber("5")}}>
+                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber(5)}}>
                             <img src={check} className="w-24" />
                         </div>
                     </div>
                     <div className="relative">
                         <div className="profile-pic-6 absolute w-full h-full" />
-                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber("6")}}>
+                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber(6)}}>
                             <img src={check} className="w-24" />
                         </div>
                     </div>
                     <div className="relative">
                         <div className="profile-pic-7 absolute w-full h-full" />
-                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber("7")}}>
+                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber(7)}}>
                             <img src={check} className="w-24" />
                         </div>
                     </div>
                     <div className="relative">
                         <div className="profile-pic-8 absolute w-full h-full" />
-                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber("8")}}>
+                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber(8)}}>
+                            <img src={check} className="w-24" />
+                        </div>
+                    </div>
+                    <div className="relative">
+                        <div className="profile-pic-9 absolute w-full h-full" />
+                        <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {changeProfilePicNumber(9)}}>
                             <img src={check} className="w-24" />
                         </div>
                     </div>

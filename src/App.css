@@ -238,14 +238,18 @@
 }
 
 #account-button {
-    background-color: var(--gray-400)
+    background-color: var(--gray-400);
 }
 
-#account-registration {
+#account-button:hover {
+    background-color: var(--gray-500);
+}
+
+#account-text-register {
     color: var(--gray-100);
 }
 
-#account-registration:hover {
+#account-text-register:hover {
     color: white;
 }
 
@@ -289,7 +293,7 @@
 
 .profile-pic-2 {
     background-image: url("./images/profile-pic-2.png");
-    background-size: 102% 102%;
+    background-size: 101% 101%;
     background-position: center;
     border-radius: 50% 50%;
     -webkit-border-radius: 50% 50%;
@@ -355,6 +359,17 @@
 
 .profile-pic-8 {
     background-image: url("./images/profile-pic-8.png");
+    background-size: 102% 102%;
+    background-position: center;
+    border-radius: 50% 50%;
+    -webkit-border-radius: 50% 50%;
+    -moz-border-radius: 50% 50%;
+    -ms-border-radius: 50% 50%;
+    -o-border-radius: 50% 50%;
+}
+
+.profile-pic-9 {
+    background-image: url("./images/profile-pic-9.png");
     background-size: 102% 102%;
     background-position: center;
     border-radius: 50% 50%;

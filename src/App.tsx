@@ -1,6 +1,8 @@
 import './App.css';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
+import { updateDoc, doc } from "firebase/firestore"
+import { db } from './firebase'
 import Home from './pages/home'
 import Film from './pages/film'
 import Series from './pages/series'
@@ -13,14 +15,32 @@ import Profile from './pages/profile'
 import Login from './pages/login'
 import Register from './pages/register'
 
+export const UserContext = createContext({
+    logged: false,
+    id: "",
+    email: "",
+    nickname: "",
+    pic: 0,
+    saved: [],
+    joined: ""
+})
+
 export default function App() {
     const [navbarDisplay, setNavbarDisplay] = useState(true)
     const [searchName, setSearchName] = useState("")
     const [prevPage, setPrevPage] = useState("")
     const location = useLocation()
     const navigate = useNavigate()
-    const [profilePicNumber, setProfilePicNumber] = useState("6")
-    const [user, setUser] = useState({})
+
+    const [user, setUser] = useState({
+        logged: false,
+        id: "",
+        email: "",
+        nickname: "",
+        pic: 0,
+        saved: [],
+        joined: ""
+    })
 
     const [navbarSection, setNavbarSection] = useState({
         home: false,
@@ -99,18 +119,37 @@ export default function App() {
         }
     }
 
-    function changeProfilePicNumber(profilePicNumber: string) {
-        setProfilePicNumber(profilePicNumber)
-        // firestone
+    async function changeProfilePicNumber(profilePicNumber: number) {
+        const docRef = doc(db, "users", user.id)
+
+        await updateDoc(docRef, {
+            pic: profilePicNumber
+        })
+
+        setUser(prev => ({
+            ...prev,
+            pic: profilePicNumber
+        }))
+    }
+
+    function changeUser(id: string, email: string, nickname: string, pic: number, saved: any, joined: string) {
+        setUser({
+            logged: true,
+            id: id,
+            email: email,
+            nickname,
+            pic: pic,
+            saved: saved,
+            joined: joined
+        })
     }
 
     return (
-        <>
+        <UserContext.Provider value={user}>
             {navbarDisplay && <>
                 <Navbar
                     navbarSection = {navbarSection}
                     changeSearchName = {changeSearchName}
-                    profilePicNumber = {profilePicNumber}
                 />
                 <div className="h-16"></div>
             </>}
@@ -125,17 +164,16 @@ export default function App() {
                         searchName = {searchName}
                     />} />
                     <Route path="/profile" element={<Profile
-                        profilePicNumber = {profilePicNumber}
                         changeProfilePicNumber = {changeProfilePicNumber}
                     />} />
                     <Route path="/login" element={<Login
-                        changeUser = {(user: any) => {setUser(user)}}
+                        changeUser = {changeUser}
                     />} />
                     <Route path="/register" element={<Register
-                        changeUser = {(user: any) => {setUser(user)}}
+                        changeUser = {changeUser}
                     />} />
                 </Routes>
             </SmoothScroll>
-        </>
+        </UserContext.Provider>
     );
 }

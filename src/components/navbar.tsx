@@ -1,7 +1,8 @@
 import logo from '../images/logo.svg'
 import search from '../images/search.svg'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { UserContext } from '../App'
 
 interface Props {
     navbarSection: {
@@ -9,12 +10,12 @@ interface Props {
         film: boolean,
         series: boolean
     },
-    changeSearchName: () => void,
-    profilePicNumber: string
+    changeSearchName: () => void
 }
 
-export default function Navbar({ navbarSection, changeSearchName, profilePicNumber }: Props) {
+export default function Navbar({ navbarSection, changeSearchName }: Props) {
     const [searchDisplay, setSearchDisplay] = useState(false)
+    const user = useContext(UserContext)
 
     return (
         <div id="navbar" className="flex h-16 px-16 justify-between items-center fixed w-full z-20 gap-8">
@@ -38,7 +39,7 @@ export default function Navbar({ navbarSection, changeSearchName, profilePicNumb
                     <input id="search-bar" className={`w-0 bg-transparent text-white transition-[width] duration-300 ${searchDisplay ? "search-bar-active" : ""}`} type="text" placeholder="Cerca" autoComplete="off" onChange={changeSearchName} />
                 </div>
                 <div id="navbar-profile-pic-container" className="py-4 flex justify-center items-center">
-                    <div id="navbar-profile-pic" className={`relative w-9 h-9 profile-pic-${profilePicNumber}`}>
+                    <div id="navbar-profile-pic" className={`relative w-9 h-9 profile-pic-${user.pic}`}>
                         <div id="navbar-account-option-container" className="absolute right-0 translate-y-12 border-[1px] text-white">
                             <Link to="/login" className="cursor-pointer">
                                 <p className="navbar-account-option px-4 py-[0.2rem] text-lg font-medium">Accedi</p>

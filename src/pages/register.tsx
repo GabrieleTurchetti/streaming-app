@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase.js'
+import { setDoc, doc } from 'firebase/firestore'
+import { auth, db } from '../firebase'
 
 interface Props {
-    changeUser: (user: any) => void
+    changeUser: (id: string, email: string, nickname: string, pic: number, saved: any, joined: string) => void
 }
 
 
@@ -18,7 +19,7 @@ export default function Register({ changeUser }: Props) {
         confirmPassword: ""
     })
 
-    function SignUp() {
+    function signUp() {
         const nickname = document.getElementById("account-input-nickname") as HTMLInputElement
         const email = document.getElementById("account-input-email") as HTMLInputElement
         const password = document.getElementById("account-input-password") as HTMLInputElement
@@ -34,8 +35,13 @@ export default function Register({ changeUser }: Props) {
         if (nickname.value.length > 0 && email.value.length > 0 && password.value.length > 0 && confirmPassword.value.length > 0) {
             if (password.value === confirmPassword.value) {
                 createUserWithEmailAndPassword(auth, email.value, password.value).then(userCredential => {
-                    changeUser(userCredential.user)
-                    // firestone
+                    const date = new Date()
+                    const currentDay = String(date.getDate()).padStart(1, "0")
+                    const currentMonth = String(date.getMonth() + 1).padStart(2, "0")
+                    const currentYear = date.getFullYear()
+                    const today = `${currentDay}/${currentMonth}/${currentYear}`
+                    createUser(email.value, nickname.value, userCredential.user.uid, today)
+                    changeUser(userCredential.user.uid, email.value, nickname.value, 1, [], today)
                     navigate("/")
                 }).catch(error => {
                     switch (error.code) {
@@ -74,6 +80,16 @@ export default function Register({ changeUser }: Props) {
         }
     }
 
+    async function createUser(email: string, nickname: string, id: string, today: string) {
+        await setDoc(doc(db, "users", id), {
+            email: email,
+            nickname: nickname,
+            joined: today,
+            pic: 1,
+            saved: []
+        })
+    }
+
     return (
         <div className="flex mt-14 justify-center">
             <div id="account-container" className="w-[32rem] flex flex-col rounded-md text-white">
@@ -100,7 +116,7 @@ export default function Register({ changeUser }: Props) {
                         <input id="account-input-confirm-password" className="account-input h-9 px-3 w-full" type="password" />
                         {errorDisplay.confirmPassword !== "" && <p className="text-red-600">{errorDisplay.confirmPassword}</p>}
                     </div>
-                    <button id="account-button" className="w-full h-9 mt-6" onClick={SignUp}>
+                    <button id="account-button" className="w-full h-9 mt-6 transition-[background-color] duration-15" onClick={signUp}>
                         <p>Registrati</p>
                     </button>
                 </div>
