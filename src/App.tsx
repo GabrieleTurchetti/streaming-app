@@ -132,9 +132,9 @@ export default function App() {
         }))
     }
 
-    function changeUser(id: string, email: string, nickname: string, pic: number, saved: any, joined: string) {
+    function changeUser(logged: boolean, id: string, email: string, nickname: string, pic: number, saved: any, joined: string) {
         setUser({
-            logged: true,
+            logged: logged,
             id: id,
             email: email,
             nickname,
@@ -150,6 +150,7 @@ export default function App() {
                 <Navbar
                     navbarSection = {navbarSection}
                     changeSearchName = {changeSearchName}
+                    changeUser = {changeUser}
                 />
                 <div className="h-16"></div>
             </>}

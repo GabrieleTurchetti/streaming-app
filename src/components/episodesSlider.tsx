@@ -23,7 +23,13 @@ export default function EpisodeSlider({ episodes }: Props) {
         right: "none"
     })
 
-    window.addEventListener("resize", reset)
+    useEffect(() => {
+        window.addEventListener("resize", reset)
+
+        return () => {
+            window.removeEventListener("resize", reset)
+        }
+    })
 
     useEffect(() => {
         setTranslate(5 - 87 * index)

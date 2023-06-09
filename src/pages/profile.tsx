@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { UserContext } from '../App'
-import Slider from '../components/slider'
+import Slider from '../components/titleSlider'
 import pencil from '../images/pencil.svg'
 import check from '../images/check.svg'
 
@@ -27,26 +27,16 @@ export default function Profile({ changeProfilePicNumber }: Props) {
                                 </div>
                             </div>
                             <div className="flex flex-col gap-6 text-lg">
-                                <div className="flex gap-16">
-                                    <div>
-                                        <p className="profile-info-header">Nome</p>
-                                        <p>Mario</p>
-                                    </div>
-                                    <div>
-                                        <p className="profile-info-header">Cognome</p>
-                                        <p>Rossi</p>
-                                    </div>
+                                <div>
+                                    <p className="profile-info-header">Nickname</p>
+                                    <p>{user.nickname}</p>
                                 </div>
                                 <div>
                                     <p className="profile-info-header">Email</p>
-                                    <p>mariorossi@gmail.com</p>
+                                    <p>{user.email}</p>
                                 </div>
                                 <div>
-                                    <p className="profile-info-header">Telefono</p>
-                                    <p>1231231234</p>
-                                </div>
-                                <div>
-                                    <p className="profile-info-header">Iscritto il:<span className="ml-3 text-white">1 gennaio 2023</span></p>
+                                    <p className="profile-info-header">Iscritto il:<span className="ml-3 text-white">{user.joined}</span></p>
                                 </div>
                             </div>
                         </div>

@@ -5,7 +5,7 @@ import { setDoc, doc } from 'firebase/firestore'
 import { auth, db } from '../firebase'
 
 interface Props {
-    changeUser: (id: string, email: string, nickname: string, pic: number, saved: any, joined: string) => void
+    changeUser: (logegd: boolean, id: string, email: string, nickname: string, pic: number, saved: any, joined: string) => void
 }
 
 
@@ -41,7 +41,7 @@ export default function Register({ changeUser }: Props) {
                     const currentYear = date.getFullYear()
                     const today = `${currentDay}/${currentMonth}/${currentYear}`
                     createUser(email.value, nickname.value, userCredential.user.uid, today)
-                    changeUser(userCredential.user.uid, email.value, nickname.value, 1, [], today)
+                    changeUser(true, userCredential.user.uid, email.value, nickname.value, 1, [], today)
                     navigate("/")
                 }).catch(error => {
                     switch (error.code) {

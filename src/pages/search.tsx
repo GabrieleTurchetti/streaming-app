@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import getSearch from '../requests/getSearch'
-import Slider from '../components/slider'
+import TitleSlider from '../components/titleSlider'
 import useTimeout from '../hooks/useTimeout'
 
 interface Props {
@@ -35,7 +35,7 @@ export default function Search({ searchName }: Props) {
         const result = []
 
         for (let i = 0; i < Math.ceil(searchTitles.length / sliderItems); i++) {
-            result.push(<Slider
+            result.push(<TitleSlider
                 name = {""}
                 titles = {searchTitles.slice(i * sliderItems, (i * sliderItems) + sliderItems)}
             />)

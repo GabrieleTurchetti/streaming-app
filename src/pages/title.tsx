@@ -6,7 +6,7 @@ import getRelated from '../requests/getRelated'
 import playHeadTitle from '../images/play-head-title.svg'
 import EpisodesSlider from '../components/episodesSlider'
 import arrowDown from '../images/arrow-down.svg'
-import Slider from '../components/slider'
+import TitleSlider from '../components/titleSlider'
 
 interface Title {
     id: number,
@@ -270,7 +270,7 @@ export default function Title() {
                 </>}
             </div>
             <div className="py-14 flex justify-center">
-                <Slider
+                <TitleSlider
                     name = {"Correlati"}
                     titles = {related}
                 />

@@ -2,7 +2,7 @@ import Head from '../components/head'
 import { useState, useEffect } from 'react'
 import getPopular from '../requests/getPopular'
 import getTopRated from '../requests/getTopRated'
-import Slider from '../components/slider'
+import TitleSlider from '../components/titleSlider'
 
 type Titles = {
     id: number,
@@ -33,11 +33,11 @@ export default function Home() {
                 page = "series"
             />
             <div className="py-14 flex flex-col gap-12 items-center">
-                <Slider
+                <TitleSlider
                     name = {"Attualmente popolari"}
                     titles = {popular}
                 />
-                <Slider
+                <TitleSlider
                     name = {"Più votati"}
                     titles = {topRated}
                 />
