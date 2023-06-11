@@ -1,10 +1,11 @@
 import logo from '../images/logo.svg'
 import search from '../images/search.svg'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../App'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
     navbarSection: {
@@ -31,27 +32,44 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
     }
 
     return (
-        <div id="navbar" className="flex h-16 px-16 justify-between items-center fixed w-full z-20 gap-8">
-            <div className="flex items-center gap-8">
+        <div id="navbar" className={`flex h-16 ${isMobile ? "px-6" : "px-16"} justify-between items-center fixed w-full z-20 gap-8`}>
+            {(!isMobile || !searchDisplay) && <div className={`flex items-center ${isMobile ? "gap-6" : "gap-8"}`}>
                 <Link to="/">
                     <img src={logo} className="w-9 min-w-[2.25rem] cursor-pointer" />
                 </Link>
-                <Link to="/">
-                    <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.home ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Home</p>
-                </Link>
-                <Link to="/film">
-                    <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.film ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Film</p>
-                </Link>
-                <Link to="/series">
-                    <p className={`navbar-section font-medium text-lg h-7 whitespace-nowrap cursor-pointer ${navbarSection.series ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Serie TV</p>
-                </Link>
-            </div>
-            <div className="flex gap-8 items-center">
-                <div id="search" className={`flex items-center p-2 border gap-2 transition-[border-color] duration-300 ${searchDisplay ? "search-active" : ""}`}>
+                {!isMobile && <>
+                    <Link to="/">
+                        <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.home ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Home</p>
+                    </Link>
+                    <Link to="/film">
+                        <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.film ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Film</p>
+                    </Link>
+                    <Link to="/series">
+                        <p className={`navbar-section font-medium text-lg h-7 whitespace-nowrap cursor-pointer ${navbarSection.series ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Serie TV</p>
+                    </Link>
+                </>}
+                {isMobile && <div className="w-20 flex gap-4 overflow-auto">
+                    <Link to="/">
+                        <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.home ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Home</p>
+                    </Link>
+                    <Link to="/film">
+                        <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.film ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Film</p>
+                    </Link>
+                    <Link to="/series">
+                        <p className={`navbar-section font-medium text-lg h-7 whitespace-nowrap cursor-pointer ${navbarSection.series ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Serie TV</p>
+                    </Link>
+                </div>}
+            </div>}
+            <div className={`flex items-center ${isMobile ? searchDisplay ? "w-full px-2" : "gap-1" : "gap-8"} transition-[gap] duration-300`}>
+                {!isMobile && <div id="search" className={`flex items-center p-2 border gap-2 transition-[border-color] duration-300 ${searchDisplay ? "search-active" : ""}`}>
                     <img src={search} className="w-6 min-w-[1.5rem] cursor-pointer" onClick={() => {setSearchDisplay(!searchDisplay)}} />
                     <input id="search-bar" className={`w-0 bg-transparent text-white transition-[width] duration-300 ${searchDisplay ? "search-bar-active" : ""}`} type="text" placeholder="Cerca" autoComplete="off" onChange={changeSearchName} />
-                </div>
-                <div id="navbar-profile-pic-container" className="py-4 flex justify-center items-center">
+                </div>}
+                {isMobile && <div id="search" className={`flex items-center p-2 border gap-2 ${searchDisplay ? "search-active w-full" : ""}`}>
+                    <img src={search} className="w-6 min-w-[1.5rem] cursor-pointer" onClick={() => {setSearchDisplay(!searchDisplay)}} />
+                    <input id="search-bar" className={`w-0 bg-transparent text-white ${searchDisplay ? "w-full" : ""}`} type="text" placeholder="Cerca" autoComplete="off" onChange={changeSearchName} />
+                </div>}
+                {(!isMobile || !searchDisplay) && <div id="navbar-profile-pic-container" className="py-4 flex justify-center items-center">
                     <div id="navbar-profile-pic" className={`relative w-9 h-9 profile-pic-${user.pic}`}>
                         <div id="navbar-account-option-container" className="absolute right-0 translate-y-12 border-[1px] text-white">
                             {user.logged && <>
@@ -73,7 +91,7 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
                         </div>
                         <div id="navbar-account-option-container-appendix" className="translate-y-10 translate-x-2 w-0 h-0" />
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     )

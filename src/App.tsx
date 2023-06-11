@@ -1,7 +1,9 @@
 import './App.css';
 import { useState, useEffect, createContext } from 'react'
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
-import { updateDoc, doc } from "firebase/firestore"
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from './firebase'
+import { updateDoc, getDoc, doc } from "firebase/firestore"
 import { db } from './firebase'
 import Home from './pages/home'
 import Film from './pages/film'
@@ -21,7 +23,6 @@ export const UserContext = createContext({
     email: "",
     nickname: "",
     pic: 0,
-    saved: [],
     joined: ""
 })
 
@@ -38,7 +39,6 @@ export default function App() {
         email: "",
         nickname: "",
         pic: 0,
-        saved: [],
         joined: ""
     })
 
@@ -52,6 +52,15 @@ export default function App() {
         if (location.pathname === "/search") {
             navigate("/")
         }
+
+        auth.onAuthStateChanged(async user => {
+            const docRef = doc(db, "users", user?.uid || "")
+            const docSnap = await getDoc(docRef)
+
+            if (user) {
+                changeUser(true, user.uid, user.email || "", docSnap.data()?.nickname, docSnap.data()?.pic, docSnap.data()?.joined)
+            }
+        })
     }, [])
 
     useEffect(() => {
@@ -132,14 +141,13 @@ export default function App() {
         }))
     }
 
-    function changeUser(logged: boolean, id: string, email: string, nickname: string, pic: number, saved: any, joined: string) {
+    function changeUser(logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string) {
         setUser({
             logged: logged,
             id: id,
             email: email,
             nickname,
             pic: pic,
-            saved: saved,
             joined: joined
         })
     }

@@ -1,7 +1,5 @@
 import genres from "./getGenres"
 
-
-
 type Titles = {
     id: number,
     type: string,

@@ -60,7 +60,7 @@ function convertResponseToTitle(response: ResponseSuccess, type: string) {
         pic: response.backdrop_path !== null ? "https://image.tmdb.org/t/p/original" + response.backdrop_path : "https://www.orange.nsw.gov.au/gallery/wp-content/uploads/2021/12/Fall-Movie-Review-GBtGCT.tmp_.jpg",
         name: response.name || response.title || "",
         year: parseInt(response.release_date?.substring(0, 4) || response.first_air_date?.substring(0, 4) || "0"),
-        plot: response.overview,
+        plot: response.overview.length <= 150 ? response.overview : response.overview.substring(0, 150) + " ...",
         rating: response.vote_average * 10,
         genres: response.genres.map(e => e.name),
         companies: response.production_companies.map(e => e.name),

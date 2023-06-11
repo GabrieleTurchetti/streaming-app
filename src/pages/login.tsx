@@ -5,7 +5,7 @@ import { auth, db } from '../firebase'
 import { getDoc, doc } from 'firebase/firestore'
 
 interface Props {
-    changeUser: (logged: boolean, id: string, email: string, nickname: string, pic: number, saved: any, joined: string) => void
+    changeUser: (logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string) => void
 }
 
 export default function Login({ changeUser }: Props) {
@@ -15,6 +15,8 @@ export default function Login({ changeUser }: Props) {
         email: "",
         password: ""
     })
+
+    console.log(auth)
 
     function signIn() {
         const email = document.getElementById("account-input-email") as HTMLInputElement
@@ -31,7 +33,7 @@ export default function Login({ changeUser }: Props) {
                 const docSnap = await getDoc(docRef)
 
                 if (docSnap.exists()) {
-                    changeUser(true, userCredential.user.uid, docSnap.data().email, docSnap.data().nickname, docSnap.data().pic, docSnap.data().saved, docSnap.data().joined)
+                    changeUser(true, userCredential.user.uid, docSnap.data().email, docSnap.data().nickname, docSnap.data().pic, docSnap.data().joined)
                 }
                 else {
                     // error!!!

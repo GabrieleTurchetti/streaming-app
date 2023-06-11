@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
 import getTitle from '../requests/getTitle'
 import getSeasonsEpisodes from '../requests/getSeasonsEpisodes'
 import getRelated from '../requests/getRelated'
@@ -57,20 +58,7 @@ export default function Title() {
     useEffect(() => {
         getTitle(parseInt(id || "0"), type || "").then(res => {
             const title: Title = res as Title
-
-            setTitle({
-                id: title.id,
-                type: title.type,
-                pic: title.pic,
-                name: title.name,
-                year: title.year,
-                time: title.time,
-                seasons: title.seasons,
-                plot: title.plot.length < 150 ? title.plot : title.plot.substring(0, 150) + " ...",
-                rating: title.rating,
-                genres: title.genres,
-                companies: title.companies
-            })
+            setTitle(title)
 
             getRelated(title.id, title.type).then(res => {
                 const titles: Titles = res as Titles
@@ -201,10 +189,10 @@ export default function Title() {
             <div className="h-[32rem] flex flex-col justify-between bg-cover" style={{backgroundImage: `url(${title?.pic})`}}>
                 <div className="head-over absolute w-full h-[32rem] opacity-75"></div>
                 {loaded && <>
-                    {sectionDisplay.general && <div className="w-3/5 min-w-[40rem] flex flex-col gap-3 px-28 py-20">
+                    {sectionDisplay.general && <div className={`${isMobile ? "w-full p-12" : "w-3/5 min-w-[40rem] px-28 py-20"} flex flex-col gap-3`}>
                         <p className="text-white text-3xl font-medium z-10">{title?.name}</p>
                         <p className="text-white text-lg z-10">{title?.year} - {title?.time !== -1 ? title?.time + " min" : title?.seasons + (title?.seasons === 1 ? " stagione" : " stagioni")}</p>
-                        <p className="head-plot text-xl z-10">{title?.plot}</p>
+                        <p className="head-plot text-xl z-10">{isMobile && (title?.plot || "").length > 100 ? title?.plot.substring(0, 100) + "..." : title?.plot}</p>
                         <div className="flex gap-6 z-10 items-center py-2">
                             <svg viewBox="0 0 36 36" className="w-16">
                                 <path id="rating-circle" className="circle" strokeDasharray={`${title?.rating}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -238,22 +226,24 @@ export default function Title() {
                         </div>
                     </>}
                     {sectionDisplay.details && <>
-                        <div className="w-3/5 min-w-[40rem] flex flex-col gap-3 px-28 pt-20">
+                        <div className={`${isMobile ? "w-full px-12 pt-12" : "w-3/5 min-w-[40rem] px-28 pt-20"} flex flex-col gap-3`}>
                             <p className="text-white text-3xl font-medium z-10">{title?.name}</p>
                             <p className="text-white text-lg z-10">{title?.year} - {title?.time !== -1 ? title?.time + " min" : title?.seasons + (title?.seasons === 1 ? " stagione" : " stagioni")}</p>
                         </div>
-                        <div className="flex w-2/5 min-w-[40rem] h-full justify-between px-28 z-10 text-white mt-6">
-                            <div>
-                                <p className="title-details-col-header py-2">Generi</p>
-                                {title?.genres.map(e => (
-                                    <p>{e}</p>
-                                ))}
-                            </div>
-                            <div>
-                                <p className="title-details-col-header py-2">Case cinematografiche</p>
-                                {title?.companies?.map(e => (
-                                    <p>{e}</p>
-                                ))}
+                        <div className={`z-10 h-full mt-6 ${isMobile ? "overflow-auto" : ""}`}>
+                            <div className={`${isMobile ? "px-12 w-[28rem]" : "w-2/5 min-w-[40rem] px-28"} flex h-full justify-between z-30 text-white`}>
+                                <div>
+                                    <p className="title-details-col-header py-2">Generi</p>
+                                    {title?.genres.map(e => (
+                                        <p>{e}</p>
+                                    ))}
+                                </div>
+                                <div>
+                                    <p className="title-details-col-header py-2">Case cinematografiche</p>
+                                    {title?.companies?.map(e => (
+                                        <p>{e}</p>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </>}

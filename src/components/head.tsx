@@ -24,9 +24,7 @@ export default function Head({ page }: Props) {
     useEffect(() => {
         getHead(page).then((res) => {
             const head: Head = res as Head
-
             setTitle(head)
-
             setLoaded(true)
         })
     }, [page])
@@ -34,7 +32,7 @@ export default function Head({ page }: Props) {
     return (
         <div id="head" className="h-[32rem] bg-cover" style={{backgroundImage: `url(${title?.pic})`}}>
             <div className="head-over absolute w-full h-[32rem] opacity-75"></div>
-            {loaded && <div className={`${isMobile ? "w-full p-20" : "w-3/5 min-w-[40rem] p-28"} flex flex-col gap-6`}>
+            {loaded && <div className={`${isMobile ? "w-full p-12" : "w-3/5 min-w-[40rem] p-28"} flex flex-col gap-6`}>
                 <p className="text-white text-3xl font-medium z-10">{title?.name}</p>
                 <p className="head-plot text-xl z-10">{title?.plot}</p>
                 <div className="flex gap-10 z-10">
