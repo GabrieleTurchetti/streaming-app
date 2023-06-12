@@ -1,5 +1,6 @@
 import EpisodesSliderCell from './episodesSliderCell'
 import { useState, useEffect } from 'react'
+import { isMobile } from 'react-device-detect'
 import sliderSideRight from '../images/slider-side-right.svg'
 import sliderSideLeft from '../images/slider-side-left.svg'
 import useTimeout from '../hooks/useTimeout'
@@ -86,25 +87,23 @@ export default function EpisodeSlider({ episodes }: Props) {
 
     return (
         <div className="slider flex flex-col gap-2">
-            <div className="relative">
-                <div className="slider-bar flex overflow-hidden">
-                    <div className="slider-side w-[4vw] absolute z-10 hover:bg-[rgba(0,0,0,0.5)]" style={{display: sliderSideDisplay.left}} onClick={decreaseIndex}>
-                        <div className="flex h-full items-center justify-center">
-                            <img src={sliderSideLeft} className="w-10" />
-                        </div>
-                    </div>
-                    <div className="slider-center w-[80vw] flex transition-transform duration-700 ease-[cubic-bezier(0.42,0,0.58,1)]" style={{transform: `translateX(${translate}vw)`}}>
-                        {episodes.map(e => (
-                            <EpisodesSliderCell
-                                episode = {e}
-                            />
-                        ))}
-                    </div>
-                    <div className="slider-side w-[4vw] absolute right-0 hover:bg-[rgba(0,0,0,0.5)] text-white font-bold text-4xl" style={{display: sliderSideDisplay.right}} onClick={increaseIndex}>
-                        <div className="flex h-full items-center justify-center">
-                            <img src={sliderSideRight} className="w-10" />
-                        </div>
-                    </div>
+            <div className={`${isMobile ? "overflow-auto" : "overflow-hidden"} slider-bar flex relative`}>
+                <div className={`slider-side w-[4vw] absolute z-10 ${isMobile ? "" : "hover:bg-[rgba(0,0,0,0.5)] text-white font-bold text-4xl"}`} style={{display: sliderSideDisplay.left}} onClick={decreaseIndex}>
+                    {!isMobile && <div className="flex h-full items-center justify-center">
+                        <img src={sliderSideLeft} className="w-10" />
+                    </div>}
+                </div>
+                <div className="slider-center w-[80vw] flex transition-transform duration-700 ease-[cubic-bezier(0.42,0,0.58,1)]" style={{transform: `translateX(${translate}vw)`}}>
+                    {episodes.map(e => (
+                        <EpisodesSliderCell
+                            episode = {e}
+                        />
+                    ))}
+                </div>
+                <div className={`slider-side w-[4vw] absolute right-0 ${isMobile ? "" : "hover:bg-[rgba(0,0,0,0.5)] text-white font-bold text-4xl"}`} style={{display: sliderSideDisplay.right}} onClick={increaseIndex}>
+                    {!isMobile && <div className="flex h-full items-center justify-center">
+                        <img src={sliderSideRight} className="w-10" />
+                    </div>}
                 </div>
             </div>
         </div>

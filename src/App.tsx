@@ -1,10 +1,9 @@
 import './App.css';
 import { useState, useEffect, createContext } from 'react'
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
-import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from './firebase'
 import { updateDoc, getDoc, doc } from "firebase/firestore"
-import { db } from './firebase'
+import { db, auth } from './firebase.js'
+import logo from './images/logo.svg'
 import Home from './pages/home'
 import Film from './pages/film'
 import Series from './pages/series'
@@ -53,14 +52,44 @@ export default function App() {
             navigate("/")
         }
 
+        if (sessionStorage.getItem("sendNotification") === null) {
+            sessionStorage.setItem("sendNotification", "true")
+        }
+
         auth.onAuthStateChanged(async user => {
             const docRef = doc(db, "users", user?.uid || "")
             const docSnap = await getDoc(docRef)
 
             if (user) {
                 changeUser(true, user.uid, user.email || "", docSnap.data()?.nickname, docSnap.data()?.pic, docSnap.data()?.joined)
+                sessionStorage.setItem("sendNotification", "false")
             }
         })
+
+        setTimeout(() => {
+            if (Notification.permission === "granted" && sessionStorage.getItem("sendNotification") === "true") {
+                const notification = new Notification("Ciao!", {
+                    lang: "it",
+                    body: "Sembra che tu non abbia fatto l'accesso",
+                    icon: logo
+                })
+
+                sessionStorage.setItem("sendNotification", "false")
+            }
+            else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted" && sessionStorage.getItem("sendNotification") === "true") {
+                        const notification = new Notification("Ciao!", {
+                            lang: "it",
+                            body: "Sembra che tu non abbia fatto l'accesso",
+                            icon: logo
+                        })
+                    }
+
+                    sessionStorage.setItem("sendNotification", "false")
+                })
+            }
+        }, 1000)
     }, [])
 
     useEffect(() => {

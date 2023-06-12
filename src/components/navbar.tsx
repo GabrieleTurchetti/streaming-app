@@ -1,10 +1,10 @@
 import logo from '../images/logo.svg'
 import search from '../images/search.svg'
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../App'
 import { signOut } from 'firebase/auth'
-import { auth } from '../firebase'
+import { auth } from '../firebase.js'
 import { isMobile } from 'react-device-detect'
 
 interface Props {

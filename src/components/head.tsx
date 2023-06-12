@@ -30,7 +30,7 @@ export default function Head({ page }: Props) {
     }, [page])
 
     return (
-        <div id="head" className="h-[32rem] bg-cover" style={{backgroundImage: `url(${title?.pic})`}}>
+        <div id="head" className="h-[32rem] bg-cover bg-top" style={{backgroundImage: `url(${title?.pic})`}}>
             <div className="head-over absolute w-full h-[32rem] opacity-75"></div>
             {loaded && <div className={`${isMobile ? "w-full p-12" : "w-3/5 min-w-[40rem] p-28"} flex flex-col gap-6`}>
                 <p className="text-white text-3xl font-medium z-10">{title?.name}</p>

@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { setDoc, doc } from 'firebase/firestore'
-import { auth, db } from '../firebase'
+import { auth, db } from '../firebase.js'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
     changeUser: (logegd: boolean, id: string, email: string, nickname: string, pic: number, saved: any, joined: string) => void
@@ -91,11 +92,11 @@ export default function Register({ changeUser }: Props) {
     }
 
     return (
-        <div className="flex mt-14 justify-center">
-            <div id="account-container" className="w-[32rem] flex flex-col rounded-md text-white">
+        <div className="flex my-14 justify-center">
+            <div id="account-container" className={`${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Registrati</p>
                 <div id="account-linebreak" className="w-full h-[1px]"></div>
-                <div className="flex flex-col py-10 px-16 gap-5">
+                <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
                     <div className="flex flex-col gap-1">
                         <p className="account-header">Nickname</p>
                         <input id="account-input-nickname" className="account-input h-9 px-3 w-full" type="text" />

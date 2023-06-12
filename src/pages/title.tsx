@@ -186,7 +186,7 @@ export default function Title() {
 
     return (
         <>
-            <div className="h-[32rem] flex flex-col justify-between bg-cover" style={{backgroundImage: `url(${title?.pic})`}}>
+            <div className="h-[32rem] flex flex-col justify-between bg-cover bg-top" style={{backgroundImage: `url(${title?.pic})`}}>
                 <div className="head-over absolute w-full h-[32rem] opacity-75"></div>
                 {loaded && <>
                     {sectionDisplay.general && <div className={`${isMobile ? "w-full p-12" : "w-3/5 min-w-[40rem] px-28 py-20"} flex flex-col gap-3`}>
@@ -204,19 +204,21 @@ export default function Title() {
                         </div>
                     </div>}
                     {sectionDisplay.episodes && <>
-                        <div className="flex justify-between">
-                            <div className="w-3/5 min-w-[40rem] flex flex-col gap-3 px-28 pt-20">
+                        <div className={`${isMobile ? "flex-col" : ""} flex justify-between`}>
+                            <div className={`${isMobile ? "w-full p-12" : " w-3/5 min-w-[40rem] px-28 pt-20"} flex flex-col gap-3`}>
                                 <p className="text-white text-3xl font-medium z-10">{title?.name}</p>
                                 <p className="text-white text-lg z-10">{title?.year} - {title?.time !== -1 ? title?.time + " min" : title?.seasons + (title?.seasons === 1 ? " stagione" : " stagioni")}</p>
                             </div>
-                            <div className="text-white pr-28 pt-28 z-10">
-                                <div id="season-select" className="cursor-pointer px-2 py-[0.1rem] border-[1px] whitespace-nowrap flex gap-2 min-w-max" onClick={() => setSeasonOptionsDisplay(!seasonOptionsDisplay)}>
-                                    Stagione {season}
-                                    <img src={arrowDown} className={`w-3 transition-[transform] duration-150 ${seasonOptionsDisplay ? "rotate-180" : ""}`} />
+                            <div className={`${isMobile ? "relative mr-12" : "pr-28 pt-28"} text-white z-10`}>
+                                <div className={`${isMobile ? "absolute right-0" : ""}`}>
+                                    <div id="season-select" className="cursor-pointer px-2 py-[0.1rem] border-[1px] whitespace-nowrap flex gap-2 min-w-max" onClick={() => setSeasonOptionsDisplay(!seasonOptionsDisplay)}>
+                                        Stagione {season}
+                                        <img src={arrowDown} className={`w-3 transition-[transform] duration-150 ${seasonOptionsDisplay ? "rotate-180" : ""}`} />
+                                    </div>
+                                    {seasonOptionsDisplay && <div id="season-option-container" className="absolute border-[1px]">
+                                        {getSeasonOptions().map(e => e)}
+                                    </div>}
                                 </div>
-                                {seasonOptionsDisplay && <div id="season-option-container" className="absolute border-[1px]">
-                                    {getSeasonOptions().map(e => e)}
-                                </div>}
                             </div>
                         </div>
                         <div className="flex h-full items-center justify-center">
@@ -231,14 +233,14 @@ export default function Title() {
                             <p className="text-white text-lg z-10">{title?.year} - {title?.time !== -1 ? title?.time + " min" : title?.seasons + (title?.seasons === 1 ? " stagione" : " stagioni")}</p>
                         </div>
                         <div className={`z-10 h-full mt-6 ${isMobile ? "overflow-auto" : ""}`}>
-                            <div className={`${isMobile ? "px-12 w-[28rem]" : "w-2/5 min-w-[40rem] px-28"} flex h-full justify-between z-30 text-white`}>
-                                <div>
+                            <div className={`${isMobile ? "px-12 w-[30rem]" : "w-2/5 min-w-[40rem] px-28"} flex h-full justify-between z-30 text-white`}>
+                                <div className={`max-w-[12rem]`}>
                                     <p className="title-details-col-header py-2">Generi</p>
                                     {title?.genres.map(e => (
                                         <p>{e}</p>
                                     ))}
                                 </div>
-                                <div>
+                                <div className={`max-w-[12rem]`}>
                                     <p className="title-details-col-header py-2">Case cinematografiche</p>
                                     {title?.companies?.map(e => (
                                         <p>{e}</p>

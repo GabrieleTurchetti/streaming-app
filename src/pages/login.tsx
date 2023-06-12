@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth, db } from '../firebase'
+import { auth, db } from '../firebase.js'
 import { getDoc, doc } from 'firebase/firestore'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
     changeUser: (logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string) => void
@@ -15,8 +16,6 @@ export default function Login({ changeUser }: Props) {
         email: "",
         password: ""
     })
-
-    console.log(auth)
 
     function signIn() {
         const email = document.getElementById("account-input-email") as HTMLInputElement
@@ -76,11 +75,11 @@ export default function Login({ changeUser }: Props) {
     }
 
     return (
-        <div className="flex mt-14 justify-center">
-            <div id="account-container" className="w-[32rem] flex flex-col rounded-md text-white">
+        <div className="flex my-14 justify-center">
+            <div id="account-container" className={`${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Accedi</p>
                 <div id="account-linebreak" className="w-full h-[1px]"></div>
-                <div className="flex flex-col py-10 px-16 gap-5">
+                <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
                     <div className="flex flex-col gap-1">
                         <p className="account-header">Email</p>
                         <input id="account-input-email" className="account-input h-9 px-3 w-full" type="email" />
