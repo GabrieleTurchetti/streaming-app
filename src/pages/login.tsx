@@ -6,7 +6,7 @@ import { getDoc, doc } from 'firebase/firestore'
 import { isMobile } from 'react-device-detect'
 
 interface Props {
-    changeUser: (logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string) => void
+    changeUser: (logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string, verified: boolean) => void
 }
 
 export default function Login({ changeUser }: Props) {
@@ -28,16 +28,21 @@ export default function Login({ changeUser }: Props) {
 
         if (email.value.length > 0 && password.value.length > 0) {
             signInWithEmailAndPassword(auth, email.value, password.value).then(async userCredential => {
-                const docRef = doc(db, "users", userCredential.user.uid)
-                const docSnap = await getDoc(docRef)
+                if (userCredential.user.emailVerified) {
+                    const docRef = doc(db, "users", userCredential.user.uid)
+                    const docSnap = await getDoc(docRef)
 
-                if (docSnap.exists()) {
-                    changeUser(true, userCredential.user.uid, docSnap.data().email, docSnap.data().nickname, docSnap.data().pic, docSnap.data().joined)
-                }
+                    if (docSnap.exists()) {
+                        changeUser(true, userCredential.user.uid, docSnap.data().email, docSnap.data().nickname, docSnap.data().pic, docSnap.data().joined, userCredential.user.emailVerified)
+                    }
+                    else {
+                        // error!!!
+                    }
+                    navigate("/")
+                    }
                 else {
-                    // error!!!
+                    // email non verificata
                 }
-                navigate("/")
             }).catch(error => {
                 switch (error.code) {
                     case "auth/user-not-found":
@@ -68,17 +73,17 @@ export default function Login({ changeUser }: Props) {
         }
         else {
             setErrorDisplay({
-                email: email.value.length === 0 ? "Complila questo campo" : "",
-                password: password.value.length === 0 ? "Complila questo campo" : ""
+                email: email.value.length === 0 ? "compila questo campo" : "",
+                password: password.value.length === 0 ? "compila questo campo" : ""
             })
         }
     }
 
     return (
-        <div className="flex my-14 justify-center">
+        <div className="flex justify-center mt-14">
             <div id="account-container" className={`${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Accedi</p>
-                <div id="account-linebreak" className="w-full h-[1px]"></div>
+                <div id="account-line-break" className="w-full h-[1px]"></div>
                 <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
                     <div className="flex flex-col gap-1">
                         <p className="account-header">Email</p>
@@ -94,7 +99,7 @@ export default function Login({ changeUser }: Props) {
                         <p>Accedi</p>
                     </button>
                     <Link to="/register">
-                        <p id="account-text-register" className="mt-6 cursor-pointer transition-[color] duration-150">E' la prima volta che passi di qui?</p>
+                        <p id="account-link-register" className="mt-6 cursor-pointer transition-[color] duration-150">E' la prima volta che passi di qui?</p>
                     </Link>
                 </div>
             </div>

@@ -22,7 +22,8 @@ export const UserContext = createContext({
     email: "",
     nickname: "",
     pic: 0,
-    joined: ""
+    joined: "",
+    verified: false
 })
 
 export default function App() {
@@ -38,7 +39,8 @@ export default function App() {
         email: "",
         nickname: "",
         pic: 0,
-        joined: ""
+        joined: "",
+        verified: false
     })
 
     const [navbarSection, setNavbarSection] = useState({
@@ -61,7 +63,7 @@ export default function App() {
             const docSnap = await getDoc(docRef)
 
             if (user) {
-                changeUser(true, user.uid, user.email || "", docSnap.data()?.nickname, docSnap.data()?.pic, docSnap.data()?.joined)
+                changeUser(true, user.uid, user.email || "", docSnap.data()?.nickname, docSnap.data()?.pic, docSnap.data()?.joined, user.emailVerified)
                 sessionStorage.setItem("sendNotification", "false")
             }
         })
@@ -170,14 +172,15 @@ export default function App() {
         }))
     }
 
-    function changeUser(logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string) {
+    function changeUser(logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string, verified: boolean) {
         setUser({
             logged: logged,
             id: id,
             email: email,
             nickname,
             pic: pic,
-            joined: joined
+            joined: joined,
+            verified: verified
         })
     }
 
@@ -207,9 +210,7 @@ export default function App() {
                     <Route path="/login" element={<Login
                         changeUser = {changeUser}
                     />} />
-                    <Route path="/register" element={<Register
-                        changeUser = {changeUser}
-                    />} />
+                    <Route path="/register" element={<Register />} />
                 </Routes>
             </SmoothScroll>
         </UserContext.Provider>

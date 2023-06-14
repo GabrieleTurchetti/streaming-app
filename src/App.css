@@ -207,7 +207,7 @@
     -o-transform: translateX(14rem);
 }
 
-#profile-info-container, #account-container {
+#profile-info-container, #account-container, #send-email-container {
     background-color: var(--gray-700);
 }
 
@@ -215,7 +215,7 @@
     color: var(--gray-200)
 }
 
-#profile-info-linebreak, #account-linebreak {
+#profile-info-line-break, #account-line-break, #send-email-line-break, #change-password-line-break {
     background-color: var(--gray-600);
 }
 
@@ -228,28 +228,28 @@
     visibility: visible;
 }
 
-.account-header {
+.account-header, #change-password-header {
     color: var(--gray-100);
 }
 
-.account-input {
+.account-input, #change-password-input {
     outline: none;
     background-color: var(--gray-500);
 }
 
-#account-button {
+#account-button, #change-password-button {
     background-color: var(--gray-400);
 }
 
-#account-button:hover {
+#account-button:hover, #change-password-button:hover {
     background-color: var(--gray-500);
 }
 
-#account-text-register {
+#account-link-register, #send-email-resend, #profile-info-change-password {
     color: var(--gray-100);
 }
 
-#account-text-register:hover {
+#account-link-register:hover, #send-email-resend:hover, #profile-info-change-password:hover {
     color: white;
 }
 

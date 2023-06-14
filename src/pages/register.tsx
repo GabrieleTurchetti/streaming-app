@@ -1,17 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import { setDoc, doc } from 'firebase/firestore'
 import { auth, db } from '../firebase.js'
 import { isMobile } from 'react-device-detect'
 
-interface Props {
-    changeUser: (logegd: boolean, id: string, email: string, nickname: string, pic: number, saved: any, joined: string) => void
-}
-
-
-export default function Register({ changeUser }: Props) {
+export default function Register() {
     const navigate = useNavigate()
+    const [sendEmailDisplay, setSendEmailDisplay] = useState(true)
 
     const [errorDisplay, setErrorDisplay] = useState({
         nickname: "",
@@ -42,8 +38,8 @@ export default function Register({ changeUser }: Props) {
                     const currentYear = date.getFullYear()
                     const today = `${currentDay}/${currentMonth}/${currentYear}`
                     createUser(email.value, nickname.value, userCredential.user.uid, today)
-                    changeUser(true, userCredential.user.uid, email.value, nickname.value, 1, [], today)
-                    navigate("/")
+                    sendEmail()
+                    setSendEmailDisplay(true)
                 }).catch(error => {
                     switch (error.code) {
                         case "auth/invalid-email":
@@ -73,12 +69,22 @@ export default function Register({ changeUser }: Props) {
         }
         else {
             setErrorDisplay({
-                nickname: nickname.value.length === 0 ? "Complila questo campo" : "",
-                email: email.value.length === 0 ? "Complila questo campo" : "",
-                password: password.value.length === 0 ? "Complila questo campo" : "",
-                confirmPassword: confirmPassword.value.length === 0 ? "Complila questo campo" : ""
+                nickname: nickname.value.length === 0 ? "compila questo campo" : "",
+                email: email.value.length === 0 ? "compila questo campo" : "",
+                password: password.value.length === 0 ? "compila questo campo" : "",
+                confirmPassword: confirmPassword.value.length === 0 ? "compila questo campo" : ""
             })
         }
+    }
+
+    function sendEmail() {
+        sendEmailVerification(auth.currentUser || ({} as any)).then(() => {
+            console.log(auth.currentUser)
+            console.log("verificata")
+        }).catch(error => {
+            console.log(error)
+            // troppe richieste
+        })
     }
 
     async function createUser(email: string, nickname: string, id: string, today: string) {
@@ -86,16 +92,15 @@ export default function Register({ changeUser }: Props) {
             email: email,
             nickname: nickname,
             joined: today,
-            pic: 1,
-            saved: []
+            pic: 1
         })
     }
 
     return (
         <div className="flex my-14 justify-center">
-            <div id="account-container" className={`${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
+            {!sendEmailDisplay && <div id="account-container" className={`${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Registrati</p>
-                <div id="account-linebreak" className="w-full h-[1px]"></div>
+                <div id="account-line-break" className="w-full h-[1px]"></div>
                 <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
                     <div className="flex flex-col gap-1">
                         <p className="account-header">Nickname</p>
@@ -121,7 +126,15 @@ export default function Register({ changeUser }: Props) {
                         <p>Registrati</p>
                     </button>
                 </div>
-            </div>
+            </div>}
+            {sendEmailDisplay && <div id="sendemail-container" className={`${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
+                <p className="text-2xl px-10 h-16 flex items-center">Email di verifica</p>
+                <div id="sendemail-line-break" className="w-full h-[1px]"></div>
+                <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
+                    <p>Ti abbiamo inviato un email per la verifica.</p>
+                    <p id="sendemail-resend" className="mt-6 cursor-pointer transition-[color] duration-150" onClick={sendEmail}>Rimanda l'email</p>
+                </div>
+            </div>}
         </div>
     )
 }

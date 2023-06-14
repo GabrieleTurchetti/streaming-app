@@ -14,7 +14,7 @@ interface Props {
         series: boolean
     },
     changeSearchName: () => void
-    changeUser: (logged: boolean, id: string, email: string, nickname: string, pic: number, saved: any, joined: string) => void
+    changeUser: (logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string, verified: boolean) => void
 }
 
 export default function Navbar({ navbarSection, changeSearchName, changeUser }: Props) {
@@ -24,7 +24,7 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
 
     function logout() {
         signOut(auth).then(() => {
-            changeUser(false, "", "", "", 0, [], "")
+            changeUser(false, "", "", "", 0, "", false)
             navigate("/")
         }).catch(error => {
             // error!!!
