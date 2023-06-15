@@ -207,7 +207,7 @@
     -o-transform: translateX(14rem);
 }
 
-#profile-info-container, #account-container, #send-email-container {
+.container {
     background-color: var(--gray-700);
 }
 
@@ -215,7 +215,7 @@
     color: var(--gray-200)
 }
 
-#profile-info-line-break, #account-line-break, #send-email-line-break, #change-password-line-break {
+.container-line-break {
     background-color: var(--gray-600);
 }
 
@@ -228,20 +228,20 @@
     visibility: visible;
 }
 
-.account-header, #change-password-header {
+.container-header {
     color: var(--gray-100);
 }
 
-.account-input, #change-password-input {
+.container-input {
     outline: none;
     background-color: var(--gray-500);
 }
 
-#account-button, #change-password-button {
+.container-button {
     background-color: var(--gray-400);
 }
 
-#account-button:hover, #change-password-button:hover {
+.container-button:hover {
     background-color: var(--gray-500);
 }
 

@@ -18,8 +18,8 @@ export default function Login({ changeUser }: Props) {
     })
 
     function signIn() {
-        const email = document.getElementById("account-input-email") as HTMLInputElement
-        const password = document.getElementById("account-input-password") as HTMLInputElement
+        const email = document.getElementById("container-input-email") as HTMLInputElement
+        const password = document.getElementById("container-input-password") as HTMLInputElement
 
         setErrorDisplay({
             email: "",
@@ -28,20 +28,15 @@ export default function Login({ changeUser }: Props) {
 
         if (email.value.length > 0 && password.value.length > 0) {
             signInWithEmailAndPassword(auth, email.value, password.value).then(async userCredential => {
-                if (userCredential.user.emailVerified) {
-                    const docRef = doc(db, "users", userCredential.user.uid)
-                    const docSnap = await getDoc(docRef)
+                const docRef = doc(db, "users", userCredential.user.uid)
+                const docSnap = await getDoc(docRef)
 
-                    if (docSnap.exists()) {
-                        changeUser(true, userCredential.user.uid, docSnap.data().email, docSnap.data().nickname, docSnap.data().pic, docSnap.data().joined, userCredential.user.emailVerified)
-                    }
-                    else {
-                        // error!!!
-                    }
+                if (docSnap.exists()) {
+                    changeUser(true, userCredential.user.uid, docSnap.data().email, docSnap.data().nickname, docSnap.data().pic, docSnap.data().joined, userCredential.user.emailVerified)
                     navigate("/")
-                    }
+                }
                 else {
-                    // email non verificata
+                    // error!!!
                 }
             }).catch(error => {
                 switch (error.code) {
@@ -81,21 +76,21 @@ export default function Login({ changeUser }: Props) {
 
     return (
         <div className="flex justify-center mt-14">
-            <div id="account-container" className={`${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
+            <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Accedi</p>
-                <div id="account-line-break" className="w-full h-[1px]"></div>
+                <div className="container-line-break w-full h-[1px]"></div>
                 <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
                     <div className="flex flex-col gap-1">
-                        <p className="account-header">Email</p>
-                        <input id="account-input-email" className="account-input h-9 px-3 w-full" type="email" />
+                        <p className="container-header">Email</p>
+                        <input id="container-input-email" className="container-input h-9 px-3 w-full" type="email" />
                         {errorDisplay.email !== "" && <p className="text-red-600">{errorDisplay.email}</p>}
                     </div>
                     <div className="flex flex-col gap-1">
-                        <p className="account-header">Password</p>
-                        <input id="account-input-password" className="account-input h-9 px-3 w-full" type="password" />
+                        <p className="container-header">Password</p>
+                        <input id="container-input-password" className="container-input h-9 px-3 w-full" type="password" />
                         {errorDisplay.password !== "" && <p className="text-red-600">{errorDisplay.password}</p>}
                     </div>
-                    <button id="account-button" className="w-full h-9 mt-6 transition-[background-color] duration-150" onClick={signIn}>
+                    <button className="container-button w-full h-9 mt-6 transition-[background-color] duration-150" onClick={signIn}>
                         <p>Accedi</p>
                     </button>
                     <Link to="/register">

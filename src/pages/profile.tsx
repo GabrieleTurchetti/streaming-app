@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react'
 import { sendEmailVerification, updatePassword } from 'firebase/auth'
+import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../App'
 import { isMobile } from 'react-device-detect'
 import { auth } from '../firebase.js'
@@ -15,18 +16,8 @@ interface Props {
 export default function Profile({ changeProfilePicNumber }: Props) {
     const [profilePicDisplay, setProfilePicDisplay] = useState(false)
     const user = useContext(UserContext)
-    const [sendEmailDisplay, setSendEmailDisplay] = useState(false)
     const [changePasswordDisplay, setChangePasswordDisplay] = useState(false)
-
-    function sendEmail() {
-        sendEmailVerification(auth.currentUser || ({} as any)).then(() => {
-            console.log(auth.currentUser)
-            console.log("verificata")
-        }).catch(error => {
-            console.log(error)
-            // troppe richieste
-        })
-    }
+    const navigate = useNavigate()
 
     function changePassword() {
         //
@@ -35,9 +26,9 @@ export default function Profile({ changeProfilePicNumber }: Props) {
     return (
         <>
             <div className="flex mt-14 justify-center">
-                {!sendEmailDisplay && !changePasswordDisplay && <div id="profile-info-container" className={`${isMobile ? "w-[20rem]" : "w-[56rem]"} flex-col flex rounded-md text-white`}>
+                {!changePasswordDisplay && <div  className={`container ${isMobile ? "w-[20rem]" : "w-[56rem]"} flex-col flex rounded-md text-white`}>
                     <p className="text-2xl px-10 h-16 flex items-center">Profilo</p>
-                    <div id="profile-info-line-break" className="w-full h-[1px]"></div>
+                    <div className="container-line-break w-full h-[1px]"></div>
                     <div className={`${isMobile ? "flex-col gap-6" : "gap-14"} flex p-10`}>
                         <div className={`${isMobile ? "w-full" : "w-36"} h-36 flex justify-center`}>
                             <div className={`w-32 h-32 absolute profile-pic-${user.pic}`} />
@@ -56,8 +47,7 @@ export default function Profile({ changeProfilePicNumber }: Props) {
                                     <p>{user.email}</p>
                                     <img src={user.verified ? verified : notVerified} className="w-6 cursor-pointer" title={user.verified ? "verificata" : "non verificata"} onClick={() => {
                                         if (!user.verified) {
-                                            sendEmail()
-                                            setSendEmailDisplay(true)
+                                            navigate("/verification")
                                         }
                                     }}/>
                                 </div>
@@ -66,30 +56,9 @@ export default function Profile({ changeProfilePicNumber }: Props) {
                                 <p className="profile-info-header">Iscritto il:<span className="ml-3 text-white">{user.joined}</span></p>
                             </div>
                             <div>
-                                <p id="profile-info-change-password" className="cursor-pointer transition-[color] duration-150" onClick={() => setChangePasswordDisplay(true)}>Cambia password</p>
+                                <p id="profile-info-change-password" className="cursor-pointer transition-[color] duration-150" onClick={() => navigate("/change-password")}>Cambia password</p>
                             </div>
                         </div>
-                    </div>
-                </div>}
-                {sendEmailDisplay && <div id="send-email-container" className={`${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
-                    <p className="text-2xl px-10 h-16 flex items-center">Email di verifica</p>
-                    <div id="send-email-line-break" className="w-full h-[1px]"></div>
-                    <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
-                        <p>Ti abbiamo inviato un email per la verifica.</p>
-                        <p id="send-email-resend" className="mt-6 cursor-pointer transition-[color] duration-150" onClick={sendEmail}>Rimanda l'email</p>
-                    </div>
-                </div>}
-                {changePasswordDisplay && <div id="account-container" className={`${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
-                    <p className="text-2xl px-10 h-16 flex items-center">Cambio password</p>
-                    <div id="change-password-line-break" className="w-full h-[1px]"></div>
-                    <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
-                        <div className="flex flex-col gap-1">
-                            <p id="change-password-header">Inserisci la nuova password</p>
-                            <input id="change-password-input-email" className="account-input h-9 px-3 w-full" type="password" />
-                        </div>
-                        <button id="change-password-button" className="w-full h-9 mt-6 transition-[background-color] duration-150" onClick={changePassword}>
-                            <p>Cambia</p>
-                        </button>
                     </div>
                 </div>}
             </div>

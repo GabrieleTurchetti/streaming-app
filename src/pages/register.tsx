@@ -7,7 +7,6 @@ import { isMobile } from 'react-device-detect'
 
 export default function Register() {
     const navigate = useNavigate()
-    const [sendEmailDisplay, setSendEmailDisplay] = useState(true)
 
     const [errorDisplay, setErrorDisplay] = useState({
         nickname: "",
@@ -17,10 +16,10 @@ export default function Register() {
     })
 
     function signUp() {
-        const nickname = document.getElementById("account-input-nickname") as HTMLInputElement
-        const email = document.getElementById("account-input-email") as HTMLInputElement
-        const password = document.getElementById("account-input-password") as HTMLInputElement
-        const confirmPassword = document.getElementById("account-input-confirm-password") as HTMLInputElement
+        const nickname = document.getElementById("container-input-nickname") as HTMLInputElement
+        const email = document.getElementById("container-input-email") as HTMLInputElement
+        const password = document.getElementById("container-input-password") as HTMLInputElement
+        const confirmPassword = document.getElementById("container-input-confirm-password") as HTMLInputElement
 
         setErrorDisplay({
             nickname: "",
@@ -38,8 +37,7 @@ export default function Register() {
                     const currentYear = date.getFullYear()
                     const today = `${currentDay}/${currentMonth}/${currentYear}`
                     createUser(email.value, nickname.value, userCredential.user.uid, today)
-                    sendEmail()
-                    setSendEmailDisplay(true)
+                    navigate("/verification")
                 }).catch(error => {
                     switch (error.code) {
                         case "auth/invalid-email":
@@ -98,43 +96,35 @@ export default function Register() {
 
     return (
         <div className="flex my-14 justify-center">
-            {!sendEmailDisplay && <div id="account-container" className={`${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
+            <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Registrati</p>
-                <div id="account-line-break" className="w-full h-[1px]"></div>
+                <div className="container-line-break w-full h-[1px]"></div>
                 <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
                     <div className="flex flex-col gap-1">
-                        <p className="account-header">Nickname</p>
-                        <input id="account-input-nickname" className="account-input h-9 px-3 w-full" type="text" />
+                        <p className="container-header">Nickname</p>
+                        <input id="container-input-nickname" className="container-input h-9 px-3 w-full" type="text" />
                         {errorDisplay.nickname !== "" && <p className="text-red-600">{errorDisplay.nickname}</p>}
                     </div>
                     <div className="flex flex-col gap-1">
-                        <p className="account-header">Email</p>
-                        <input id="account-input-email" className="account-input h-9 px-3 w-full" type="email" />
+                        <p className="container-header">Email</p>
+                        <input id="container-input-email" className="container-input h-9 px-3 w-full" type="email" />
                         {errorDisplay.email !== "" && <p className="text-red-600">{errorDisplay.email}</p>}
                     </div>
                     <div className="flex flex-col gap-1">
-                        <p className="account-header">Password</p>
-                        <input id="account-input-password" className="account-input h-9 px-3 w-full" type="password" />
+                        <p className="container-header">Password</p>
+                        <input id="container-input-password" className="container-input h-9 px-3 w-full" type="password" />
                         {errorDisplay.password !== "" && <p className="text-red-600">{errorDisplay.password}</p>}
                     </div>
                     <div className="flex flex-col gap-1">
-                        <p className="account-header">Conferma password</p>
-                        <input id="account-input-confirm-password" className="account-input h-9 px-3 w-full" type="password" />
+                        <p className="container-header">Conferma password</p>
+                        <input id="container-input-confirm-password" className="container-input h-9 px-3 w-full" type="password" />
                         {errorDisplay.confirmPassword !== "" && <p className="text-red-600">{errorDisplay.confirmPassword}</p>}
                     </div>
-                    <button id="account-button" className="w-full h-9 mt-6 transition-[background-color] duration-15" onClick={signUp}>
+                    <button className="container-button w-full h-9 mt-6 transition-[background-color] duration-15" onClick={signUp}>
                         <p>Registrati</p>
                     </button>
                 </div>
-            </div>}
-            {sendEmailDisplay && <div id="sendemail-container" className={`${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
-                <p className="text-2xl px-10 h-16 flex items-center">Email di verifica</p>
-                <div id="sendemail-line-break" className="w-full h-[1px]"></div>
-                <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
-                    <p>Ti abbiamo inviato un email per la verifica.</p>
-                    <p id="sendemail-resend" className="mt-6 cursor-pointer transition-[color] duration-150" onClick={sendEmail}>Rimanda l'email</p>
-                </div>
-            </div>}
+            </div>
         </div>
     )
 }

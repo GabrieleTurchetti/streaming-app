@@ -15,6 +15,8 @@ import SmoothScroll from './components/smoothScroll'
 import Profile from './pages/profile'
 import Login from './pages/login'
 import Register from './pages/register'
+import Verification from './pages/verification'
+import ChangePassword from './pages/changePassword'
 
 export const UserContext = createContext({
     logged: false,
@@ -211,6 +213,8 @@ export default function App() {
                         changeUser = {changeUser}
                     />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/verification" element={<Verification />} />
+                    <Route path="/change-password" element={<ChangePassword />} />
                 </Routes>
             </SmoothScroll>
         </UserContext.Provider>
