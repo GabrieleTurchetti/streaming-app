@@ -1,35 +1,39 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { setDoc, doc } from 'firebase/firestore'
 import { auth, db } from '../firebase.js'
 import { isMobile } from 'react-device-detect'
+import openEye from '../images/open-eye.svg'
+import closedEye from '../images/closed-eye.svg'
 
 export default function Register() {
     const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(false)
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
 
     const [errorDisplay, setErrorDisplay] = useState({
         nickname: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        passwordConfirm: ""
     })
 
     function signUp() {
         const nickname = document.getElementById("container-input-nickname") as HTMLInputElement
         const email = document.getElementById("container-input-email") as HTMLInputElement
         const password = document.getElementById("container-input-password") as HTMLInputElement
-        const confirmPassword = document.getElementById("container-input-confirm-password") as HTMLInputElement
+        const passwordConfirm = document.getElementById("container-input-password-confirm") as HTMLInputElement
 
         setErrorDisplay({
             nickname: "",
             email: "",
             password: "",
-            confirmPassword: ""
+            passwordConfirm: ""
         })
 
-        if (nickname.value.length > 0 && email.value.length > 0 && password.value.length > 0 && confirmPassword.value.length > 0) {
-            if (password.value === confirmPassword.value) {
+        if (nickname.value.length > 0 && email.value.length > 0 && password.value.length > 0 && passwordConfirm.value.length > 0) {
+            if (password.value === passwordConfirm.value) {
                 createUserWithEmailAndPassword(auth, email.value, password.value).then(userCredential => {
                     const date = new Date()
                     const currentDay = String(date.getDate()).padStart(1, "0")
@@ -51,17 +55,20 @@ export default function Register() {
                         case "auth/weak-password":
                             setErrorDisplay(prev => ({
                                 ...prev,
-                                password: "Password troppo debole :("
+                                password: "Password troppo debole"
                             }))
 
                             break
+
+                        default:
+                            console.error(error.message)
                     }
                 })
             }
             else {
                 setErrorDisplay(prev => ({
                     ...prev,
-                    confirmPassword: "Le password non combaciano"
+                    passwordConfirm: "Le password non combaciano"
                 }))
             }
         }
@@ -70,19 +77,9 @@ export default function Register() {
                 nickname: nickname.value.length === 0 ? "compila questo campo" : "",
                 email: email.value.length === 0 ? "compila questo campo" : "",
                 password: password.value.length === 0 ? "compila questo campo" : "",
-                confirmPassword: confirmPassword.value.length === 0 ? "compila questo campo" : ""
+                passwordConfirm: passwordConfirm.value.length === 0 ? "compila questo campo" : ""
             })
         }
-    }
-
-    function sendEmail() {
-        sendEmailVerification(auth.currentUser || ({} as any)).then(() => {
-            console.log(auth.currentUser)
-            console.log("verificata")
-        }).catch(error => {
-            console.log(error)
-            // troppe richieste
-        })
     }
 
     async function createUser(email: string, nickname: string, id: string, today: string) {
@@ -95,7 +92,7 @@ export default function Register() {
     }
 
     return (
-        <div className="flex my-14 justify-center">
+        <div className="flex justify-center my-[10vh]">
             <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Registrati</p>
                 <div className="container-line-break w-full h-[1px]"></div>
@@ -112,13 +109,23 @@ export default function Register() {
                     </div>
                     <div className="flex flex-col gap-1">
                         <p className="container-header">Password</p>
-                        <input id="container-input-password" className="container-input h-9 px-3 w-full" type="password" />
+                        <div className="flex">
+                            <input id="container-input-password" className="container-input h-9 pl-3 w-full" type={showPassword ? "text" : "password"} />
+                            <div className="container-eye flex px-2 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
+                                <img src={showPassword ? closedEye : openEye} className="w-6" />
+                            </div>
+                        </div>
                         {errorDisplay.password !== "" && <p className="text-red-600">{errorDisplay.password}</p>}
                     </div>
                     <div className="flex flex-col gap-1">
                         <p className="container-header">Conferma password</p>
-                        <input id="container-input-confirm-password" className="container-input h-9 px-3 w-full" type="password" />
-                        {errorDisplay.confirmPassword !== "" && <p className="text-red-600">{errorDisplay.confirmPassword}</p>}
+                        <div className="flex">
+                            <input id="container-input-password-confirm" className="container-input h-9 pl-3 w-full" type={showPasswordConfirm ? "text" : "password"} />
+                            <div className="container-eye flex px-2 cursor-pointer" onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}>
+                                <img src={showPasswordConfirm ? closedEye : openEye} className="w-6" />
+                            </div>
+                        </div>
+                        {errorDisplay.passwordConfirm !== "" && <p className="text-red-600">{errorDisplay.passwordConfirm}</p>}
                     </div>
                     <button className="container-button w-full h-9 mt-6 transition-[background-color] duration-15" onClick={signUp}>
                         <p>Registrati</p>

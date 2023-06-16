@@ -25,7 +25,7 @@ export default function Search({ searchName }: Props) {
             getSearch(searchName).then(res => {
                 const titles: Titles = res as Titles
                 setSearchTitles(titles)
-            })
+            }).catch(error => console.error(error))
         }
     }, [searchName])
 

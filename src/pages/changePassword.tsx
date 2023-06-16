@@ -1,62 +1,92 @@
 import { isMobile } from 'react-device-detect'
+import { useNavigate } from 'react-router-dom'
 import { updatePassword } from 'firebase/auth'
 import { auth } from '../firebase.js'
 import { useState } from 'react'
+import openEye from '../images/open-eye.svg'
+import closedEye from '../images/closed-eye.svg'
+import sendNotification from '../functions/sendNotification'
 
 export default function ChangePassword() {
+    const [showPassword, setShowPassword] = useState(false)
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
+    const [enableButton, setEnableButton] = useState(true)
+    const navigate = useNavigate()
+
     const [errorDisplay, setErrorDisplay] = useState({
         password: "",
-        confirmPassword: ""
+        passwordConfirm: ""
     })
 
     function changePassword() {
         const password = document.getElementById("container-input-password") as HTMLInputElement
-        const confirmPassword = document.getElementById("container-input-confirm-password") as HTMLInputElement
+        const passwordConfirm = document.getElementById("container-input-password-confirm") as HTMLInputElement
 
         setErrorDisplay({
             password: "",
-            confirmPassword: ""
+            passwordConfirm: ""
         })
 
-        if (password.value.length > 0 && confirmPassword.value.length > 0) {
-            if (password.value === confirmPassword.value) {
-                updatePassword(auth.currentUser || ({} as any), password.value).then(() => {
-                    console.log("fatto")
-                })
+        if (password.value.length > 0 && passwordConfirm.value.length > 0) {
+            if (password.value === passwordConfirm.value) {
+                setEnableButton(false)
+
+                if (auth.currentUser !== null) {
+                    updatePassword(auth.currentUser, password.value).then(() => {
+                        sendNotification("Cambio password", "Il cambio della password è avvenuto con successo.")
+                        navigate("/profile")
+                    }).catch(() => {
+                        sendNotification("Cambio password", "Purtroppo c'è stato un errore durante il cambio della password. Riprova tra qualche minuto.")
+                        navigate("/profile")
+                    })
+                }
             }
             else {
                 setErrorDisplay(prev => ({
                     ...prev,
-                    confirmPassword: "Le password non combaciano"
+                    passwordConfirm: "Le password non combaciano"
                 }))
             }
         }
         else {
             setErrorDisplay({
                 password: password.value.length === 0 ? "compila questo campo" : "",
-                confirmPassword: confirmPassword.value.length === 0 ? "compila questo campo" : ""
+                passwordConfirm: passwordConfirm.value.length === 0 ? "compila questo campo" : ""
             })
         }
-
     }
 
     return (
-        <div className="flex mt-14 justify-center">
+        <div className="flex justify-center my-[10vh]">
             <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Cambio password</p>
                 <div className="container-line-break w-full h-[1px]" />
                 <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
                     <div className="flex flex-col gap-1">
                         <p className="container-header">Inserisci la nuova password</p>
-                        <input id="container-input-password" className="container-input h-9 px-3 w-full" type="password" />
+                        <div className="flex">
+                            <input id="container-input-password" className="container-input h-9 pl-3 w-full" type={showPassword ? "text" : "password"} />
+                            <div className="container-eye flex px-2 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
+                                <img src={showPassword ? closedEye : openEye} className="w-6" />
+                            </div>
+                        </div>
                         {errorDisplay.password !== "" && <p className="text-red-600">{errorDisplay.password}</p>}
                     </div>
                     <div className="flex flex-col gap-1">
                         <p className="container-header">Conferma la nuova password</p>
-                        <input id="container-input-confirm-password" className="container-input h-9 px-3 w-full" type="password" />
-                        {errorDisplay.confirmPassword !== "" && <p className="text-red-600">{errorDisplay.confirmPassword}</p>}
+                        <div className="flex">
+                            <input id="container-input-password-confirm" className="container-input h-9 pl-3 w-full" type={showPasswordConfirm ? "text" : "password"} />
+                            <div className="container-eye flex px-2 cursor-pointer" onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}>
+                                <img src={showPasswordConfirm ? closedEye : openEye} className="w-6" />
+                            </div>
+                        </div>
+                        {errorDisplay.passwordConfirm !== "" && <p className="text-red-600">{errorDisplay.passwordConfirm}</p>}
                     </div>
-                    <button className="container-button w-full h-9 mt-6 transition-[background-color] duration-150" onClick={changePassword}>
+                    <button className="container-button w-full h-9 mt-6 transition-[background-color] duration-150" onClick={() => {
+                        if (enableButton) {
+                            changePassword()
+                        }
+                    }}>
                         <p>Cambia</p>
                     </button>
                 </div>

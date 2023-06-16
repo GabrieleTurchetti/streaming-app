@@ -4,6 +4,9 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth, db } from '../firebase.js'
 import { getDoc, doc } from 'firebase/firestore'
 import { isMobile } from 'react-device-detect'
+import openEye from '../images/open-eye.svg'
+import closedEye from '../images/closed-eye.svg'
+import sendNotification from '../functions/sendNotification'
 
 interface Props {
     changeUser: (logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string, verified: boolean) => void
@@ -11,6 +14,7 @@ interface Props {
 
 export default function Login({ changeUser }: Props) {
     const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(false)
 
     const [errorDisplay, setErrorDisplay] = useState({
         email: "",
@@ -36,7 +40,7 @@ export default function Login({ changeUser }: Props) {
                     navigate("/")
                 }
                 else {
-                    // error!!!
+                    sendNotification("Errore nel login", "Purtroppo non è stato possibile effettuare il login. Contattaci tramite email per risolvere il problema.")
                 }
             }).catch(error => {
                 switch (error.code) {
@@ -63,6 +67,9 @@ export default function Login({ changeUser }: Props) {
                         }))
 
                         break
+
+                    default:
+                        console.error(error.message)
                 }
             })
         }
@@ -75,7 +82,7 @@ export default function Login({ changeUser }: Props) {
     }
 
     return (
-        <div className="flex justify-center mt-14">
+        <div className="flex justify-center my-[10vh]">
             <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Accedi</p>
                 <div className="container-line-break w-full h-[1px]"></div>
@@ -87,7 +94,12 @@ export default function Login({ changeUser }: Props) {
                     </div>
                     <div className="flex flex-col gap-1">
                         <p className="container-header">Password</p>
-                        <input id="container-input-password" className="container-input h-9 px-3 w-full" type="password" />
+                        <div className="flex">
+                            <input id="container-input-password" className="container-input h-9 pl-3 w-full" type={showPassword ? "text" : "password"} />
+                            <div className="container-eye flex px-2 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
+                                <img src={showPassword ? closedEye : openEye} className="w-6" />
+                            </div>
+                        </div>
                         {errorDisplay.password !== "" && <p className="text-red-600">{errorDisplay.password}</p>}
                     </div>
                     <button className="container-button w-full h-9 mt-6 transition-[background-color] duration-150" onClick={signIn}>

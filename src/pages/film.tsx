@@ -22,15 +22,15 @@ export default function Home() {
         getPopular("film").then(res => {
             const titles: Titles = res as Titles
             setPopular(titles)
-        })
+        }).catch(error => console.error(error))
         getTopRated("film").then(res => {
             const titles: Titles = res as Titles
             setTopRated(titles)
-        })
+        }).catch(error => console.error(error))
         getUpcoming().then(res => {
             const titles: Titles = res as Titles
             setUpcoming(titles)
-        })
+        }).catch(error => console.error(error))
     }, [])
 
     return (

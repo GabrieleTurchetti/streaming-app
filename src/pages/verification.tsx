@@ -19,7 +19,7 @@ export default function Verification() {
     }
 
     return (
-        <div className="flex mt-14 justify-center">
+        <div className="flex justify-center my-[20vh]">
             <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Email di verifica</p>
                 <div className="container-line-break w-full h-[1px]" />

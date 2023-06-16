@@ -20,11 +20,11 @@ export default function Home() {
         getPopular("series").then(res => {
             const titles: Titles = res as Titles
             setPopular(titles)
-        })
+        }).catch(error => console.error(error))
         getTopRated("series").then(res => {
             const titles: Titles = res as Titles
             setTopRated(titles)
-        })
+        }).catch(error => console.error(error))
     }, [])
 
     return (

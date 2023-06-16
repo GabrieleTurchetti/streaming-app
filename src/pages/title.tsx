@@ -63,17 +63,17 @@ export default function Title() {
             getRelated(title.id, title.type).then(res => {
                 const titles: Titles = res as Titles
                 setRelated(titles)
-            })
+            }).catch(error => console.error(error))
 
             if (type === "series") {
                 getSeasonsEpisodes(title.id, title.seasons || 0).then(res => {
                     const seasonsEpisodes: Episodes[] = res as Episodes[]
                     setSeasonsEpisodes(seasonsEpisodes)
-                })
+                }).catch(error => console.error(error))
             }
 
             setLoaded(true)
-        })
+        }).catch(error => console.error(error))
     }, [])
 
     useEffect(() => {

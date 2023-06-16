@@ -9,7 +9,7 @@ export default function Watch() {
     useEffect(() => {
         getVideo(parseInt(id || "0"), type || "").then(res => {
             setVideo(res)
-        })
+        }).catch(error => console.log(error))
     }, [])
 
     return (

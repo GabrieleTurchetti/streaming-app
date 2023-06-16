@@ -253,6 +253,10 @@
     color: white;
 }
 
+.container-eye {
+    background-color: var(--gray-500);
+}
+
 #profile-pic-container {
     background-color: var(--gray-600);
     display: grid;
