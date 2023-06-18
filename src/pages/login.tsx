@@ -40,7 +40,7 @@ export default function Login({ changeUser }: Props) {
                     navigate("/")
                 }
                 else {
-                    sendNotification("Errore nel login", "Purtroppo non è stato possibile effettuare il login. Contattaci tramite email per risolvere il problema.")
+                    sendNotification("Errore login", "Purtroppo non è stato possibile effettuare il login. Contattaci tramite email per risolvere il problema.")
                 }
             }).catch(error => {
                 switch (error.code) {
@@ -69,7 +69,7 @@ export default function Login({ changeUser }: Props) {
                         break
 
                     default:
-                        console.error(error.message)
+                        alert(error.message)
                 }
             })
         }

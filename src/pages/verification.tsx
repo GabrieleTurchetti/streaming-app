@@ -9,13 +9,11 @@ export default function Verification() {
     }, [])
 
     function sendEmail() {
-        sendEmailVerification(auth.currentUser || ({} as any)).then(() => {
-            console.log(auth.currentUser)
-            console.log("verificata")
-        }).catch(error => {
-            console.log(error)
-            // troppe richieste
-        })
+        if (auth.currentUser !== null) {
+            sendEmailVerification(auth.currentUser).catch(error => {
+                alert(error.message)
+            })
+        }
     }
 
     return (

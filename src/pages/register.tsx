@@ -6,6 +6,7 @@ import { auth, db } from '../firebase.js'
 import { isMobile } from 'react-device-detect'
 import openEye from '../images/open-eye.svg'
 import closedEye from '../images/closed-eye.svg'
+import sendNotification from '../functions/sendNotification'
 
 export default function Register() {
     const navigate = useNavigate()
@@ -41,6 +42,7 @@ export default function Register() {
                     const currentYear = date.getFullYear()
                     const today = `${currentDay}/${currentMonth}/${currentYear}`
                     createUser(email.value, nickname.value, userCredential.user.uid, today)
+                    sendNotification("Registrazione effettuata", `Benvenuto ${nickname.value}.`)
                     navigate("/verification")
                 }).catch(error => {
                     switch (error.code) {
@@ -61,7 +63,7 @@ export default function Register() {
                             break
 
                         default:
-                            console.error(error.message)
+                            alert(error.message)
                     }
                 })
             }

@@ -14,10 +14,7 @@
         <div id="message-container">
             <p id="message-title">Ops!</p>
             <div id="message-container-line-break"></div>
-            <div id="message-middle-container">
-                <p id="message-info">Dalle nostre indagini risulti non essere connesso ad internet.</p>
-                <img id="no-wifi-image" src="no-wifi.svg">
-            </div>
+            <p id="message-info">Dalle nostre indagini risulti non essere connesso ad internet.</p>
         </div>
         <style>
             * {
@@ -54,30 +51,15 @@
             #message-info {
                 color: rgb(220, 220, 220);
                 font-size: 1.125rem;
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+                padding-top: 1rem;
+                padding-bottom: 1rem;
             }
 
             #message-container-line-break {
                 background-color: rgb(45, 45, 45);
                 height: 1px;
-            }
-
-            #no-wifi-image {
-                width: 4rem;
-            }
-
-            #message-middle-container {
-                display: flex;
-                padding-left: 2.5rem;
-                padding-right: 2.5rem;
-                padding-top: 1rem;
-                padding-bottom: 1rem;
-                gap: 2.5rem;
-            }
-
-            @media (max-width: 400px) {
-                #no-wifi-image {
-                    display: none;
-                }
             }
         </style>
     </body>

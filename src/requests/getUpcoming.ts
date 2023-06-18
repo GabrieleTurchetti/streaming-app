@@ -48,7 +48,7 @@ function convertResponseToTitles(response: ResponseSuccess) {
             id: result.id,
             type: "film",
             name: result.title,
-            genres: result.genre_ids.map((e: number) => genres[String(e) as keyof typeof genres]).join(","),
+            genres: result.genre_ids.map(n => genres[n]).join(","),
             coverPic: result.backdrop_path !== null ? "https://image.tmdb.org/t/p/w500" + result.backdrop_path : "https://www.orange.nsw.gov.au/gallery/wp-content/uploads/2021/12/Fall-Movie-Review-GBtGCT.tmp_.jpg",
         })
     })

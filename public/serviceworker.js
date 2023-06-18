@@ -9,16 +9,9 @@ self.addEventListener("install", event => {
 })
 
 self.addEventListener("activate", event => {
-    const cacheWhitelist = []
-    cacheWhitelist.push(cacheName)
-
     event.waitUntil(
-        caches.keys().then((cacheNames) => Promise.all(
-            cacheNames.map((cacheName) => {
-                if (!cacheWhitelist.includes(cacheName)) {
-                    return caches.delete(cacheName)
-                }
-            })
+        caches.keys().then(keys => Promise.all(
+            keys.filter(key => key !== cacheName).map(key => caches.delete(key))
         ))
     )
 })

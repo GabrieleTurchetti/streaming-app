@@ -35,9 +35,19 @@ export default function ChangePassword() {
                     updatePassword(auth.currentUser, password.value).then(() => {
                         sendNotification("Cambio password", "Il cambio della password è avvenuto con successo.")
                         navigate("/profile")
-                    }).catch(() => {
-                        sendNotification("Cambio password", "Purtroppo c'è stato un errore durante il cambio della password. Riprova tra qualche minuto.")
-                        navigate("/profile")
+                    }).catch(error => {
+                        switch (error.code) {
+                            case "auth/weak-password":
+                                setErrorDisplay(prev => ({
+                                    ...prev,
+                                    password: "Password troppo debole"
+                                }))
+
+                                break
+
+                            default:
+                                alert(error.message)
+                        }
                     })
                 }
             }

@@ -9,7 +9,7 @@ interface Props {
 export default function Watch({ number, changeProfilePicNumber, changeProfilePicDisplay }: Props) {
     return (
         <div className="relative">
-            <div className={`profile-pic-${number} absolute w-full h-full`} />
+            <div className={`profile-pic-${number} absolute rounded-full w-full h-full`} />
             <div className="absolute w-full h-full opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {
                 changeProfilePicNumber(number)
                 changeProfilePicDisplay()

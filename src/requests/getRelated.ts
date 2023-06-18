@@ -45,7 +45,7 @@ function convertResponseToTitles(response: ResponseSuccess, type: string) {
             id: result.id,
             type: type,
             name: result.name || result.title || "",
-            genres: result.genre_ids.map((e: number) => genres[String(e) as keyof typeof genres]).join(","),
+            genres: result.genre_ids.map((n: number) => genres[n]).join(","),
             coverPic: result.backdrop_path !== null ? "https://image.tmdb.org/t/p/w500" + result.backdrop_path : "https://www.orange.nsw.gov.au/gallery/wp-content/uploads/2021/12/Fall-Movie-Review-GBtGCT.tmp_.jpg",
         })
     })

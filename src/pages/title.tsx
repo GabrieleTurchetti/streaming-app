@@ -56,24 +56,26 @@ export default function Title() {
     })
 
     useEffect(() => {
-        getTitle(parseInt(id || "0"), type || "").then(res => {
-            const title: Title = res as Title
-            setTitle(title)
+        if (id !== undefined && type !== undefined) {
+            getTitle(parseInt(id || "0"), type || "").then(res => {
+                const title: Title = res as Title
+                setTitle(title)
 
-            getRelated(title.id, title.type).then(res => {
-                const titles: Titles = res as Titles
-                setRelated(titles)
-            }).catch(error => console.error(error))
-
-            if (type === "series") {
-                getSeasonsEpisodes(title.id, title.seasons || 0).then(res => {
-                    const seasonsEpisodes: Episodes[] = res as Episodes[]
-                    setSeasonsEpisodes(seasonsEpisodes)
+                getRelated(title.id, title.type).then(res => {
+                    const titles: Titles = res as Titles
+                    setRelated(titles)
                 }).catch(error => console.error(error))
-            }
 
-            setLoaded(true)
-        }).catch(error => console.error(error))
+                if (type === "series") {
+                    getSeasonsEpisodes(title.id, title.seasons || 0).then(res => {
+                        const seasonsEpisodes: Episodes[] = res as Episodes[]
+                        setSeasonsEpisodes(seasonsEpisodes)
+                    }).catch(error => console.error(error))
+                }
+
+                setLoaded(true)
+            }).catch(error => console.error(error))
+        }
     }, [])
 
     useEffect(() => {
@@ -85,7 +87,9 @@ export default function Title() {
     }, [loaded])
 
     useEffect(() => {
-        startRatingAnimation((title?.rating || 0))
+        if (title !== undefined) {
+            startRatingAnimation(title.rating)
+        }
     }, [sectionDisplay, title])
 
     useEffect(() => {

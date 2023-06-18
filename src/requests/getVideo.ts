@@ -22,5 +22,9 @@ export default async function getVideo(id: number, type: string) {
 }
 
 async function convertResponseToVideo(response: ResponseSuccess) {
-    return "https://www.youtube.com/embed/" + response.results[0].key
+    if (response.results.length !== 0) {
+        return "https://www.youtube.com/embed/" + response.results[0].key
+    }
+
+    return ""
 }

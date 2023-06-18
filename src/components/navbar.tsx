@@ -27,7 +27,7 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
             changeUser(false, "", "", "", 0, "", false)
             navigate("/")
         }).catch(error => {
-            // error!!!
+            alert(error.message)
         })
     }
 
