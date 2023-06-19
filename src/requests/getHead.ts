@@ -29,7 +29,7 @@ interface SingleResponse {
 }
 
 export default async function getHead(page: string = "home") {
-    const response: Response = await fetch(`https://api.themoviedb.org/3/trending/${page === "film" ? "movie" : page === "series" ? "tv" : "all"}/week?api_key=${process.env.REACT_APP_TMDB_API_KEY}`).then(res => res.json())
+    const response: Response = await fetch(`https://api.themoviedb.org/3/trending/${page === "film" ? "movie" : page === "series" ? "tv" : "all"}/week?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=it-IT`).then(res => res.json())
 
     if ("status_code" in (response as (ResponseSuccess & ResponseError))) {
         return {}
@@ -39,7 +39,7 @@ export default async function getHead(page: string = "home") {
 }
 
 async function convertResponseToHead(response: ResponseSuccess) {
-    const headResponse: SingleResponse = await fetch(`https://api.themoviedb.org/3/${response.results[0].media_type}/${response.results[0].id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`).then(res => res.json())
+    const headResponse: SingleResponse = await fetch(`https://api.themoviedb.org/3/${response.results[0].media_type}/${response.results[0].id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=it-IT`).then(res => res.json())
 
     const head: Head = {
         id: response.results[0].id,

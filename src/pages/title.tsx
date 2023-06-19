@@ -240,13 +240,13 @@ export default function Title() {
                             <div className={`${isMobile ? "px-12 w-[30rem]" : "w-2/5 min-w-[40rem] px-28"} flex h-full justify-between z-30 text-white`}>
                                 <div className={`max-w-[12rem]`}>
                                     <p className="title-details-col-header py-2">Generi</p>
-                                    {title?.genres.map(e => (
+                                    {title?.genres.slice(0, 5).map(e => (
                                         <p>{e}</p>
                                     ))}
                                 </div>
                                 <div className={`max-w-[12rem]`}>
                                     <p className="title-details-col-header py-2">Case cinematografiche</p>
-                                    {title?.companies?.map(e => (
+                                    {title?.companies.slice(0, 5).map(e => (
                                         <p>{e}</p>
                                     ))}
                                 </div>
@@ -265,12 +265,12 @@ export default function Title() {
                     </div>
                 </>}
             </div>
-            <div className="py-14 flex justify-center">
+            {related.length !== 0 && <div className="py-14 flex justify-center">
                 <TitleSlider
                     name = {"Correlati"}
                     titles = {related}
                 />
-            </div>
+            </div>}
         </>
     )
 }

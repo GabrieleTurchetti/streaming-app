@@ -38,6 +38,7 @@ export default function EpisodeSlider({ episodes }: Props) {
     }, [index])
 
     useEffect(() => {
+        setIndex(0)
         changeSliderSideDisplay()
     }, [episodes])
 

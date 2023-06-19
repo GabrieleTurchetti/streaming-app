@@ -27,7 +27,7 @@ interface ResponseError {
 type Response = ResponseSuccess | ResponseError
 
 export default async function getSearch(name: string) {
-    const response: Response = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=it-IT&query=${name}&page=1&include_adult=false`).then(res => res.json())
+    const response: Response = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_TMDB_API_KEY}&query=${name}&include_adult=false&language=it-IT&page=1`).then(res => res.json())
 
     if ("status_code" in (response as (ResponseSuccess & ResponseError))) {
         return []

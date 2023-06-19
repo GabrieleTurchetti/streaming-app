@@ -36,6 +36,8 @@ export default function ChangePassword() {
                         sendNotification("Cambio password", "Il cambio della password è avvenuto con successo.")
                         navigate("/profile")
                     }).catch(error => {
+                        setEnableButton(true)
+
                         switch (error.code) {
                             case "auth/weak-password":
                                 setErrorDisplay(prev => ({
@@ -52,6 +54,7 @@ export default function ChangePassword() {
                 }
             }
             else {
+                console.log("ciao")
                 setErrorDisplay(prev => ({
                     ...prev,
                     passwordConfirm: "Le password non combaciano"
