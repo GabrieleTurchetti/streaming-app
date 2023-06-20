@@ -2,11 +2,15 @@
 
 ## Descrizione
 
-L'applicazione consiste in una piattaforma di streaming di film e serie TV, nella quale è possibile prendere visione di una vasta gamma di titoli e delle relative informazioni.
+L'applicazione consiste in una piattaforma di streaming di film e serie TV, nella quale è possibile navigare attraverso una vasta gamma di titoli.
 
-## Premesse
+</br>
 
-Essendo difficilmente reperibili i contenuti multimediali effettivi dei titoli in maniera gratis e legale, l'app si limita a mostrare un altro contenuto video, come ad esempio il trailer del film o serie TV che abbiamo selezionato.
+## Premessa
+
+Essendo difficilmente reperibili i contenuti multimediali effettivi dei titoli, in maniera gratis e legale, l'app si limita a mostrare un altro contenuto video, come ad esempio il trailer del film o della serie TV.
+
+</br>
 
 ## Linguaggi
 
@@ -15,31 +19,72 @@ Essendo difficilmente reperibili i contenuti multimediali effettivi dei titoli i
 - CSS
 - HTML
 
+</br>
+
 ## Librerie
 
 - React
 - Tailwind CSS
 
+</br>
+
 ## API
 
 - TMDB API: https://developer.themoviedb.org/docs
 
+</br>
+
 ## Altri strumenti
 
-- Firebase autentication
-- Firestore database
+- Firebase authentication
+- Firestore Database
+
+</br>
 
 ## Funzioni
 
-Navigazione tra i film e serie TV del momento, con possibilità di filtrare i titoli per film o serie TV.
-Visualizzazione del contenuto video tramite tasto *play* e collegamento alla pagine del titolo tramite tasto *info*.
+- Navigazione tra i titoli più popolati, più votati e quelli in arrivo
+- Visione del titolo in evidenza tramite tasto *play*
+- Collegamento alla pagina principale del titolo in evidenza tramite tasto *info*
+- Fitraggio per film o serie TV
 
 <img src="./assets/images/home.png" width="600">
 
-Presa visione del titolo in questione tramite la sua pagina principale, con possibilità di leggere i relativi dettagli e, nel caso delle serie TV, navigazione tra gli episodi delle varie stagioni.
+</br>
+
+- Panoramica generale del titolo
+- Lista degli episodi (solo per le serie TV)
+- Dettagli del titolo
+- Lista dei correlati
 
 <img src="./assets/images/title.png" width="600">
 
-Ricerca di un titolo specifico tramite barra di ricerca, con relativi altri suggerimenti.
+</br>
+
+- Ricerca di un titolo specifico, e dei suoi correlati, tramite barra di ricerca
 
 <img src="./assets/images/search.png" width="600">
+
+</br>
+
+- Creazione di un account
+- Personalizzazione della foto di profilo
+- Verifica dell'account tramite email
+- Cambio della password
+
+<img src="./assets/images/profile.png" width="600">
+
+</br>
+
+- Funzioni base di una PWA:
+
+    1. Installabile
+    2. Collegamento alla pagina di fallback in caso di assenza di connessione
+
+</br>
+
+- Invio di notifiche desktop quando:
+
+    1. L'utente ha effettuato la registrazione
+    2. L'utente ha cambiato la propria password
+    3. Si è verificato un errore durante il login
