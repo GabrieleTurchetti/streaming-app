@@ -17,6 +17,7 @@ import Register from './pages/register'
 import Verification from './pages/verification'
 import ChangePassword from './pages/changePassword'
 
+// oggetto contenente le informazioni dell'utente da condividere ai vari componenti
 export const UserContext = createContext({
     logged: false,
     id: "",
@@ -28,12 +29,13 @@ export const UserContext = createContext({
 })
 
 export default function App() {
-    const [navbarDisplay, setNavbarDisplay] = useState(true)
-    const [searchName, setSearchName] = useState("")
-    const [prevPage, setPrevPage] = useState("")
+    const [navbarDisplay, setNavbarDisplay] = useState(true) // decide se mostrare la navbar o no
+    const [searchName, setSearchName] = useState("") // nome cercato nella search bar
+    const [prevPage, setPrevPage] = useState("") // url della vecchia pagina a cui fare ritorno una volta chiusa la pagina "search"
     const location = useLocation()
     const navigate = useNavigate()
 
+    // valori effettivi dell'oggetto "UserContext"
     const [user, setUser] = useState({
         logged: false,
         id: "",
@@ -44,6 +46,7 @@ export default function App() {
         verified: false
     })
 
+    // decide quale nome delle pagine mettere in risalto
     const [navbarSection, setNavbarSection] = useState({
         home: false,
         film: false,
@@ -55,6 +58,7 @@ export default function App() {
             navigate("/")
         }
 
+        // imposta lo stato dei dati dell'utente se precedentemente ha effettuato il login
         auth.onAuthStateChanged(async user => {
             const docRef = doc(db, "users", user?.uid || "")
             const docSnap = await getDoc(docRef)
@@ -66,6 +70,7 @@ export default function App() {
     }, [])
 
     useEffect(() => {
+        // ritorno alla pagina precedente dopo aver cancellato il contenuto della search bar
         if (searchName !== "") {
             if (location.pathname !== "/search") {
                 setPrevPage(location.pathname)
@@ -78,6 +83,7 @@ export default function App() {
     }, [searchName])
 
     useEffect(() => {
+        // in caso mi trovo nella pagina watch non voglio che sia renderizzato la componente "navbar"
         if (location.pathname.startsWith("/film/watch") || location.pathname.startsWith("/series/watch")) {
             setNavbarDisplay(false)
         }
@@ -85,6 +91,7 @@ export default function App() {
             setNavbarDisplay(true)
         }
 
+        // mette in evidenza il nome della pagina corrente
         switch (location.pathname) {
             case "/":
                 setNavbarSection({
@@ -122,6 +129,7 @@ export default function App() {
         }
     }, [location])
 
+    // imposta il nome del titolo che si vuole cercare
     function changeSearchName() {
         let searchBar = document.getElementById("search-bar") as HTMLInputElement
 
@@ -130,6 +138,7 @@ export default function App() {
         }
     }
 
+    // aggiorna lo stato dell'utente e il numero della pic nel database Firestore
     async function changeProfilePicNumber(profilePicNumber: number) {
         const docRef = doc(db, "users", user.id)
 
@@ -143,6 +152,7 @@ export default function App() {
         }))
     }
 
+    // esegue il cambio di stato effettivo dell'oggetto "user"
     function changeUser(logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string, verified: boolean) {
         setUser({
             logged: logged,

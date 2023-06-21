@@ -15,15 +15,21 @@ interface Props {
 }
 
 export default function EpisodeSlider({ episodes }: Props) {
-    const [index, setIndex] = useState(0)
-    const [translate, setTranslate] = useState(5)
+    const [index, setIndex] = useState(0) // indice dello slider
+    const [translate, setTranslate] = useState(5) // valore con cui effettuare lo spostamento dello slider
+
+    /* funzione de eseguire in caso di resize della pagina
+    il controllo viene eseguito ogni 100 ms per non gravare sulle prestazioni durante il resize
+    (guardare "hooks/useTimeout.ts" per informazioni sul funzionamento della custom hook") */
     const { reset } = useTimeout(changeSliderSideDisplay, 100)
 
+    // contiene le proprietà display delle frecce dello slider
     const [sliderSideDisplay, setSliderSideDisplay] = useState({
         left: "none",
         right: "none"
     })
 
+    // aggiunge un event listener per l'evento "resize" con cui associa la funzione "reset" descritta sopra
     useEffect(() => {
         window.addEventListener("resize", reset)
 
@@ -32,16 +38,19 @@ export default function EpisodeSlider({ episodes }: Props) {
         }
     })
 
+    // muove lo slider quando "index" cambia
     useEffect(() => {
         setTranslate(5 - 87 * index)
         changeSliderSideDisplay()
     }, [index])
 
+    // se l'utente cambia stagione rimando "index" a 0
     useEffect(() => {
         setIndex(0)
         changeSliderSideDisplay()
     }, [episodes])
 
+    // se non sono arrivato alla fine dello slider incrementa "index"
     function increaseIndex() {
         let sliderItems = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--slider-items"))
 
@@ -50,12 +59,14 @@ export default function EpisodeSlider({ episodes }: Props) {
         }
     }
 
+    // se non sono all'inizio dello slider decrementa "index"
     function decreaseIndex() {
         if (index > 0) {
             setIndex(index - 1)
         }
     }
 
+    // decide quali frecce dello slider mostrare in base a "index"
     function changeSliderSideDisplay() {
         let sliderItems = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--slider-items"))
 

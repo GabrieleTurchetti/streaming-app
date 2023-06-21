@@ -18,9 +18,10 @@ interface Head {
 }
 
 export default function Head({ page }: Props) {
-    const [title, setTitle] = useState<Head>()
-    const [loaded, setLoaded] = useState(false)
+    const [title, setTitle] = useState<Head>() // contiene le informazioni del titolo in evidenza
+    const [loaded, setLoaded] = useState(false) // permette il rendering del titolo in evidenza solo quando le informazioni relative sono state acquisite
 
+    // acquisisce le informazioni del titolo in evidenza
     useEffect(() => {
         getHead(page).then((res) => {
             const head: Head = res as Head
