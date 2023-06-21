@@ -1,23 +1,22 @@
 enum genres {
     "Avventura" = 12,
+    "Fantasy" = 14,
     "Animazione" = 16,
+    "Dramma" = 18,
+    "Horror" = 27,
     "Azione" = 28,
     "Commedia" = 35,
+    "Storia" = 36,
+    "Western" = 37,
+    "Thriller" = 53,
     "Crime" = 80,
     "Documentario" = 99,
-    "Dramma" = 18,
-    "Famiglia" = 10751,
-    "Fantasy" = 14,
-    "Storia" = 36,
-    "Horror" = 27,
-    "Musical" = 10402,
-    "Mistero" = 9648,
-    "Romantico" = 10749,
     "Science Fiction" = 878,
-    "TV Movie" = 10770,
-    "Thriller" = 53,
+    "Mistero" = 9648,
+    "Musical" = 10402,
+    "Romantico" = 10749,
+    "Famiglia" = 10751,
     "Guerra" = 10752,
-    "Western" = 37,
     "Avventura e azione" = 10759,
     "Bambini" = 10762,
     "News" = 10763,
@@ -25,7 +24,8 @@ enum genres {
     "Sci-Fi & Fantasy" = 10765,
     "Soap" = 10766,
     "Talk" = 10767,
-    "Guerra e politica" = 10768
+    "Guerra e politica" = 10768,
+    "TV Movie" = 10770
 }
 
 export default genres
