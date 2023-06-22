@@ -12,10 +12,10 @@ interface Props {
 }
 
 export default function Profile({ changeProfilePicNumber }: Props) {
-    const [profilePicDisplay, setProfilePicDisplay] = useState(false)
-    const user = useContext(UserContext)
-    const navigate = useNavigate()
-    const profilePics = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    const [profilePicsDisplay, setProfilePicsDisplay] = useState(false) // variabile di stato utilizzata per la visualizzazione del box di scelta della foto di profilo
+    const user = useContext(UserContext) // oggetto contenente le informazioni dell'utente
+    const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
+    const profilePics = [1, 2, 3, 4, 5, 6, 7, 8, 9] // array contenente i numeri correlati alle foto di profilo
 
     return (
         <>
@@ -26,7 +26,7 @@ export default function Profile({ changeProfilePicNumber }: Props) {
                     <div className={`${isMobile ? "flex-col gap-6" : "gap-14"} flex p-10`}>
                         <div className={`${isMobile ? "w-full" : "w-36"} h-36 flex justify-center`}>
                             <div className={`w-32 h-32 absolute profile-pic-${user.pic}`} />
-                            <div className="absolute w-32 h-32 opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {setProfilePicDisplay(!profilePicDisplay)}}>
+                            <div className="absolute w-32 h-32 opacity-0 bg-black hover:opacity-50 rounded-full transition-opacity duration-150 flex justify-center" onClick={() => {setProfilePicsDisplay(!profilePicsDisplay)}}>
                                 <img src={pencil} className="w-20" />
                             </div>
                         </div>
@@ -43,7 +43,7 @@ export default function Profile({ changeProfilePicNumber }: Props) {
                                         if (!user.verified) {
                                             navigate("/verification")
                                         }
-                                    }}/>
+                                    }} />
                                 </div>
                             </div>
                             <div>
@@ -56,13 +56,13 @@ export default function Profile({ changeProfilePicNumber }: Props) {
                     </div>
                 </div>
             </div>
-            <div className={`w-full h-full top-0 bg-black absolute transition-all duration-300 ${profilePicDisplay ? "profile-pic-filter-active" : "invisible opacity-0"}`} onClick={() => {setProfilePicDisplay(!profilePicDisplay)}} />
-            <div className={`w-full h-full top-0 absolute flex justify-center items-center ${profilePicDisplay ? "profile-pic-background-active" : "invisible"}`}>
-                <div id="profile-pic-container" className={`translate-y-[-6rem] p-4 rounded-md fixed ${isMobile ? "w-[20rem] h-[20rem]" : "w-[28rem] h-[28rem]"} transition-all duration-300 gap-4 ${profilePicDisplay ? "profile-pic-container-active" : "opacity-0"}`}>
+            <div className={`w-full h-full top-0 bg-black absolute transition-all duration-300 ${profilePicsDisplay ? "profile-pics-filter-active" : "invisible opacity-0"}`} />
+            <div className={`w-full h-full top-0 absolute flex justify-center items-center ${profilePicsDisplay ? "profile-pics-background-active" : "invisible"}`}>
+                <div id="profile-pics-container" className={`translate-y-[-6rem] p-4 rounded-md fixed ${isMobile ? "w-[20rem] h-[20rem]" : "w-[28rem] h-[28rem]"} transition-all duration-300 gap-4 ${profilePicsDisplay ? "profile-pics-container-active" : "opacity-0"}`}>
                     {profilePics.map(e => <ProfilePic
                         number = {e}
                         changeProfilePicNumber = {changeProfilePicNumber}
-                        changeProfilePicDisplay = {() => setProfilePicDisplay(!profilePicDisplay)}
+                        changeProfilePicDisplay = {() => setProfilePicsDisplay(!profilePicsDisplay)}
                     />)}
                 </div>
             </div>

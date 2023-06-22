@@ -8,16 +8,17 @@ import closedEye from '../images/closed-eye.svg'
 import sendNotification from '../functions/sendNotification'
 
 export default function ChangePassword() {
-    const [showPassword, setShowPassword] = useState(false)
-    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
-    const [enableButton, setEnableButton] = useState(true)
-    const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(false) // variabile di stato utilizzata per la visualizzazione del testo della password
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false) // variabile di stato utilizzata per la visualizzazione del testo della conferma della password
+    const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
 
+    // variabile di stato contenente i messaggi da inviare come errore
     const [errorDisplay, setErrorDisplay] = useState({
         password: "",
         passwordConfirm: ""
     })
 
+    // funzione che effettua il cambio della password
     function changePassword() {
         const password = document.getElementById("container-input-password") as HTMLInputElement
         const passwordConfirm = document.getElementById("container-input-password-confirm") as HTMLInputElement
@@ -29,15 +30,13 @@ export default function ChangePassword() {
 
         if (password.value.length > 0 && passwordConfirm.value.length > 0) {
             if (password.value === passwordConfirm.value) {
-                setEnableButton(false)
-
                 if (auth.currentUser !== null) {
+                    // se il cambio della password va a buon fine viene inviata una notifica desktop
                     updatePassword(auth.currentUser, password.value).then(() => {
                         sendNotification("Cambio password", "Il cambio della password è avvenuto con successo.")
                         navigate("/profile")
                     }).catch(error => {
-                        setEnableButton(true)
-
+                        // vengono impostati i messaggi di errore in base al codice dell'errore ritornato dalla funzione di Firebase
                         switch (error.code) {
                             case "auth/weak-password":
                                 setErrorDisplay(prev => ({
@@ -54,7 +53,6 @@ export default function ChangePassword() {
                 }
             }
             else {
-                console.log("ciao")
                 setErrorDisplay(prev => ({
                     ...prev,
                     passwordConfirm: "Le password non combaciano"
@@ -95,11 +93,7 @@ export default function ChangePassword() {
                         </div>
                         {errorDisplay.passwordConfirm !== "" && <p className="text-red-600">{errorDisplay.passwordConfirm}</p>}
                     </div>
-                    <button className="container-button w-full h-9 mt-6 transition-[background-color] duration-150" onClick={() => {
-                        if (enableButton) {
-                            changePassword()
-                        }
-                    }}>
+                    <button className="container-button w-full h-9 mt-6 transition-[background-color] duration-150" onClick={() => changePassword}>
                         <p>Cambia</p>
                     </button>
                 </div>

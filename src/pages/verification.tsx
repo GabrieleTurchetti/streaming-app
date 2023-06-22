@@ -4,11 +4,14 @@ import { auth } from '../firebase.js'
 import { useEffect, useState } from 'react'
 
 export default function Verification() {
-    const [message, setMessage] = useState("")
+    const [message, setMessage] = useState("") // variabile di stato contenente il messaggio da mostrare in base all'esito dell'invio dell'email
+
+    // viene inviata l'email di verifica dell'account
     useEffect(() => {
         sendEmail()
     }, [])
 
+    // funzione che invia l'email di verifica dell'account
     function sendEmail() {
         if (auth.currentUser !== null) {
             sendEmailVerification(auth.currentUser).then(() => {

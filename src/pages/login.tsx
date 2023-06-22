@@ -13,14 +13,16 @@ interface Props {
 }
 
 export default function Login({ changeUser }: Props) {
-    const navigate = useNavigate()
-    const [showPassword, setShowPassword] = useState(false)
+    const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
+    const [showPassword, setShowPassword] = useState(false) // variabile di stato utilizzata per la visualizzazione del testo della password
 
+    // variabile di stato contenente i messaggi da inviare come errore
     const [errorDisplay, setErrorDisplay] = useState({
         email: "",
         password: ""
     })
 
+    // funzione che effettua il login
     function signIn() {
         const email = document.getElementById("container-input-email") as HTMLInputElement
         const password = document.getElementById("container-input-password") as HTMLInputElement
@@ -31,10 +33,13 @@ export default function Login({ changeUser }: Props) {
         })
 
         if (email.value.length > 0 && password.value.length > 0) {
+            // se l'accesso va a buon fine vengono recuperati i dati associati all'utente dal database Firestore
             signInWithEmailAndPassword(auth, email.value, password.value).then(async userCredential => {
                 const docRef = doc(db, "users", userCredential.user.uid)
                 const docSnap = await getDoc(docRef)
 
+                // se i dati nel database Firestore dell'utente esistono vengono impostati i dati dell'utente nel sito
+                // altrimenti viene inviata una notifica desktop di errore
                 if (docSnap.exists()) {
                     changeUser(true, userCredential.user.uid, docSnap.data().email, docSnap.data().nickname, docSnap.data().pic, docSnap.data().joined, userCredential.user.emailVerified)
                     navigate("/")
@@ -43,6 +48,7 @@ export default function Login({ changeUser }: Props) {
                     sendNotification("Errore login", "Purtroppo non è stato possibile effettuare il login. Contattaci tramite email per risolvere il problema.")
                 }
             }).catch(error => {
+                // vengono impostati i messaggi di errore in base al codice dell'errore ritornato dalla funzione di Firebase
                 switch (error.code) {
                     case "auth/user-not-found":
                         setErrorDisplay(prev => ({

@@ -15,7 +15,8 @@ export default async function getVideo(id: number, type: string) {
     const response: Response = await fetch(`https://api.themoviedb.org/3/${type === "film" ? "movie" : type === "series" ? "tv" : "all"}/${id}/videos?api_key=${process.env.REACT_APP_TMDB_API_KEY}`).then(res => res.json())
 
     if ("status_code" in (response as (ResponseSuccess & ResponseError))) {
-        return ""
+        const responseError: ResponseError = response as ResponseError
+        throw new Error(responseError.status_message)
     }
 
     return convertResponseToVideo(response as ResponseSuccess)

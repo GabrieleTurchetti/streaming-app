@@ -17,15 +17,20 @@ interface Props {
 }
 
 export default function TitleSlider({ name, titles }: Props) {
-    const [index, setIndex] = useState(0)
-    const [translate, setTranslate] = useState(5)
+    const [index, setIndex] = useState(0) // variabile di stato contenente il valore dell'indice dello slider
+    const [translate, setTranslate] = useState(5) // variabile di stato contenente il valore di quanto lo slider deve essere spostato
+
+    // funzione che chiama "changeSliderSideDisplay" al massimo una volta ogni 100 ms
+    // guardare "hooks/useTimeout.ts" per informazioni sul funzionamento della custom hook
     const { reset } = useTimeout(changeSliderSideDisplay, 100)
 
+    // variabile di stato contenente le proprietà "display" delle frecce dello slider
     const [sliderSideDisplay, setSliderSideDisplay] = useState({
         left: "none",
         right: "none"
     })
 
+    // aggiunge un event listener per l'evento "resize" alla quale associa la funzione "reset"
     useEffect(() => {
         window.addEventListener("resize", reset)
 
@@ -34,15 +39,18 @@ export default function TitleSlider({ name, titles }: Props) {
         }
     })
 
+    // muove lo slider quando il valore di "index" cambia e chiama la funzione di impostazione di visualizzazione delle frecce
     useEffect(() => {
         setTranslate(5 - 87 * index)
         changeSliderSideDisplay()
     }, [index])
 
+    // chiama la funzione di impostazione di visualizzazione delle frecce
     useEffect(() => {
         changeSliderSideDisplay()
     }, [titles])
 
+    // funzione che incrementa il valore di "index" a meno che non abbia raggiunto il suo valore massimo
     function increaseIndex() {
         let sliderItems = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--slider-items"))
 
@@ -51,12 +59,14 @@ export default function TitleSlider({ name, titles }: Props) {
         }
     }
 
+    // funzione che decrementa il valore di "index" a meno che non sia 0
     function decreaseIndex() {
         if (index > 0) {
             setIndex(index - 1)
         }
     }
 
+    // funzione che imposta quali frecce visualizzare in base al valore di "index"
     function changeSliderSideDisplay() {
         let sliderItems = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--slider-items"))
 

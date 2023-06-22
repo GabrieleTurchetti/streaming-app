@@ -2,7 +2,7 @@
 
 ## Descrizione
 
-L'applicazione consiste in una piattaforma online di streaming di film e serie TV, nella quale è possibile navigare attraverso una vasta gamma di titoli, vederne i dettagli e prendere visione del contenuto video effettivo.
+L'applicazione consiste in una piattaforma online di streaming di film e serie TV, nella quale è possibile navigare attraverso una vasta gamma di titoli, vederne i dettagli e prendere visione del contenuto video effettivo. Il progetto è stato realizzato con l'ausilio della famosissima librearia di sviluppo di applicazioni web *React*.
 
 ## Premessa
 
@@ -68,14 +68,9 @@ Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da
     2. L'utente ha cambiato la propria password
     3. Si è verificato un errore durante il login
 
-## Struttura dei file
+## Struttura delle cartelle
 
-<img src="./assets/images/file-structure.png" width="600">
-
-### App.tsx:
-
-- Si occupa del rendering delle varie pagine e dei componenti attraverso il sistema di routing offerto dalla libreria *React Router*
-- Gestisce la creazione e la modifica dello stato globale dell'app
+<img src="./assets/images/folder-structure.png" width="600">
 
 ### pages:
 
@@ -89,14 +84,76 @@ Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da
 
 - Qui vengono gestite tutte le richieste all'API TMDB, formattate nella corretta maniera ed esportate alle componenti che ne richiederanno i dati
 
-### index.html
+## Componenti
 
-- E' la pagina principale dove verranno renderizzati gli elementi tramite la libreria *React*
+### App
 
-### offline.html
+- Si occupa del rendering di tutti gli altri componenti
+- Implementa un sistema di routing per la navigazione tra le varie pagine, grazie alla libreria *React Router*
+- Gestisce la creazione e la modifica dello stato globale dell'app
 
-- E' la pagina di fallback che verrà automaticamente visualizzata in mancanza di connessione ad internet
+### Navbar
 
-## Gerarchia dei componenti
+- Componente dedito alla navigazione tra le pagine principali e alla ricerca di titoli tramite nome
+### SmoothScrool
 
-<img src="./assets/images/components-hierarchy.png" width="600">
+- Implenta un'animazione di scorrimento fino all'inizio della pagina
+
+### Home/Film/Series
+
+- *Home* rappresenta la pagina iniziale con la quale si apre si sito dove si possono visualizzare i contenuti di ogni tipo
+- *Film* e *Series* rappresentano le pagine in cui i contenuti sono filtrati rispettivamente per film e serie TV
+
+### TitleSlider/EpisodeSlider
+
+- Sono le componenti che implementano uno slider per la navigazione tramite scorrimenti rispettivamente dei titoli e degli episodi di una serie TV
+
+### TitleSliderCell/EpisodeSliderCell
+
+- Rappresenta la singola cella che costituisce rispettivamente *TitleSlider* e *EpisodesSlider*
+
+### Search
+
+- Rappresenta la pagina di ricerca dei titoli che si apre in automatico una volta che l'utente inserisce un nome nella search bar
+
+### Title
+
+- Rappresenta la pagina di un determinato titolo
+- Gestisce tutto il sistema di richieste per i dati del titolo in questione
+
+### Watch
+
+- Rappresenta la pagina di visualizzazione del contenuto video
+
+### Profile
+
+- Rappresenta la pagina accedibile tramite navbar contenente le informazioni dell'account dell'utente
+
+### ProfilePic
+
+- Singola componente che rappresenta una pic del profilo
+- Più *ProfilePic* formano il box di scelta della pic visualizzata nella pagina *profile*
+
+### Login
+
+- Rapprensenta la pagina accedibile tramite navbar in cui l'utente può effettuare il login
+
+### Register
+
+- Rapprensenta la pagina accedibile tramite navbar in cui l'utente può effettuare la registrazione
+
+### Verification
+
+- Rappresenta la pagina a cui viene rimandato l'utente una volta effettuata la registrazione o se decide di verificare l'email in un momento successivo tramite l'icona "<img src="./src/images/not-verified.svg" width="16" style="transform: translateY(3px)">"
+
+### ChangePassword
+
+- Rappresenta la pagina a cui viene rimandato l'utente in caso decida di cambiare la password
+
+## Relazioni di importazioni dei componenti
+
+<img src="./assets/images/components-relations.png" width="600">
+
+## Gestione delle richieste all'API TMDB
+
+<img src="./assets/images/requests-managment.png" width="300">

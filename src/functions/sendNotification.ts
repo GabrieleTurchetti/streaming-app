@@ -1,5 +1,6 @@
 import logo from '../images/logo.svg'
 
+// invia una notifica desktop se possibile
 export default function sendNotification(title: string, message: string) {
     if (!("Notification" in window)) {
         alert("Questo browser non supporta le notifiche desktop")

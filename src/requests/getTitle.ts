@@ -47,7 +47,8 @@ export default async function getTitle(id: number, type: string) {
     const response: Response = await fetch(`https://api.themoviedb.org/3/${type === "film" ? "movie" : "tv"}/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=it-IT`).then(res => res.json())
 
     if ("status_code" in (response as (ResponseSuccess & ResponseError))) {
-        return {}
+        const responseError: ResponseError = response as ResponseError
+        throw new Error(responseError.status_message)
     }
 
     return convertResponseToTitle(response as ResponseSuccess, type)

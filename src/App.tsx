@@ -17,7 +17,7 @@ import Register from './pages/register'
 import Verification from './pages/verification'
 import ChangePassword from './pages/changePassword'
 
-// oggetto contenente le informazioni dell'utente da condividere ai vari componenti
+// oggetto contenente i dati dell'utente da condividere tra diversi componenti
 export const UserContext = createContext({
     logged: false,
     id: "",
@@ -29,13 +29,13 @@ export const UserContext = createContext({
 })
 
 export default function App() {
-    const [navbarDisplay, setNavbarDisplay] = useState(true) // decide se mostrare la navbar o no
-    const [searchName, setSearchName] = useState("") // nome cercato nella search bar
-    const [prevPage, setPrevPage] = useState("") // url della vecchia pagina a cui fare ritorno una volta chiusa la pagina "search"
-    const location = useLocation()
-    const navigate = useNavigate()
+    const [navbarDisplay, setNavbarDisplay] = useState(true) // variabile di stato utilizzata per decidere se renderizzare la navabar o meno
+    const [searchName, setSearchName] = useState("") // variabile di stato contenente il nome del titolo da cercare
+    const [prevPage, setPrevPage] = useState("") // variabile di stato contenente l'URL della pagina precedente a cui fare ritorno una volta che il valore della search bar è nullo
+    const location = useLocation() // oggetto contenente le informazioni dell'URL
+    const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
 
-    // valori effettivi dell'oggetto "UserContext"
+    // variabile di stato contenente i dati effettivi dell'utente
     const [user, setUser] = useState({
         logged: false,
         id: "",
@@ -46,7 +46,7 @@ export default function App() {
         verified: false
     })
 
-    // decide quale nome delle pagine mettere in risalto
+    // variabile di stato utilizzata per decidere quale nome della pagina mettere in risalto
     const [navbarSection, setNavbarSection] = useState({
         home: false,
         film: false,
@@ -58,7 +58,7 @@ export default function App() {
             navigate("/")
         }
 
-        // imposta lo stato dei dati dell'utente se precedentemente ha effettuato il login
+        // funzione che imposta i dati dell'utente se precedentemente ha effettuato il login
         auth.onAuthStateChanged(async user => {
             const docRef = doc(db, "users", user?.uid || "")
             const docSnap = await getDoc(docRef)
@@ -70,7 +70,7 @@ export default function App() {
     }, [])
 
     useEffect(() => {
-        // ritorno alla pagina precedente dopo aver cancellato il contenuto della search bar
+        // gestisce il ritorno alla pagina precedente al cambiare del valore della search bar
         if (searchName !== "") {
             if (location.pathname !== "/search") {
                 setPrevPage(location.pathname)
@@ -83,7 +83,7 @@ export default function App() {
     }, [searchName])
 
     useEffect(() => {
-        // in caso mi trovo nella pagina watch non voglio che sia renderizzato la componente "navbar"
+        // gestisce la visualizzazione della navbar in base alla pagina corrente
         if (location.pathname.startsWith("/film/watch") || location.pathname.startsWith("/series/watch")) {
             setNavbarDisplay(false)
         }
@@ -129,7 +129,7 @@ export default function App() {
         }
     }, [location])
 
-    // imposta il nome del titolo che si vuole cercare
+    // funzione che imposta il nome del titolo che si vuole cercare
     function changeSearchName() {
         let searchBar = document.getElementById("search-bar") as HTMLInputElement
 
@@ -138,7 +138,7 @@ export default function App() {
         }
     }
 
-    // aggiorna lo stato dell'utente e il numero della pic nel database Firestore
+    // funzione che aggiorna la foto di profilo dell'utente
     async function changeProfilePicNumber(profilePicNumber: number) {
         const docRef = doc(db, "users", user.id)
 
@@ -152,7 +152,7 @@ export default function App() {
         }))
     }
 
-    // esegue il cambio di stato effettivo dell'oggetto "user"
+    // funzione che imposta i dati dell'utente
     function changeUser(logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string, verified: boolean) {
         setUser({
             logged: logged,

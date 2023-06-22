@@ -28,9 +28,12 @@ export default async function getSeasonsEpisodes(seriesId: number, seasons: numb
     for (let i = 1; i <= seasons; i++) {
         const response: Response = await fetch(`https://api.themoviedb.org/3/tv/${seriesId}}/season/${i}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=it-IT`).then(res => res.json())
 
-        if (!("status_code" in (response as (ResponseSuccess & ResponseError)))) {
-            seasonsEpisodes.push(convertResponseToEpisodes(response as ResponseSuccess))
+        if ("status_code" in (response as (ResponseSuccess & ResponseError))) {
+            const responseError: ResponseError = response as ResponseError
+            throw new Error(responseError.status_message)
         }
+
+        seasonsEpisodes.push(convertResponseToEpisodes(response as ResponseSuccess))
     }
 
     return seasonsEpisodes

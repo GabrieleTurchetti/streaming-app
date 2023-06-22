@@ -31,7 +31,8 @@ export default async function getRelated(id: number, type: string) {
     const response: Response = await fetch(`https://api.themoviedb.org/3/${type === "film" ? "movie" : "tv"}/${id}/recommendations?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=it-IT&page=1`).then(res => res.json())
 
     if ("status_code" in (response as (ResponseSuccess & ResponseError))) {
-        return []
+        const responseError: ResponseError = response as ResponseError
+        throw new Error(responseError.status_message)
     }
 
     return convertResponseToTitles(response as ResponseSuccess, type)

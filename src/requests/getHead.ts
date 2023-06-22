@@ -32,7 +32,8 @@ export default async function getHead(page: string = "home") {
     const response: Response = await fetch(`https://api.themoviedb.org/3/trending/${page === "film" ? "movie" : page === "series" ? "tv" : "all"}/week?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=it-IT`).then(res => res.json())
 
     if ("status_code" in (response as (ResponseSuccess & ResponseError))) {
-        return {}
+        const responseError: ResponseError = response as ResponseError
+        throw new Error(responseError.status_message)
     }
 
     return convertResponseToHead(response as ResponseSuccess)

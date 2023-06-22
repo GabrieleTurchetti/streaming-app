@@ -15,21 +15,20 @@ interface Props {
 }
 
 export default function EpisodeSlider({ episodes }: Props) {
-    const [index, setIndex] = useState(0) // indice dello slider
-    const [translate, setTranslate] = useState(5) // valore con cui effettuare lo spostamento dello slider
+    const [index, setIndex] = useState(0) // variabile di stato contenente il valore dell'indice dello slider
+    const [translate, setTranslate] = useState(5) // variabile di stato contenente il valore di quanto lo slider deve essere spostato
 
-    /* funzione de eseguire in caso di resize della pagina
-    il controllo viene eseguito ogni 100 ms per non gravare sulle prestazioni durante il resize
-    (guardare "hooks/useTimeout.ts" per informazioni sul funzionamento della custom hook") */
+    // funzione che chiama "changeSliderSideDisplay" al massimo una volta ogni 100 ms
+    // guardare "hooks/useTimeout.ts" per informazioni sul funzionamento della custom hook
     const { reset } = useTimeout(changeSliderSideDisplay, 100)
 
-    // contiene le proprietà display delle frecce dello slider
+    // variabile di stato contenente le proprietà "display" delle frecce dello slider
     const [sliderSideDisplay, setSliderSideDisplay] = useState({
         left: "none",
         right: "none"
     })
 
-    // aggiunge un event listener per l'evento "resize" con cui associa la funzione "reset" descritta sopra
+    // aggiunge un event listener per l'evento "resize" alla quale associa la funzione "reset"
     useEffect(() => {
         window.addEventListener("resize", reset)
 
@@ -38,19 +37,19 @@ export default function EpisodeSlider({ episodes }: Props) {
         }
     })
 
-    // muove lo slider quando "index" cambia
+    // muove lo slider quando il valore di "index" cambia e chiama la funzione di impostazione di visualizzazione delle frecce
     useEffect(() => {
         setTranslate(5 - 87 * index)
         changeSliderSideDisplay()
     }, [index])
 
-    // se l'utente cambia stagione rimando "index" a 0
+    // muove lo slider fino all'inizio ogni volta che i dati degli episodi cambiano e chiama la funzione di impostazione di visualizzazione delle frecce
     useEffect(() => {
         setIndex(0)
         changeSliderSideDisplay()
     }, [episodes])
 
-    // se non sono arrivato alla fine dello slider incrementa "index"
+    // funzione che incrementa il valore di "index" a meno che non abbia raggiunto il suo valore massimo
     function increaseIndex() {
         let sliderItems = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--slider-items"))
 
@@ -59,14 +58,14 @@ export default function EpisodeSlider({ episodes }: Props) {
         }
     }
 
-    // se non sono all'inizio dello slider decrementa "index"
+    // funzione che decrementa il valore di "index" a meno che non sia 0
     function decreaseIndex() {
         if (index > 0) {
             setIndex(index - 1)
         }
     }
 
-    // decide quali frecce dello slider mostrare in base a "index"
+    // funzione che imposta quali frecce visualizzare in base al valore di "index"
     function changeSliderSideDisplay() {
         let sliderItems = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--slider-items"))
 

@@ -5,10 +5,11 @@ import getVideo from '../requests/getVideo'
 
 
 export default function Watch() {
-    const { type, id } = useParams()
-    const [video, setVideo] = useState<string>()
-    const [videoAvailable, setVideoAvailable] = useState(true)
+    const { type, id } = useParams() // parametri contenuti nell'URL associati al titolo
+    const [video, setVideo] = useState<string>() // variabile di stato contenente l'URL del video da mostrare
+    const [videoAvailable, setVideoAvailable] = useState(true) // variabile di stato che rappresenta la presenza del video o meno
 
+    // acquisisce l'URL del video
     useEffect(() => {
         if (id !== undefined && type !== undefined) {
             getVideo(parseInt(id), type).then(res => {

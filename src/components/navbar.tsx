@@ -18,10 +18,11 @@ interface Props {
 }
 
 export default function Navbar({ navbarSection, changeSearchName, changeUser }: Props) {
-    const [searchDisplay, setSearchDisplay] = useState(false)
-    const user = useContext(UserContext)
-    const navigate = useNavigate()
+    const [searchDisplay, setSearchDisplay] = useState(false) // variabile di stato che gestisce la visibilità della search bar
+    const user = useContext(UserContext) // oggetto contenente le informazioni dell'utente
+    const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
 
+    // funzione che effettua il logout tramite la procedura di Firebase e la cancellazione delle informazioni riguardanti l'utente nel sito
     function logout() {
         signOut(auth).then(() => {
             changeUser(false, "", "", "", 0, "", false)

@@ -6,7 +6,7 @@ interface Props {
     changeProfilePicDisplay: () => void
 }
 
-export default function Watch({ number, changeProfilePicNumber, changeProfilePicDisplay }: Props) {
+export default function ProfilePic({ number, changeProfilePicNumber, changeProfilePicDisplay }: Props) {
     return (
         <div className="relative">
             <div className={`profile-pic-${number} absolute rounded-full w-full h-full`} />
