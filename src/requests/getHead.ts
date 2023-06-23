@@ -45,7 +45,7 @@ async function convertResponseToHead(response: ResponseSuccess) {
     const head: Head = {
         id: response.results[0].id,
         type: response.results[0].media_type === "movie" ? "film" : "series",
-        pic: response.results[0].backdrop_path !== null ? "https://image.tmdb.org/t/p/original" + response.results[0].backdrop_path : "https://www.orange.nsw.gov.au/gallery/wp-content/uploads/2021/12/Fall-Movie-Review-GBtGCT.tmp_.jpg",
+        pic: response.results[0].backdrop_path !== null ? "https://image.tmdb.org/t/p/original" + response.results[0].backdrop_path : "https://www.kcpls.org/sites/default/files/2023-02/movienight-graphic_0.jpg",
         name: response.results[0].name || response.results[0].title || "",
         plot: ""
     }

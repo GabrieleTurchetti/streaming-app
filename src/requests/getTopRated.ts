@@ -62,7 +62,7 @@ function convertResponseToTitles(response: ResponseSuccess, type: string) {
                 type: type,
                 name: result.name || result.title || "",
                 genres: result.genre_ids.map(n => genres[n]).join(","),
-                coverPic: result.backdrop_path !== null ? "https://image.tmdb.org/t/p/w500" + result.backdrop_path : "https://www.orange.nsw.gov.au/gallery/wp-content/uploads/2021/12/Fall-Movie-Review-GBtGCT.tmp_.jpg",
+                coverPic: result.backdrop_path !== null ? "https://image.tmdb.org/t/p/w500" + result.backdrop_path : "https://www.kcpls.org/sites/default/files/2023-02/movienight-graphic_0.jpg",
                 rating: result.vote_average
             })
         })

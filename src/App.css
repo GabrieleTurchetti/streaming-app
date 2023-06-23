@@ -18,19 +18,19 @@
     color: white;
 }
 
-#search {
+#search-bar {
     border-color: transparent;
 }
 
-.search-active {
+.search-bar-active {
     border-color: var(--gray-400) !important;
 }
 
-#search-bar {
+#search-bar-input {
     outline: none;
 }
 
-.search-bar-active {
+.search-bar-input-active {
     width: 12rem;
 }
 

@@ -45,7 +45,7 @@ function convertResponseToEpisodes(response: ResponseSuccess) {
     response.episodes.forEach(episode => {
         episodes.push({
             id: episode.id,
-            coverPic: episode.still_path !== null ? "https://image.tmdb.org/t/p/original" + episode.still_path : "https://www.orange.nsw.gov.au/gallery/wp-content/uploads/2021/12/Fall-Movie-Review-GBtGCT.tmp_.jpg",
+            coverPic: episode.still_path !== null ? "https://image.tmdb.org/t/p/original" + episode.still_path : "https://www.kcpls.org/sites/default/files/2023-02/movienight-graphic_0.jpg",
             number: episode.episode_number,
             name: episode.name
         })

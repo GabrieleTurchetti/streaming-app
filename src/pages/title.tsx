@@ -47,7 +47,7 @@ export default function Title() {
     const [related, setRelated] = useState<Titles>([]) // variabile di stato contenente le informazioni dei titoli correlati
     const [loaded, setLoaded] = useState(false) // variabile di stato utilizzata per il rendering del titolo principale solo quando le informazioni relative sono state acquisite
     const { type, id } = useParams() // parametri contenuti nell'URL associati al titolo
-    const reload = useRef(false) // variabile utilizzata per il reaload della pagina dopo aver selezionato un titolo correlato
+    const [reload, setReload] = useState(false) // variabile di stato utilizzata per ricaricare la pagina dopo aver selezionato un titolo correlato
 
     // variabile di stato utilizzata per il rendering delle sezioni della pagina
     const [sectionDisplay, setSectionDisplay] = useState({
@@ -96,13 +96,13 @@ export default function Title() {
         }
     }, [sectionDisplay, title])
 
-    // ricarica la pagina una volta selezionato e acquisiti i dati di un titolo correlato
+    // ricarica la pagina una volta selezionato un titolo correlato
     useEffect(() => {
-        if (reload.current) {
+        if (reload) {
             window.location.reload()
         }
         else {
-            reload.current = true
+            setReload(true)
         }
     }, [id])
 

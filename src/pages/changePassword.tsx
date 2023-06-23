@@ -93,7 +93,7 @@ export default function ChangePassword() {
                         </div>
                         {errorDisplay.passwordConfirm !== "" && <p className="text-red-600">{errorDisplay.passwordConfirm}</p>}
                     </div>
-                    <button className="container-button w-full h-9 mt-6 transition-[background-color] duration-150" onClick={() => changePassword}>
+                    <button className="container-button w-full h-9 mt-6 transition-[background-color] duration-150" onClick={changePassword}>
                         <p>Cambia</p>
                     </button>
                 </div>

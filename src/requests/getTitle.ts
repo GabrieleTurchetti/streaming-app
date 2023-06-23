@@ -58,7 +58,7 @@ function convertResponseToTitle(response: ResponseSuccess, type: string) {
     const title: Title = {
         id: response.id,
         type: type,
-        pic: response.backdrop_path !== null ? "https://image.tmdb.org/t/p/original" + response.backdrop_path : "https://www.orange.nsw.gov.au/gallery/wp-content/uploads/2021/12/Fall-Movie-Review-GBtGCT.tmp_.jpg",
+        pic: response.backdrop_path !== null ? "https://image.tmdb.org/t/p/original" + response.backdrop_path : "https://www.kcpls.org/sites/default/files/2023-02/movienight-graphic_0.jpg",
         name: response.name || response.title || "",
         year: parseInt(response.release_date?.substring(0, 4) || response.first_air_date?.substring(0, 4) || "0"),
         plot: response.overview.length <= 150 ? response.overview : response.overview.substring(0, 150) + " ...",

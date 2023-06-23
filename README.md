@@ -2,7 +2,7 @@
 
 ## Descrizione
 
-L'applicazione consiste in una piattaforma online di streaming di film e serie TV, nella quale è possibile navigare attraverso una vasta gamma di titoli, vederne i dettagli e prendere visione del contenuto video effettivo. Il progetto è stato realizzato con l'ausilio della famosissima librearia di sviluppo di applicazioni web *React*.
+L'applicazione consiste in una piattaforma online di streaming di film e serie TV, nella quale è possibile navigare attraverso una vasta gamma di titoli, vederne i dettagli e prendere visione del contenuto video. Il progetto è stato realizzato con l'ausilio della librearia di sviluppo di applicazioni web *React*.
 
 ## Premessa
 
@@ -102,20 +102,19 @@ Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da
 ### Home/Film/Series
 
 - *Home* rappresenta la pagina iniziale con la quale si apre si sito dove si possono visualizzare i contenuti di ogni tipo
-- *Film* e *Series* rappresentano le pagine in cui i contenuti sono filtrati rispettivamente per film e serie TV
+- *Film* e *Series* rappresentano le pagine i cui contenuti sono filtrati rispettivamente per film e serie TV
 
 ### TitleSlider/EpisodeSlider
 
-- Sono le componenti che implementano uno slider per la navigazione tramite scorrimenti rispettivamente dei titoli e degli episodi di una serie TV
+- Sono le componenti che implementano uno slider per la navigazione tramite scorrimento rispettivamente dei titoli e degli episodi di una serie TV
 
 ### TitleSliderCell/EpisodeSliderCell
 
-- Rappresenta la singola cella che costituisce rispettivamente *TitleSlider* e *EpisodesSlider*
+- Rappresentano le singole celle che costituiscono rispettivamente *TitleSlider* e *EpisodesSlider*
 
 ### Search
 
-- Rappresenta la pagina di ricerca dei titoli che si apre in automatico una volta che l'utente inserisce un nome nella search bar
-
+- Rappresenta la pagina di ricerca dei titoli che si apre in automatico una volta che l'utente scrive nella barra di ricerca
 ### Title
 
 - Rappresenta la pagina di un determinato titolo
@@ -131,12 +130,12 @@ Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da
 
 ### ProfilePic
 
-- Singola componente che rappresenta una pic del profilo
+- Singola componente che rappresenta una pic per il profilo
 - Più *ProfilePic* formano il box di scelta della pic visualizzata nella pagina *profile*
 
 ### Login
 
-- Rapprensenta la pagina accedibile tramite navbar in cui l'utente può effettuare il login
+- Rapprensenta la pagina accedibile tramite navbar in cui l'utente può effettuare l'accesso
 
 ### Register
 
@@ -144,15 +143,23 @@ Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da
 
 ### Verification
 
-- Rappresenta la pagina a cui viene rimandato l'utente una volta effettuata la registrazione o se decide di verificare l'email in un momento successivo tramite l'icona "<img src="./src/images/not-verified.svg" width="16" style="transform: translateY(3px)">"
+- Rappresenta la pagina dove viene rimandato l'utente una volta effettuata la registrazione, o se decide di verificare l'email in un momento successivo tramite l'icona "<img src="./src/images/not-verified.svg" width="16" style="transform: translateY(3px)">"
 
 ### ChangePassword
 
-- Rappresenta la pagina a cui viene rimandato l'utente in caso decida di cambiare la password
+- Rappresenta la pagina dove viene rimandato l'utente in caso decida di cambiare la propria password
 
 ## Relazioni di importazioni dei componenti
 
 <img src="./assets/images/components-relations.png" width="600">
+
+## Custom Hooks
+
+- useTimeout(callback, delay): esegue *callback* dopo il lasso di tempo definito da *delay*
+    <br/>
+    Riferimenti:
+    - GitHub: https://github.com/WebDevSimplified/useful-custom-react-hooks.git
+    - Video: https://www.youtube.com/watch?v=0c6znExIqRw&t=232s&ab_channel=WebDevSimplified
 
 ## Gestione delle richieste all'API TMDB
 

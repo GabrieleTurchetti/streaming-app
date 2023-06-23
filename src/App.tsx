@@ -41,7 +41,7 @@ export default function App() {
         id: "",
         email: "",
         nickname: "",
-        pic: 0,
+        pic: parseInt(localStorage.getItem("pic") || "0"),
         joined: "",
         verified: false
     })
@@ -129,15 +129,6 @@ export default function App() {
         }
     }, [location])
 
-    // funzione che imposta il nome del titolo che si vuole cercare
-    function changeSearchName() {
-        let searchBar = document.getElementById("search-bar") as HTMLInputElement
-
-        if (searchBar !== null) {
-            setSearchName(searchBar.value)
-        }
-    }
-
     // funzione che aggiorna la foto di profilo dell'utente
     async function changeProfilePicNumber(profilePicNumber: number) {
         const docRef = doc(db, "users", user.id)
@@ -150,6 +141,8 @@ export default function App() {
             ...prev,
             pic: profilePicNumber
         }))
+
+        localStorage.setItem("pic", String(profilePicNumber))
     }
 
     // funzione che imposta i dati dell'utente
@@ -163,6 +156,8 @@ export default function App() {
             joined: joined,
             verified: verified
         })
+
+        localStorage.setItem("pic", String(pic))
     }
 
     return (
@@ -170,7 +165,7 @@ export default function App() {
             {navbarDisplay && <>
                 <Navbar
                     navbarSection = {navbarSection}
-                    changeSearchName = {changeSearchName}
+                    changeSearchName = {(name: string) => setSearchName(name)}
                     changeUser = {changeUser}
                 />
                 <div className="h-16"></div>
