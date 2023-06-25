@@ -3,25 +3,20 @@
     "name": "Streaming App",
     "icons": [
         {
-            "src": "logo-vector.svg",
+            "src": "logo.svg",
             "type": "image/svg+xml",
-            "sizes": "512x512"
+            "sizes": "any"
         },
         {
-            "src": "logo-192.png",
+            "src": "maskable-logo.png",
             "type": "image/png",
-            "sizes": "192x192"
-        },
-        {
-            "src": "logo-512.png",
-            "type": "image/png",
-            "sizes": "512x512"
-        },
-        {
-            "src": "logo-maskable.png",
-            "type": "image/png",
-            "sizes": "512x512",
+            "sizes": "196x196",
             "purpose": "any maskable"
+        },
+        {
+            "src": "logo-512.svg",
+            "type": "image/png",
+            "sizes": "512x512"
         }
     ],
     "start_url": ".",

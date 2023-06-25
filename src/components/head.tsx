@@ -9,7 +9,7 @@ interface Props {
     page: string
 }
 
-interface Head {
+interface Title {
     id: number,
     type: string,
     pic: string,
@@ -18,14 +18,14 @@ interface Head {
 }
 
 export default function Head({ page }: Props) {
-    const [title, setTitle] = useState<Head>() // variabile di stato contenente le informazioni del titolo in evidenza
+    const [title, setTitle] = useState<Title>() // variabile di stato contenente le informazioni del titolo in evidenza
     const [loaded, setLoaded] = useState(false) // variabile di stato utilizzata per il rendering del titolo in evidenza solo quando le informazioni relative sono state acquisite
 
     // acquisisce le informazioni del titolo in evidenza
     useEffect(() => {
         getHead(page).then((res) => {
-            const head: Head = res as Head
-            setTitle(head)
+            const title: Title = res as Title
+            setTitle(title)
             setLoaded(true)
         })
     }, [page])

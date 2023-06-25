@@ -66,8 +66,16 @@ export default function Register() {
 
                             break
 
+                        case "auth/email-already-in-use":
+                            setErrorDisplay(prev => ({
+                                ...prev,
+                                email: "Email già in uso"
+                            }))
+
+                            break
+
                         default:
-                            alert(error.message)
+                            alert(error.code)
                     }
                 })
             }

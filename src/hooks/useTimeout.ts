@@ -9,7 +9,7 @@ export default function useTimeout(callback: () => void, delay: number) {
         callbackRef.current = callback
     }, [callback])
 
-    // funzione che associa il timeout principale a "timeoutRef"
+    // funzione che imposta il timeout principale e lo associa a "timeoutRef"
     const set = useCallback(() => {
         timeoutRef.current = setTimeout(() => callbackRef.current(), delay)
     }, [delay])
@@ -19,7 +19,7 @@ export default function useTimeout(callback: () => void, delay: number) {
         timeoutRef.current && clearTimeout(timeoutRef.current)
     }, [])
 
-    // chiama la funzione che imposta il timeout principale
+    // imposta il timeout principale
     useEffect(() => {
         set()
         return clear

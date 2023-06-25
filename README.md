@@ -2,7 +2,7 @@
 
 ## Descrizione
 
-L'applicazione consiste in una piattaforma online di streaming di film e serie TV, nella quale è possibile navigare attraverso una vasta gamma di titoli, vederne i dettagli e prendere visione del contenuto video. Il progetto è stato realizzato con l'ausilio della librearia di sviluppo di applicazioni web *React*.
+L'applicazione consiste in una piattaforma online di streaming di film e serie TV, nella quale è possibile navigare attraverso una vasta gamma di titoli, vederne i dettagli e il contenuto video. Il progetto è stato realizzato con l'ausilio della libreria di sviluppo di applicazioni web *React*.
 
 ## Premessa
 
@@ -78,11 +78,11 @@ Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da
 
 ### components:
 
-- Contiene i file delle singole componenti che verranno utilizzate in *App.tsx*, nei file di *pages* e in altre componenti della cartella stessa *components*
+- Contiene i file delle singole componenti che verranno utilizzate in *App.tsx*, nei file di *pages* e in altri file della cartella stessa *components*
 
 ### requests
 
-- Qui vengono gestite tutte le richieste all'API TMDB, formattate nella corretta maniera ed esportate alle componenti che ne richiederanno i dati
+- Qui vengono gestite tutte le richieste all'API TMDB, formattate nella corretta maniera ed esportate alle componenti che ne richiedono i dati
 
 ## Componenti
 
@@ -94,19 +94,19 @@ Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da
 
 ### Navbar
 
-- Componente dedito alla navigazione tra le pagine principali e alla ricerca di titoli tramite nome
+- Componente dedito alla navigazione tra le pagine principali e alla ricerca dei titoli tramite nome
 ### SmoothScrool
 
 - Implenta un'animazione di scorrimento fino all'inizio della pagina
 
 ### Home/Film/Series
 
-- *Home* rappresenta la pagina iniziale con la quale si apre si sito dove si possono visualizzare i contenuti di ogni tipo
+- *Home* rappresenta la pagina iniziale con la quale si apre si sito, dove si possono visualizzare i contenuti di ogni tipo
 - *Film* e *Series* rappresentano le pagine i cui contenuti sono filtrati rispettivamente per film e serie TV
 
 ### TitleSlider/EpisodeSlider
 
-- Sono le componenti che implementano uno slider per la navigazione tramite scorrimento rispettivamente dei titoli e degli episodi di una serie TV
+- Sono le componenti che implementano uno slider per la navigazione tramite scorrimento, rispettivamente dei titoli e degli episodi di una serie TV
 
 ### TitleSliderCell/EpisodeSliderCell
 
@@ -114,11 +114,11 @@ Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da
 
 ### Search
 
-- Rappresenta la pagina di ricerca dei titoli che si apre in automatico una volta che l'utente scrive nella barra di ricerca
+- Rappresenta la pagina di ricerca dei titoli, che si apre in automatico una volta che l'utente scrive nella barra di ricerca
 ### Title
 
 - Rappresenta la pagina di un determinato titolo
-- Gestisce tutto il sistema di richieste per i dati del titolo in questione
+- Gestisce tutto il sistema di richieste dei dati del titolo in questione
 
 ### Watch
 
@@ -126,7 +126,7 @@ Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da
 
 ### Profile
 
-- Rappresenta la pagina accedibile tramite navbar contenente le informazioni dell'account dell'utente
+- Rappresenta la pagina accedibile tramite navbar, contenente le informazioni dell'account dell'utente
 
 ### ProfilePic
 
@@ -135,11 +135,11 @@ Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da
 
 ### Login
 
-- Rapprensenta la pagina accedibile tramite navbar in cui l'utente può effettuare l'accesso
+- Rapprensenta la pagina accedibile tramite navbar, in cui l'utente può effettuare l'accesso
 
 ### Register
 
-- Rapprensenta la pagina accedibile tramite navbar in cui l'utente può effettuare la registrazione
+- Rapprensenta la pagina accedibile tramite navbar, in cui l'utente può effettuare la registrazione
 
 ### Verification
 

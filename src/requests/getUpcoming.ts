@@ -8,11 +8,6 @@ type Titles = {
     coverPic: string
 }[]
 
-interface Dates {
-    maximum: string,
-    minimum: string
-}
-
 interface ResponseSuccess {
     results: {
         genre_ids: number[],

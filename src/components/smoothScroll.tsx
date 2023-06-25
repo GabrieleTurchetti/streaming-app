@@ -1,8 +1,8 @@
 import { useLocation, useNavigationType } from 'react-router-dom'
-import { useEffect, ReactElement } from 'react'
+import { useEffect, ReactNode } from 'react'
 
 interface Props {
-    children: ReactElement<any, any>
+    children: ReactNode
 }
 
 export default function SmoothScrool({ children }: Props) {

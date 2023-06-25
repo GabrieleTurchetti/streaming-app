@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import getTitle from '../requests/getTitle'

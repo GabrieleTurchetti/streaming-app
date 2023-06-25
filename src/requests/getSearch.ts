@@ -1,6 +1,5 @@
 import genres from "./getGenres"
 
-
 type Titles = {
     id: number,
     type: string,
@@ -8,6 +7,7 @@ type Titles = {
     genres: string,
     coverPic: string
 }[]
+
 interface ResponseSuccess {
     results: {
         genre_ids: number[],
@@ -18,6 +18,7 @@ interface ResponseSuccess {
         name?: string
     }[]
 }
+
 interface ResponseError {
     status_message: string,
     status_code: number,

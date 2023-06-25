@@ -2,11 +2,11 @@
 <html lang="it">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" href="logo-vector.svg" />
+        <link rel="icon" href="logo.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
         <meta name="description" content="Streaming App" />
-        <link rel="apple-touch-icon" href="logo-vector.svg" />
+        <link rel="apple-touch-icon" href="logo.svg" />
         <link rel="manifest" href="manifest.json" />
         <title>Streaming App</title>
     </head>
@@ -14,9 +14,7 @@
         <div id="root"></div>
         <script>
             if ("serviceWorker" in navigator) {
-                window.addEventListener("load", () => {
-                    navigator.serviceWorker.register("./serviceworker.js").catch(error => console.error("Error registering the Service Worker: ", error))
-                })
+                navigator.serviceWorker.register("./serviceworker.js").catch(error => console.error("Error registering the Service Worker: ", error))
             }
         </script>
     </body>

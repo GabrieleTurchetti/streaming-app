@@ -37,7 +37,7 @@ export default function App() {
 
     // variabile di stato contenente i dati effettivi dell'utente
     const [user, setUser] = useState({
-        logged: false,
+        logged: localStorage.getItem("logged") !== null ? localStorage.getItem("logged") === "true" : false,
         id: "",
         email: "",
         nickname: "",
@@ -158,6 +158,7 @@ export default function App() {
         })
 
         localStorage.setItem("pic", String(pic))
+        localStorage.setItem("logged", String(logged))
     }
 
     return (
