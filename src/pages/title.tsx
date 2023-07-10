@@ -89,7 +89,7 @@ export default function Title() {
         }
     }, [loaded])
 
-    // fa partire l'animazione della barra del voto del titolo
+    // fa partire l'animazione della progress bar del voto del titolo
     useEffect(() => {
         if (title !== undefined) {
             startRatingAnimation(title.rating)
@@ -106,7 +106,7 @@ export default function Title() {
         }
     }, [id])
 
-    // funzione che fa partire l'animazione della barra del voto del titolo
+    // funzione che fa partire l'animazione della progress bar del voto del titolo
     function startRatingAnimation(rating: number) {
         let ratingCircle = document.getElementById("rating-circle")
         increasePercentage(rating)
@@ -200,7 +200,7 @@ export default function Title() {
     return (
         <>
             <div className="h-[32rem] flex flex-col justify-between bg-cover bg-top" style={{backgroundImage: `url(${title?.pic})`}}>
-                <div className="head-over absolute w-full h-[32rem] opacity-75"></div>
+                <div className="head-over absolute w-full h-[32rem] opacity-75" />
                 {loaded && <>
                     {sectionDisplay.general && <div className={`${isMobile ? "w-full p-12" : "w-3/5 min-w-[40rem] px-28 py-20"} flex flex-col gap-3`}>
                         <p className="text-white text-3xl font-medium z-10">{title?.name}</p>
@@ -234,11 +234,11 @@ export default function Title() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex h-full items-center justify-center">
+                        {seasonsEpisodes.length !== 0 && <div className="flex h-full items-center justify-center">
                             <EpisodesSlider
                                 episodes = {seasonsEpisodes[season - 1]}
                             />
-                        </div>
+                        </div>}
                     </>}
                     {sectionDisplay.details && <>
                         <div className={`${isMobile ? "w-full px-12 pt-12" : "w-3/5 min-w-[40rem] px-28 pt-20"} flex flex-col gap-3`}>

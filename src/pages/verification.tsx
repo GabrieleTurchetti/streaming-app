@@ -15,7 +15,7 @@ export default function Verification() {
     function sendEmail() {
         if (auth.currentUser !== null) {
             sendEmailVerification(auth.currentUser).then(() => {
-                setMessage("Ti abbiamo inviato una email per la verifica.")
+                setMessage("Ti abbiamo inviato una email per la verifica dell'account.")
             }).catch(() => {
                 setMessage("Purtroppo c'è stato un errore durante l'invio della email. Riprova tra qualche minuto.")
             })
