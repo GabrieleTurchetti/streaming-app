@@ -153,7 +153,7 @@ https://streamingapp-8662c.web.app
 
 - Rappresenta la pagina dove viene rimandato l'utente in caso decida di cambiare la propria password
 
-## Relazioni di importazioni dei componenti
+## Gerarchia dei componenti
 
 <img src="./assets/images/components-relations.png" width="600">
 
