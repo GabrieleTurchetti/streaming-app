@@ -59,8 +59,8 @@ export default function Profile({ changeProfilePicNumber }: Props) {
                     </div>
                 </div>
             </div>
-            <div className={`w-full h-full top-0 bg-black absolute transition-all duration-300 ${profilePicsDisplay ? "profile-pics-filter-active" : "invisible opacity-0"}`} />
-            <div className={`w-full h-full top-0 absolute flex justify-center items-center ${profilePicsDisplay ? "profile-pics-background-active" : "invisible"}`}>
+            <div className={`w-full h-full top-0 bg-black absolute transition-all duration-300 z-20 ${profilePicsDisplay ? "profile-pics-filter-active" : "invisible opacity-0"}`} />
+            <div className={`w-full h-full top-0 absolute flex justify-center items-center z-20 ${profilePicsDisplay ? "profile-pics-background-active" : "invisible"}`}>
                 <div id="profile-pics-container" className={`translate-y-[-5rem] p-4 rounded-md fixed ${isMobile ? "w-[20rem] h-[20rem]" : "w-[28rem] h-[28rem]"} transition-all duration-300 gap-4 ${profilePicsDisplay ? "profile-pics-container-active" : "opacity-0"}`}>
                     {profilePics.map(e => <ProfilePic
                         number = {e}

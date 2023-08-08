@@ -112,7 +112,7 @@ export default function Login({ changeUser }: Props) {
                         <p>Accedi</p>
                     </button>
                     <Link to="/register">
-                        <p id="account-link-register" className="mt-6 cursor-pointer transition-[color] duration-150">E' la prima volta che passi di qui?</p>
+                        <p id="account-link-register" className="mt-6 cursor-pointer transition-[color] duration-150">È la prima volta che passi di qui?</p>
                     </Link>
                 </div>
             </div>

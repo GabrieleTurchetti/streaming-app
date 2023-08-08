@@ -48,6 +48,7 @@ export default function Title() {
     const [loaded, setLoaded] = useState(false) // variabile di stato utilizzata per il rendering del titolo principale solo quando le informazioni relative sono state acquisite
     const { type, id } = useParams() // parametri contenuti nell'URL associati al titolo
     const [reload, setReload] = useState(false) // variabile di stato utilizzata per ricaricare la pagina dopo aver selezionato un titolo correlato
+    const [sectionUnderlinePosition, setSectionUnderlinePosition] = useState(0)
 
     // variabile di stato utilizzata per il rendering delle sezioni della pagina
     const [sectionDisplay, setSectionDisplay] = useState({
@@ -141,8 +142,7 @@ export default function Title() {
                         details:  false
                     })
 
-                    document.getElementById("title-section-underline")?.classList.remove("title-section-underline-1", "title-section-underline-2")
-                    document.getElementById("title-section-underline")?.classList.add("title-section-underline-0")
+                    setSectionUnderlinePosition(0)
                 }
 
                 break
@@ -155,8 +155,7 @@ export default function Title() {
                         details:  false
                     })
 
-                    document.getElementById("title-section-underline")?.classList.remove("title-section-underline-0", "title-section-underline-2")
-                    document.getElementById("title-section-underline")?.classList.add("title-section-underline-1")
+                    setSectionUnderlinePosition(1)
                 }
 
                 break
@@ -169,14 +168,7 @@ export default function Title() {
                         details:  true
                     })
 
-                    if (title?.type === "film") {
-                        document.getElementById("title-section-underline")?.classList.remove("title-section-underline-0")
-                        document.getElementById("title-section-underline")?.classList.add("title-section-underline-1")
-                    }
-                    else {
-                        document.getElementById("title-section-underline")?.classList.remove("title-section-underline-0", "title-section-underline-1")
-                        document.getElementById("title-section-underline")?.classList.add("title-section-underline-2")
-                    }
+                    setSectionUnderlinePosition(title?.type === "film" ? 1 : 2)
                 }
 
                 break
@@ -188,7 +180,7 @@ export default function Title() {
         let result = []
 
         for (let i = 1; i <= (title?.seasons || 0); i++) {
-            result.push(<div className="season-option cursor-pointer pl-2 pr-7 py-[0.1rem] whitespace-nowrap" onClick={() => {
+            result.push(<div className="season-option cursor-pointer px-2 py-[0.1rem] whitespace-nowrap" onClick={() => {
                 setSeason(i)
                 setSeasonOptionsDisplay(!seasonOptionsDisplay)
             }}>Stagione {i}</div>)
@@ -228,7 +220,7 @@ export default function Title() {
                                         Stagione {season}
                                         <img src={arrowDown} className={`w-3 transition-[transform] duration-150 ${seasonOptionsDisplay ? "rotate-180" : ""}`} />
                                     </div>
-                                    {seasonOptionsDisplay && <div id="season-option-container" className="absolute border-[1px]">
+                                    {seasonOptionsDisplay && <div id="season-option-container" className="absolute border-[1px] max-h-[10rem] overflow-y-auto">
                                         {getSeasonOptions().map(e => e)}
                                     </div>}
                                 </div>
@@ -269,7 +261,7 @@ export default function Title() {
                             <p className="cursor-pointer title-section-text w-28" onClick={() => changeSectionDisplay("details")}>DETTAGLI</p>
                         </div>
                         <div className="w-28 px-4">
-                            <div id="title-section-underline" className="h-1 w-full px-4 rounded-lg transition-[transform] duration-150 title-section-undeline-0"></div>
+                            <div id="title-section-underline" className={`h-1 w-full px-4 rounded-lg transition-[transform] duration-150 title-section-underline-${sectionUnderlinePosition}`}></div>
                         </div>
                     </div>
                 </>}

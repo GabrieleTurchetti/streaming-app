@@ -8,6 +8,10 @@ L'applicazione consiste in una piattaforma online di streaming di film e serie T
 
 Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da copyright, l'app si limita a mostrare altri tipi di video, come ad esempio i trailer dei film e delle serie TV.
 
+## Link
+
+https://streamingapp-8662c.web.app
+
 ## Linguaggi
 
 - TypeScript
