@@ -171,7 +171,7 @@
     color: var(--gray-200)
 }
 
-#season-select, .season-option {
+#season-select, .season-option, #season-option-container {
     background-color: var(--gray-700);
 }
 
@@ -205,22 +205,6 @@
     -moz-transform: translateX(14rem);
     -ms-transform: translateX(14rem);
     -o-transform: translateX(14rem);
-}
-
-#season-option-container::-webkit-scrollbar {
-    width: 10px;
-}
-
-#season-option-container::-webkit-scrollbar-track {
-    background: var(--gray-200)
-}
-
-#season-option-container::-webkit-scrollbar-thumb {
-    background: var(--gray-400)
-}
-
-#season-option-container::-webkit-scrollbar-thumb:hover {
-    background: var(--gray-500)
 }
 
 .container {
