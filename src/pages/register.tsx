@@ -107,25 +107,25 @@ export default function Register() {
     }
 
     return (
-        <div className="flex justify-center my-[10vh]">
+        <div className="flex justify-center my-16">
             <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Registrati</p>
                 <div className="container-line-break w-full h-[1px]"></div>
                 <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
                     <div className="flex flex-col gap-1">
                         <p className="container-header">Nickname</p>
-                        <input id="container-input-nickname" className="container-input h-9 px-3 w-full" type="text" />
+                        <input id="container-input-nickname" className="container-input h-9 px-3 w-full rounded-none" type="text" />
                         {errorDisplay.nickname !== "" && <p className="text-red-600">{errorDisplay.nickname}</p>}
                     </div>
                     <div className="flex flex-col gap-1">
                         <p className="container-header">Email</p>
-                        <input id="container-input-email" className="container-input h-9 px-3 w-full" type="email" />
+                        <input id="container-input-email" className="container-input h-9 px-3 w-full rounded-none" type="email" />
                         {errorDisplay.email !== "" && <p className="text-red-600">{errorDisplay.email}</p>}
                     </div>
                     <div className="flex flex-col gap-1">
                         <p className="container-header">Password</p>
                         <div className="flex">
-                            <input id="container-input-password" className="container-input h-9 pl-3 w-full" type={showPassword ? "text" : "password"} />
+                            <input id="container-input-password" className="container-input h-9 pl-3 w-full rounded-none" type={showPassword ? "text" : "password"} />
                             <div className="container-eye flex px-2 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
                                 <img src={showPassword ? closedEye : openEye} className="w-6" />
                             </div>
@@ -135,7 +135,7 @@ export default function Register() {
                     <div className="flex flex-col gap-1">
                         <p className="container-header">Conferma password</p>
                         <div className="flex">
-                            <input id="container-input-password-confirm" className="container-input h-9 pl-3 w-full" type={showPasswordConfirm ? "text" : "password"} />
+                            <input id="container-input-password-confirm" className="container-input h-9 pl-3 w-full rounded-none" type={showPasswordConfirm ? "text" : "password"} />
                             <div className="container-eye flex px-2 cursor-pointer" onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}>
                                 <img src={showPasswordConfirm ? closedEye : openEye} className="w-6" />
                             </div>

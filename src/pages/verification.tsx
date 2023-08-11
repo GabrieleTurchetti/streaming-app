@@ -24,8 +24,8 @@ export default function Verification() {
 
     return (
         <>
-            {message !== "" && <div className="flex justify-center my-[20vh]">
-                <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
+            {/*message !== "" &&*/ <div id="verification-wrapper" className="flex justify-center items-center">
+                <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white h-fit`}>
                     <p className="text-2xl px-10 h-16 flex items-center">Email di verifica</p>
                     <div className="container-line-break w-full h-[1px]" />
                     <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>

@@ -168,7 +168,7 @@
 }
 
 .title-details-col-header {
-    color: var(--gray-200)
+    color: var(--gray-200);
 }
 
 #season-select, .season-option, #season-option-container {
@@ -224,7 +224,7 @@
     visibility: visible;
 }
 
-.profile-pics-background-active {
+.profile-pic-wrapper-active {
     visibility: visible;
 }
 
@@ -243,6 +243,10 @@
 
 .container-button:hover {
     background-color: var(--gray-500);
+}
+
+#verification-wrapper {
+    min-height: calc(100vh - 4rem);
 }
 
 #account-link-register, #send-email-resend, #profile-info-change-password {
