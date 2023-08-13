@@ -18,6 +18,10 @@
     color: white;
 }
 
+#navbar-menu {
+    background-color: var(--gray-800);
+}
+
 #search-bar {
     border-color: transparent;
 }
@@ -219,12 +223,12 @@
     background-color: var(--gray-600);
 }
 
-.profile-pics-filter-active {
+.profile-pics-background-active {
     opacity: 0.5;
     visibility: visible;
 }
 
-.profile-pic-wrapper-active {
+.profile-pics-wrapper-active {
     visibility: visible;
 }
 

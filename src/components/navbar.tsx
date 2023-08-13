@@ -1,5 +1,6 @@
 import logo from '../images/logo.svg'
 import search from '../images/search.svg'
+import menu from '../images/menu.svg'
 import { useState, useContext, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../App'
@@ -22,6 +23,7 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
     const user = useContext(UserContext) // oggetto contenente le informazioni dell'utente
     const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
     const searchBar = useRef<HTMLInputElement>(null) // riferimento all'elemento DOM dell'input della barra di ricerca
+    const [menuDisplay, setMenuDisplay] = useState(false)
 
     // funzione che effettua il logout tramite la procedura di Firebase e la cancellazione delle informazioni riguardanti l'utente nel sito
     function logout() {
@@ -50,16 +52,17 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
                         <p className={`navbar-section font-medium text-lg h-7 whitespace-nowrap cursor-pointer ${navbarSection.series ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Serie TV</p>
                     </Link>
                 </>}
-                {isMobile && <div className="w-20 flex gap-4 overflow-auto">
-                    <Link to="/">
+                {isMobile && <div className="flex gap-2">
+                    {(!navbarSection.film && !navbarSection.series) && <Link to="/">
                         <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.home ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Home</p>
-                    </Link>
-                    <Link to="/film">
+                    </Link>}
+                    {navbarSection.film && <Link to="/film">
                         <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.film ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Film</p>
-                    </Link>
-                    <Link to="/series">
+                    </Link>}
+                    {navbarSection.series && <Link to="/series">
                         <p className={`navbar-section font-medium text-lg h-7 whitespace-nowrap cursor-pointer ${navbarSection.series ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Serie TV</p>
-                    </Link>
+                    </Link>}
+                    <img src={menu} className="w-6" onClick={() => setMenuDisplay(true)}/>
                 </div>}
             </div>}
             <div className={`flex items-center ${isMobile ? searchBarDisplay ? "w-full px-2" : "gap-1" : "gap-8"} transition-[gap] duration-300`}>
@@ -94,6 +97,20 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
                         <div id="navbar-account-option-container-appendix" className="translate-y-10 translate-x-2 w-0 h-0" />
                     </div>
                 </div>}
+            </div>
+            <div className={`absolute w-screen h-screen top-0 bg-black transition-all duration-300 ${menuDisplay ? "opacity-50" : "opacity-0 invisible"}`} onClick={() => setMenuDisplay(false)} />
+            <div id="navbar-menu" className={`absolute h-screen left-0 top-0 duration-300 transition-[width] ${menuDisplay ? "w-[50vw]" : "w-0"}`}>
+                <div className={`flex flex-col gap-4 items-center w-full py-10 transition-[visibility] ${menuDisplay ? "" : "invisible"}`}>
+                    <Link to="/" onClick={() => setMenuDisplay(false)}>
+                        <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.home ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Home</p>
+                    </Link>
+                    <Link to="/film" onClick={() => setMenuDisplay(false)}>
+                        <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.film ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Film</p>
+                    </Link>
+                    <Link to="/series" onClick={() => setMenuDisplay(false)}>
+                        <p className={`navbar-section font-medium text-lg h-7 whitespace-nowrap cursor-pointer ${navbarSection.series ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Serie TV</p>
+                    </Link>
+                </div>
             </div>
         </div>
     )

@@ -237,15 +237,15 @@ export default function Title() {
                             <p className="text-white text-3xl font-medium z-10">{title?.name}</p>
                             <p className="text-white text-lg z-10">{title?.year} - {title?.time !== -1 ? title?.time + " min" : title?.seasons + (title?.seasons === 1 ? " stagione" : " stagioni")}</p>
                         </div>
-                        <div className={`z-10 h-full mt-6 ${isMobile ? "overflow-auto" : ""}`}>
-                            <div className={`${isMobile ? "px-12 w-[30rem]" : "w-2/5 min-w-[40rem] px-28"} flex h-full justify-between z-30 text-white`}>
-                                <div className={`max-w-[12rem]`}>
+                        <div className={`z-10 h-full mt-6 ${isMobile ? "overflow-auto mx-12" : ""}`}>
+                            <div className={`${isMobile ? "gap-20" : "min-w-[40rem] px-28 gap-40"} flex h-full z-30 text-white`}>
+                                <div>
                                     <p className="title-details-col-header py-2">Generi</p>
                                     {title?.genres.slice(0, 5).map(e => (
                                         <p>{e}</p>
                                     ))}
                                 </div>
-                                <div className={`max-w-[12rem]`}>
+                                <div>
                                     <p className="title-details-col-header py-2">Case cinematografiche</p>
                                     {title?.companies.slice(0, 5).map(e => (
                                         <p>{e}</p>

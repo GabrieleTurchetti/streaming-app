@@ -47,7 +47,7 @@ export default function App() {
     })
 
     // variabile di stato utilizzata per decidere quale nome della pagina mettere in risalto
-    const [navbarSection, setNavbarSection] = useState({
+    const [navbarSection, setnavbarSection] = useState({
         home: false,
         film: false,
         series: false
@@ -94,7 +94,7 @@ export default function App() {
         // mette in evidenza il nome della pagina corrente
         switch (location.pathname) {
             case "/":
-                setNavbarSection({
+                setnavbarSection({
                     home: true,
                     film: false,
                     series: false
@@ -103,7 +103,7 @@ export default function App() {
                 break
 
             case "/film":
-                setNavbarSection({
+                setnavbarSection({
                     home: false,
                     film: true,
                     series: false
@@ -112,7 +112,7 @@ export default function App() {
                 break
 
             case "/series":
-                setNavbarSection({
+                setnavbarSection({
                     home: false,
                     film: false,
                     series: true
@@ -121,7 +121,7 @@ export default function App() {
                 break
 
             default:
-                setNavbarSection({
+                setnavbarSection({
                     home: false,
                     film: false,
                     series: false
