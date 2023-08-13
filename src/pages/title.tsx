@@ -45,10 +45,15 @@ export default function Title() {
     const [season, setSeason] = useState(1) // variabile di stato contenente il numero della stagione attualmente selezionata per le serie TV
     const [seasonOptionsDisplay, setSeasonOptionsDisplay] = useState(false) // variabile di stato utilizzata per la visualizzazione della lista delle stagioni per le serie TV
     const [related, setRelated] = useState<Titles>([]) // variabile di stato contenente le informazioni dei titoli correlati
-    const [loaded, setLoaded] = useState(false) // variabile di stato utilizzata per il rendering del titolo principale solo quando le informazioni relative sono state acquisite
     const { type, id } = useParams() // parametri contenuti nell'URL associati al titolo
     const [reload, setReload] = useState(false) // variabile di stato utilizzata per ricaricare la pagina dopo aver selezionato un titolo correlato
     const [sectionUnderlinePosition, setSectionUnderlinePosition] = useState(0)
+
+    // variabile di stato utilizzata per il rendering del titolo principale solo quando le informazioni relative sono state acquisite
+    const [loaded, setLoaded] = useState({
+        title: false,
+        seasonsEpisodes: false,
+    })
 
     // variabile di stato utilizzata per il rendering delle sezioni della pagina
     const [sectionDisplay, setSectionDisplay] = useState({
@@ -73,10 +78,18 @@ export default function Title() {
                     getSeasonsEpisodes(title.id, title.seasons || 0).then(res => {
                         const seasonsEpisodes: Episodes[] = res as Episodes[]
                         setSeasonsEpisodes(seasonsEpisodes)
+
+                        setLoaded(prev => ({
+                            ...prev,
+                            seasonsEpisodes: true
+                        }))
                     }).catch(error => console.error(error))
                 }
 
-                setLoaded(true)
+                setLoaded(prev => ({
+                    ...prev,
+                    title: true
+                }))
             }).catch(error => console.error(error))
         }
     }, [])
@@ -193,7 +206,7 @@ export default function Title() {
         <>
             <div className="h-[32rem] flex flex-col justify-between bg-cover bg-top" style={{backgroundImage: `url(${title?.pic})`}}>
                 <div className="head-over absolute w-full h-[32rem] opacity-75" />
-                {loaded && <>
+                {loaded.title && <>
                     {sectionDisplay.general && <div className={`${isMobile ? "w-full p-12" : "w-3/5 min-w-[40rem] px-28 py-20"} flex flex-col gap-3`}>
                         <p className="text-white text-3xl font-medium z-10">{title?.name}</p>
                         <p className="text-white text-lg z-10">{title?.year} - {title?.time !== -1 ? title?.time + " min" : title?.seasons + (title?.seasons === 1 ? " stagione" : " stagioni")}</p>
@@ -226,10 +239,18 @@ export default function Title() {
                                 </div>
                             </div>
                         </div>
-                        {seasonsEpisodes.length !== 0 && <div className="flex h-full items-center justify-center">
+                        {loaded.seasonsEpisodes && <div className="flex h-full items-center justify-center">
                             <EpisodesSlider
                                 episodes = {seasonsEpisodes[season - 1]}
                             />
+                        </div>}
+                        {!loaded.seasonsEpisodes && <div className="flex h-full items-center justify-center">
+                            <div className="lds-ellipsis">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
                         </div>}
                     </>}
                     {sectionDisplay.details && <>

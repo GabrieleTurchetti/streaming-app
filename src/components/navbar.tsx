@@ -68,7 +68,7 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
             <div className={`flex items-center ${isMobile ? searchBarDisplay ? "w-full px-2" : "gap-1" : "gap-8"} transition-[gap] duration-300`}>
                 {!isMobile && <div id="search-bar" className={`flex items-center p-2 border gap-2 transition-[border-color] duration-300 ${searchBarDisplay ? "search-bar-active" : ""}`}>
                     <img src={search} className="w-6 min-w-[1.5rem] cursor-pointer" onClick={() => {setSearchBarDisplay(!searchBarDisplay)}} />
-                    <input ref={searchBar} id="search-bar-input" className={`w-0 bg-transparent text-white transition-[width] duration-300 ${searchBarDisplay ? "search-bar-input-active" : ""}`} type="text" placeholder="Cerca" autoComplete="off" onChange={() => searchBar.current !== null && changeSearchName(searchBar.current.value)} />
+                    <input ref={searchBar} id="search-bar-input" className={`bg-transparent text-white transition-[width] duration-300 ${searchBarDisplay ? "w-48" : "w-0"}`} type="text" placeholder="Cerca" autoComplete="off" onChange={() => searchBar.current !== null && changeSearchName(searchBar.current.value)} />
                 </div>}
                 {isMobile && <div id="search-bar" className={`flex items-center p-2 border gap-2 ${searchBarDisplay ? "search-bar-active w-full" : ""}`}>
                     <img src={search} className="w-6 min-w-[1.5rem] cursor-pointer" onClick={() => {setSearchBarDisplay(!searchBarDisplay)}} />
