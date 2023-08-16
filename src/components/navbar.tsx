@@ -53,7 +53,7 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
                     </Link>
                 </>}
                 {isMobile && <div className="flex gap-2">
-                    {(!navbarSection.film && !navbarSection.series) && <Link to="/">
+                    {navbarSection.home && <Link to="/">
                         <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.home ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Home</p>
                     </Link>}
                     {navbarSection.film && <Link to="/film">

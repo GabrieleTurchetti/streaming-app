@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import getSearch from '../requests/getSearch'
 import TitleSlider from '../components/titleSlider'
-import useTimeout from '../hooks/useTimeout'
 
 interface Props {
     searchName: string
@@ -19,10 +18,6 @@ export default function Search({ searchName }: Props) {
     const [searchTitles, setSearchTitles] = useState<Titles>([]) // variabile di stato contenente i dati relativi ai titoli ricercati
     const [sliderItems, setSliderItems] = useState(5) // variabile di stato contenente il numero degli elementi per ogni slider
 
-    // funzione che chiama "changeSliderSideDisplay" al massimo una volta ogni 100 ms
-    // guardare "hooks/useTimeout.ts" per informazioni sul funzionamento della custom hook
-    const { reset } = useTimeout(changeSliderItems, 100)
-
     // acquisisce le informazioni dei titoli ricercati
     useEffect(() => {
         if (searchName !== "") {
@@ -35,10 +30,10 @@ export default function Search({ searchName }: Props) {
 
     // aggiunge un event listener per l'evento "resize" alla quale associa la funzione "reset"
     useEffect(() => {
-        window.addEventListener("resize", reset)
+        window.addEventListener("resize", changeSliderItems)
 
         return () => {
-            window.removeEventListener("resize", reset)
+            window.removeEventListener("resize", changeSliderItems)
         }
     })
 

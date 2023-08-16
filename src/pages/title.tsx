@@ -4,10 +4,12 @@ import { isMobile } from 'react-device-detect'
 import getTitle from '../requests/getTitle'
 import getSeasonsEpisodes from '../requests/getSeasonsEpisodes'
 import getRelated from '../requests/getRelated'
-import playHeadTitle from '../images/play-head-title.svg'
+import playCircle from '../images/play-circle.svg'
 import EpisodesSlider from '../components/episodesSlider'
 import arrowDown from '../images/arrow-down.svg'
 import TitleSlider from '../components/titleSlider'
+import checkFilled from '../images/check-filled.svg'
+import addFilled from '../images/add-filled.svg'
 
 interface Title {
     id: number,
@@ -93,15 +95,6 @@ export default function Title() {
             }).catch(error => console.error(error))
         }
     }, [])
-
-    // riporta la pagina in cima una volta selezionato e acquisiti i dati di un titolo correlato
-    useEffect(() => {
-        if (loaded) {
-            window.scrollTo({
-                top: 0
-            })
-        }
-    }, [loaded])
 
     // fa partire l'animazione della progress bar del voto del titolo
     useEffect(() => {
@@ -205,7 +198,7 @@ export default function Title() {
     return (
         <>
             <div className="h-[32rem] flex flex-col justify-between bg-cover bg-top" style={{backgroundImage: `url(${title?.pic})`}}>
-                <div className="head-over absolute w-full h-[32rem] opacity-75" />
+                <div className="head-over absolute w-full h-[32rem] opacity-80" />
                 {loaded.title && <>
                     {sectionDisplay.general && <div className={`${isMobile ? "w-full p-12" : "w-3/5 min-w-[40rem] px-28 py-20"} flex flex-col gap-3`}>
                         <p className="text-white text-3xl font-medium z-10">{title?.name}</p>
@@ -217,8 +210,9 @@ export default function Title() {
                                 <text x="18" y="20.35" className="percentage">{percentage}%</text>
                             </svg>
                             <Link to={type === "film" ? `/film/watch/${title?.id}` : `/series/watch/${title?.id}`}>
-                                <img src={playHeadTitle} id="play-head-title" className="w-14 opacity-80 duration-150 hover:opacity-100" />
+                                <img src={playCircle} className="w-14 opacity-80 duration-150 hover:opacity-100" />
                             </Link>
+                            <img src={false ? checkFilled : addFilled} className="w-10 opacity-80 hover:opacity-100 cursor-pointer" />
                         </div>
                     </div>}
                     {sectionDisplay.episodes && <>
@@ -268,7 +262,7 @@ export default function Title() {
                                 </div>
                                 <div>
                                     <p className="title-details-col-header py-2">Case cinematografiche</p>
-                                    {title?.companies.slice(0, 5).map(e => (
+                                    {title?.companies.slice(0, isMobile ? 3 : 5).map(e => (
                                         <p>{e}</p>
                                     ))}
                                 </div>

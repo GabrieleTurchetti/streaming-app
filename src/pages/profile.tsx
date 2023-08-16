@@ -61,7 +61,7 @@ export default function Profile({ changeProfilePicNumber }: Props) {
             </div>
             <div className={`w-screen h-screen top-0 bg-black absolute transition-all duration-300 z-20 ${profilePicsDisplay ? "opacity-50" : "invisible opacity-0"}`} onClick={() => setProfilePicsDisplay(false)} />
             <div className={`absolute left-[50vw] top-[50vh] flex justify-center items-center z-20 ${profilePicsDisplay ? "" : "invisible"}`}>
-                <div id="profile-pics-container" className={`translate-y-[-5rem] p-4 rounded-md fixed ${isMobile ? "w-[20rem] h-[20rem]" : "w-[28rem] h-[28rem]"} transition-all duration-300 gap-4 ${profilePicsDisplay ? "translate-y-0" : "opacity-0"}`}>
+                <div id="profile-pics-container" className={`p-4 rounded-md fixed ${isMobile ? "w-[20rem] h-[20rem]" : "w-[28rem] h-[28rem]"} transition-all duration-300 gap-4 ${profilePicsDisplay ? "translate-y-0" : "opacity-0 translate-y-[-5rem] "}`}>
                     {profilePics.map(e => <ProfilePic
                         number = {e}
                         changeProfilePicNumber = {changeProfilePicNumber}

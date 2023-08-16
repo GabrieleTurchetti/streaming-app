@@ -1,10 +1,11 @@
-import playHead from '../images/play-head.svg'
+import playRectangular from '../images/play-rectangular.svg'
 import info from '../images/info.svg'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import getHead from '../requests/getHead'
-
+import checkFilled from '../images/check-filled.svg'
+import addFilled from '../images/add-filled.svg'
 interface Props {
     page: string
 }
@@ -38,17 +39,18 @@ export default function Head({ page }: Props) {
                 <p className="head-plot text-xl z-10">{title?.plot}</p>
                 <div className="flex gap-10 z-10">
                     <Link to={title?.type === "film" ? `/film/watch/${title?.id}` : `/series/watch/${title?.id}`}>
-                        <button className={`${isMobile ? "w-24" : "w-36"} bg-white rounded-sm font-medium text-lg flex items-center justify-center cursor-pointer h-10`}>
-                            <img src={playHead} className="w-8" />
+                        <button className={`${isMobile ? "w-24" : "w-36"} bg-white rounded-sm font-medium text-lg flex items-center justify-center h-10 hover:brightness-[0.8] duration-150`}>
+                            <img src={playRectangular} className="w-8" />
                             <p>Play</p>
                         </button>
                     </Link>
                     <Link to={`/${title?.type}/title/${title?.id}`}>
-                        <button id="head-info" className={`${isMobile ? "w-24" : "w-36"} rounded-sm text-white font-medium text-lg flex items-center justify-center gap-2 cursor-pointer h-10`}>
+                        <button id="head-info" className={`${isMobile ? "w-24" : "w-36"} rounded-sm text-white font-medium text-lg flex items-center justify-center gap-2 h-10 hover:brightness-[0.8] duration-150`}>
                             <img src={info} className="w-5" />
                             <p>Info</p>
                         </button>
                     </Link>
+                    {!isMobile && <img src={false ? checkFilled : addFilled} className="w-10 opacity-80 hover:opacity-100 duration-150 cursor-pointer" />}
                 </div>
             </div>}
         </div>

@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
+import { useRef } from 'react'
+import playCircle from '../images/play-circle.svg'
+import checkFilled from '../images/check-filled.svg'
+import addFilled from '../images/add-filled.svg'
+
 interface Props {
     title: {
         id: number,
@@ -11,12 +16,22 @@ interface Props {
 }
 
 export default function SliderCell({ title }: Props) {
+    const sliderCell = useRef<HTMLInputElement>(null) // riferimento all'elemento DOM dell'input della barra di ricerca
+
     return (
         <Link to={`/${title.type}/title/${title.id}`}>
-            <div className="slider-cell aspect-video cursor-pointer bg-[length:100%_100%] hover:bg-[length:115%_115%] bg-center transition-[background] duration-300" style={{backgroundImage: `url(${title.coverPic})`}}>
-                <div className={`slider-cell-over flex flex-col justify-end ${isMobile ? "p-3" : "p-4"} text-white h-full invisible shadow-[inset_0_-100px_100px_0_rgba(0,0,0,0.75)]`}>
-                    <p className={`font-medium ${isMobile ? "text-sm" : "text-lg"}`}>{title.name.length < (isMobile ? 30 : 20) ? title.name : title.name.substring(0, (isMobile ? 30 : 20)) + " ..."}</p>
-                    {!isMobile && <p className="text-sm">{title.genres.length < 20 ? title.genres.replaceAll(",", " • ") : title.genres.substring(0, 20).replaceAll(",", " • ") + " ..."}</p>}
+            <div ref={sliderCell} className="slider-cell aspect-video cursor-pointer bg-[length:100%_100%] hover:bg-[length:115%_115%] bg-center transition-[background] duration-300" style={{backgroundImage: `url(${title.coverPic})`}}>
+                <div className={`slider-cell-over invisible flex flex-col justify-between p-[7.5%] text-white h-full shadow-[inset_0_-100px_100px_0_rgba(0,0,0,0.75)]`}>
+                    {!isMobile && <div className="flex gap-[5%]">
+                        <Link className="inline-block w-1/5" to={title.type === "film" ? `/film/watch/${title.id}` : `/series/watch/${title.id}`}>
+                            <img src={playCircle} className="opacity-80 duration-150 hover:opacity-100" />
+                        </Link>
+                        <img src={false ? checkFilled : addFilled} className="w-8 opacity-80 hover:opacity-100 cursor-pointer" />
+                    </div>}
+                    <div>
+                        <p className="font-medium" style={{fontSize: `${(sliderCell.current?.offsetWidth || 0) / 14}px`}}>{title.name.length < (isMobile ? 30 : 20) ? title.name : title.name.substring(0, (isMobile ? 30 : 20)) + " ..."}</p>
+                        {!isMobile && <p style={{fontSize: `${(sliderCell.current?.offsetWidth || 0) / 18}px`}}>{title.genres.length < 20 ? title.genres.replaceAll(",", " • ") : title.genres.substring(0, 20).replaceAll(",", " • ") + " ..."}</p>}
+                    </div>
                 </div>
             </div>
         </Link>

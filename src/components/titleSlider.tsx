@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { isMobile } from 'react-device-detect'
 import sliderSideRight from '../images/slider-side-right.svg'
 import sliderSideLeft from '../images/slider-side-left.svg'
-import useTimeout from '../hooks/useTimeout'
 
 interface Props {
     name: string,
@@ -20,10 +19,6 @@ export default function TitleSlider({ name, titles }: Props) {
     const [index, setIndex] = useState(0) // variabile di stato contenente il valore dell'indice dello slider
     const [translate, setTranslate] = useState(5) // variabile di stato contenente il valore di quanto lo slider deve essere spostato
 
-    // funzione che chiama "changeSliderSideDisplay" al massimo una volta ogni 100 ms
-    // guardare "hooks/useTimeout.ts" per informazioni sul funzionamento della custom hook
-    const { reset } = useTimeout(changeSliderSideDisplay, 100)
-
     // variabile di stato contenente le proprietà "display" delle frecce dello slider
     const [sliderSideDisplay, setSliderSideDisplay] = useState({
         left: "none",
@@ -32,10 +27,10 @@ export default function TitleSlider({ name, titles }: Props) {
 
     // aggiunge un event listener per l'evento "resize" alla quale associa la funzione "reset"
     useEffect(() => {
-        window.addEventListener("resize", reset)
+        window.addEventListener("resize", changeSliderSideDisplay)
 
         return () => {
-            window.removeEventListener("resize", reset)
+            window.removeEventListener("resize", changeSliderSideDisplay)
         }
     })
 
@@ -95,6 +90,7 @@ export default function TitleSlider({ name, titles }: Props) {
                 right: "none"
             }))
         }
+        console.log("ciaoa")
     }
 
     return (
