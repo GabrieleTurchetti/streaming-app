@@ -3,6 +3,7 @@ import { useState, useEffect, createContext } from 'react'
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 import { updateDoc, getDoc, doc } from "firebase/firestore"
 import { db, auth } from './firebase.js'
+import { isMobile } from 'react-device-detect'
 import Home from './pages/home'
 import Film from './pages/film'
 import Series from './pages/series'
@@ -31,7 +32,6 @@ export const UserContext = createContext({
 export default function App() {
     const [navbarDisplay, setNavbarDisplay] = useState(true) // variabile di stato utilizzata per decidere se renderizzare la navabar o meno
     const [searchName, setSearchName] = useState("") // variabile di stato contenente il nome del titolo da cercare
-    const [prevPage, setPrevPage] = useState("") // variabile di stato contenente l'URL della pagina precedente a cui fare ritorno una volta che il valore della search bar è nullo
     const location = useLocation() // oggetto contenente le informazioni dell'URL
     const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
 
@@ -67,18 +67,22 @@ export default function App() {
                 changeUser(true, user.uid, user.email || "", docSnap.data()?.nickname, docSnap.data()?.pic, docSnap.data()?.joined, user.emailVerified)
             }
         })
+
+        if (isMobile) {
+            let root = document.querySelector(":root") as HTMLElement
+            root.style.setProperty("--slider-items", "1.5")
+        }
     }, [])
 
     useEffect(() => {
-        // gestisce il ritorno alla pagina precedente al cambiare del valore della search bar
-        if (searchName !== "") {
-            if (location.pathname !== "/search") {
-                setPrevPage(location.pathname)
-                navigate("/search")
-            }
+        // reindirizza alla pagina "search" se il valore della search bar non è vuoto
+        if (searchName !== "" && location.pathname !== "/search") {
+            navigate("/search")
         }
-        else if (prevPage !== "" && location.pathname === "/search"){
-            navigate(prevPage)
+
+        // reindirizza alla pagina precedente di "search" se il valore della search bar è vuoto
+        if (searchName === "" && location.pathname === "/search"){
+            navigate(-1)
         }
     }, [searchName])
 

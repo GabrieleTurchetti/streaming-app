@@ -52,18 +52,7 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
                         <p className={`navbar-section font-medium text-lg h-7 whitespace-nowrap cursor-pointer ${navbarSection.series ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Serie TV</p>
                     </Link>
                 </>}
-                {isMobile && <div className="flex gap-2">
-                    {navbarSection.home && <Link to="/">
-                        <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.home ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Home</p>
-                    </Link>}
-                    {navbarSection.film && <Link to="/film">
-                        <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.film ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Film</p>
-                    </Link>}
-                    {navbarSection.series && <Link to="/series">
-                        <p className={`navbar-section font-medium text-lg h-7 whitespace-nowrap cursor-pointer ${navbarSection.series ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Serie TV</p>
-                    </Link>}
-                    <img src={menu} className="w-6" onClick={() => setMenuDisplay(true)}/>
-                </div>}
+                {isMobile && <img src={menu} className="w-6" onClick={() => setMenuDisplay(true)} />}
             </div>}
             <div className={`flex items-center ${isMobile ? searchBarDisplay ? "w-full px-2" : "gap-1" : "gap-8"} transition-[gap] duration-300`}>
                 {!isMobile && <div id="search-bar" className={`flex items-center p-2 border gap-2 transition-[border-color] duration-300 ${searchBarDisplay ? "search-bar-active" : ""}`}>
