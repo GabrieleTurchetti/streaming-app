@@ -4,12 +4,13 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth, db } from '../firebase.js'
 import { getDoc, doc } from 'firebase/firestore'
 import { isMobile } from 'react-device-detect'
+import { User } from '../App'
 import openEye from '../images/open-eye.svg'
 import closedEye from '../images/closed-eye.svg'
 import sendNotification from '../functions/sendNotification'
 
 interface Props {
-    changeUser: (logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string, verified: boolean) => void
+    changeUser: (user: User) => void
 }
 
 export default function Login({ changeUser }: Props) {
@@ -38,10 +39,20 @@ export default function Login({ changeUser }: Props) {
                 const docRef = doc(db, "users", userCredential.user.uid)
                 const docSnap = await getDoc(docRef)
 
-                // se i dati nel database Firestore dell'utente esistono vengono impostati i dati dell'utente nel sito
-                // altrimenti viene inviata una notifica desktop di errore
+                /* se i dati nel database Firestore dell'utente esistono vengono impostati i dati dell'utente nel sito
+                altrimenti viene inviata una notifica desktop di errore */
                 if (docSnap.exists()) {
-                    changeUser(true, userCredential.user.uid, docSnap.data().email, docSnap.data().nickname, docSnap.data().pic, docSnap.data().joined, userCredential.user.emailVerified)
+                    changeUser({
+                        logged: true,
+                        id: userCredential.user.uid,
+                        email: docSnap.data().email,
+                        nickname: docSnap.data().nickname,
+                        pic: docSnap.data().pic,
+                        saved: docSnap.data().saved,
+                        joined: docSnap.data().joined,
+                        verified: userCredential.user.emailVerified
+                    })
+
                     navigate("/")
                 }
                 else {

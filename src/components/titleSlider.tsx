@@ -10,7 +10,7 @@ interface Props {
         id: number,
         type: string,
         name: string,
-        genres: string,
+        genres: string[],
         coverPic: string
     }[],
 }
@@ -103,9 +103,9 @@ export default function TitleSlider({ name, titles }: Props) {
                     </div>}
                 </div>
                 <div className="slider-center w-[80vw] flex transition-transform duration-700 ease-[cubic-bezier(0.42,0,0.58,1)]" style={{transform: `translateX(${translate}vw)`}}>
-                    {titles.map(e => (
+                    {titles.map(title => (
                         <TitleSliderCell
-                            title = {e}
+                            title = {title}
                         />
                     ))}
                 </div>

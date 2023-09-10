@@ -19,7 +19,7 @@
 }
 
 #navbar-menu {
-    background-color: var(--gray-800);
+    background-color: var(--gray-700);
 }
 
 #search-bar {
@@ -94,7 +94,7 @@
 }
 
 .slider-cell {
-    min-width: calc((86vw - var(--slider-gap) * (var(--slider-items) - 1)) / var(--slider-items));
+    width: calc((86vw - var(--slider-gap) * (var(--slider-items) - 1)) / var(--slider-items));
 }
 
 .slider-side {

@@ -101,6 +101,7 @@ export default function Register() {
         await setDoc(doc(db, "users", id), {
             email: email,
             nickname: nickname,
+            saved: [],
             joined: today,
             pic: 1
         })

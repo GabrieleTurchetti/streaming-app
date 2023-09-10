@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
+import { SavedTitlesContext, UserContext } from '../App'
 import getTitle from '../requests/getTitle'
 import getSeasonsEpisodes from '../requests/getSeasonsEpisodes'
 import getRelated from '../requests/getRelated'
@@ -29,7 +30,7 @@ type Titles = {
     id: number,
     type: string,
     name: string,
-    genres: string,
+    genres: string[],
     coverPic: string
 }[]
 
@@ -50,6 +51,8 @@ export default function Title() {
     const { type, id } = useParams() // parametri contenuti nell'URL associati al titolo
     const [reload, setReload] = useState(false) // variabile di stato utilizzata per ricaricare la pagina dopo aver selezionato un titolo correlato
     const [sectionUnderlinePosition, setSectionUnderlinePosition] = useState(0)
+    const savedTitle = useContext(SavedTitlesContext)
+    const user = useContext(UserContext) // oggetto contenente le informazioni dell'utente
 
     // variabile di stato utilizzata per il rendering del titolo principale solo quando le informazioni relative sono state acquisite
     const [loaded, setLoaded] = useState({
@@ -212,7 +215,7 @@ export default function Title() {
                             <Link to={type === "film" ? `/film/watch/${title?.id}` : `/series/watch/${title?.id}`}>
                                 <img src={playCircle} className="w-14 opacity-80 duration-150 hover:opacity-100" />
                             </Link>
-                            <img src={false ? checkFilled : addFilled} className="w-10 opacity-80 hover:opacity-100 cursor-pointer" />
+                            <img src={(title?.id || 0) in user.saved ? checkFilled : addFilled} className="w-10 opacity-80 hover:opacity-100 cursor-pointer" onClick={() => title !== undefined && (title.id in user.saved ? savedTitle.remove(title.id, title.type) : savedTitle.add(title.id, title.type))} />
                         </div>
                     </div>}
                     {sectionDisplay.episodes && <>

@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../App'
 import { isMobile } from 'react-device-detect'
@@ -6,6 +6,16 @@ import pencil from '../images/pencil.svg'
 import verified from '../images/verified.svg'
 import notVerified from '../images/not-verified.svg'
 import ProfilePic from '../components/profilePic'
+import TitleSlider from '../components/titleSlider'
+import getTitle from '../requests/getTitle'
+
+type Title = {
+    id: number,
+    type: string,
+    name: string,
+    genres: string[],
+    coverPic: string
+}
 
 interface Props {
     changeProfilePicNumber: (profilePicNumber: number) => void
@@ -16,6 +26,23 @@ export default function Profile({ changeProfilePicNumber }: Props) {
     const user = useContext(UserContext) // oggetto contenente le informazioni dell'utente
     const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
     const profilePics = [1, 2, 3, 4, 5, 6, 7, 8, 9] // array contenente i numeri correlati alle foto di profilo
+    const [savedTitles, setSavedTitles] = useState<Title[]>([])
+
+    useEffect(() => {
+        getSavedTitles().then(res => setSavedTitles(res))
+    }, [user.saved])
+
+    async function getSavedTitles() {
+        const tempSavedTitles: Title[] = []
+
+        for (let i = 0; i < Object.keys(user.saved).length; i++) {
+            await getTitle(parseInt(Object.keys(user.saved)[i]), user.saved[parseInt(Object.keys(user.saved)[i])]).then((res: Title) => {
+                tempSavedTitles.push(res)
+            }).catch(error => console.error(error))
+        }
+
+        return tempSavedTitles
+    }
 
     return (
         <>
@@ -59,6 +86,12 @@ export default function Profile({ changeProfilePicNumber }: Props) {
                     </div>
                 </div>
             </div>
+            {savedTitles.length !== 0 && <div className="pb-14 pt-2 flex justify-center">
+                <TitleSlider
+                    name = {"Salvati"}
+                    titles = {savedTitles}
+                />
+            </div>}
             <div className={`w-screen h-screen top-0 bg-black absolute transition-all duration-300 z-20 ${profilePicsDisplay ? "opacity-50" : "invisible opacity-0"}`} onClick={() => setProfilePicsDisplay(false)} />
             <div className={`absolute left-[50vw] top-[50vh] flex justify-center items-center z-20 ${profilePicsDisplay ? "" : "invisible"}`}>
                 <div id="profile-pics-container" className={`p-4 rounded-md fixed ${isMobile ? "w-[20rem] h-[20rem]" : "w-[28rem] h-[28rem]"} transition-all duration-300 gap-4 ${profilePicsDisplay ? "translate-y-0" : "opacity-0 translate-y-[-5rem] "}`}>

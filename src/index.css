@@ -17,3 +17,7 @@
 body {
     background-color: var(--gray-800);
 }
+
+html {
+    overflow-x: hidden;
+}

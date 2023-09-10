@@ -1,12 +1,13 @@
 import logo from '../images/logo.svg'
 import search from '../images/search.svg'
 import menu from '../images/menu.svg'
-import { useState, useContext, useRef } from 'react'
+import { useState, useContext, useRef, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../App'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase.js'
 import { isMobile } from 'react-device-detect'
+import { User } from '../App'
 
 interface Props {
     navbarSection: {
@@ -15,7 +16,7 @@ interface Props {
         series: boolean
     },
     changeSearchName: (name: string) => void
-    changeUser: (logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string, verified: boolean) => void
+    changeUser: (user: User) => void
 }
 
 export default function Navbar({ navbarSection, changeSearchName, changeUser }: Props) {
@@ -25,10 +26,29 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
     const searchBar = useRef<HTMLInputElement>(null) // riferimento all'elemento DOM dell'input della barra di ricerca
     const [menuDisplay, setMenuDisplay] = useState(false)
 
+    useEffect(() => {
+        if (menuDisplay) {
+            document.body.style.overflow = "hidden"
+        }
+        else {
+            document.body.style.overflow = "visible"
+        }
+    }, [menuDisplay])
+
     // funzione che effettua il logout tramite la procedura di Firebase e la cancellazione delle informazioni riguardanti l'utente nel sito
     function logout() {
         signOut(auth).then(() => {
-            changeUser(false, "", "", "", 0, "", false)
+            changeUser({
+                logged: false,
+                id: "",
+                email: "",
+                nickname: "",
+                pic: 0,
+                saved: {},
+                joined: "",
+                verified: false
+            })
+
             navigate("/")
         }).catch(error => {
             alert(error.message)
@@ -88,7 +108,7 @@ export default function Navbar({ navbarSection, changeSearchName, changeUser }: 
                 </div>}
             </div>
             <div className={`absolute w-screen h-screen top-0 bg-black transition-all duration-300 ${menuDisplay ? "opacity-50" : "opacity-0 invisible"}`} onClick={() => setMenuDisplay(false)} />
-            <div id="navbar-menu" className={`absolute h-screen left-0 top-0 duration-300 transition-[width] ${menuDisplay ? "w-[50vw]" : "w-0"}`}>
+            <div id="navbar-menu" className={`absolute h-screen left-0 top-0 duration-300 transition-all ${menuDisplay ? "w-[50vw]" : "w-0"}`}>
                 <div className={`flex flex-col gap-4 items-center w-full py-10 transition-[visibility] ${menuDisplay ? "" : "invisible"}`}>
                     <Link to="/" onClick={() => setMenuDisplay(false)}>
                         <p className={`navbar-section font-medium text-lg h-7 cursor-pointer ${navbarSection.home ? "navbar-section-active" : ""} hover:text-white transition-[color] duration-150`}>Home</p>

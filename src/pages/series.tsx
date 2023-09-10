@@ -8,7 +8,7 @@ type Titles = {
     id: number,
     type: string,
     name: string,
-    genres: string,
+    genres: string[],
     coverPic: string
 }[]
 

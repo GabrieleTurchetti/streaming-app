@@ -1,7 +1,7 @@
 import './App.css';
 import { useState, useEffect, createContext } from 'react'
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
-import { updateDoc, getDoc, doc } from "firebase/firestore"
+import { updateDoc, getDoc, doc, arrayUnion, arrayRemove } from "firebase/firestore"
 import { db, auth } from './firebase.js'
 import { isMobile } from 'react-device-detect'
 import Home from './pages/home'
@@ -25,9 +25,26 @@ export const UserContext = createContext({
     email: "",
     nickname: "",
     pic: 0,
+    saved: [] as {[id: number]: string},
     joined: "",
     verified: false
 })
+
+export const SavedTitlesContext = createContext({
+    add: (id: number, type: string) => {},
+    remove: (id: number, type: string) => {}
+})
+
+export interface User {
+    logged: boolean,
+    id: string,
+    email: string,
+    nickname: string,
+    pic: number,
+    saved: {[id: number]: string},
+    joined: string,
+    verified: boolean
+}
 
 export default function App() {
     const [navbarDisplay, setNavbarDisplay] = useState(true) // variabile di stato utilizzata per decidere se renderizzare la navabar o meno
@@ -42,6 +59,7 @@ export default function App() {
         email: "",
         nickname: "",
         pic: parseInt(localStorage.getItem("pic") || "0"),
+        saved: [] as {[id: number]: string},
         joined: "",
         verified: false
     })
@@ -64,7 +82,16 @@ export default function App() {
             const docSnap = await getDoc(docRef)
 
             if (user) {
-                changeUser(true, user.uid, user.email || "", docSnap.data()?.nickname, docSnap.data()?.pic, docSnap.data()?.joined, user.emailVerified)
+                changeUser({
+                    logged: true,
+                    id: user.uid,
+                    email: user.email || "",
+                    nickname: docSnap.data()?.nickname,
+                    pic: docSnap.data()?.pic,
+                    saved: docSnap.data()?.saved,
+                    joined: docSnap.data()?.joined,
+                    verified: user.emailVerified
+                })
             }
         })
 
@@ -150,19 +177,59 @@ export default function App() {
     }
 
     // funzione che imposta i dati dell'utente
-    function changeUser(logged: boolean, id: string, email: string, nickname: string, pic: number, joined: string, verified: boolean) {
+    function changeUser(user: User) {
+        console.log(user.saved)
         setUser({
-            logged: logged,
-            id: id,
-            email: email,
-            nickname,
-            pic: pic,
-            joined: joined,
-            verified: verified
+            logged: user.logged,
+            id: user.id,
+            email: user.email,
+            nickname: user.nickname,
+            pic: user.pic,
+            joined: user.joined,
+            saved: user.saved,
+            verified: user.verified
         })
 
-        localStorage.setItem("pic", String(pic))
-        localStorage.setItem("logged", String(logged))
+        localStorage.setItem("pic", String(user.pic))
+        localStorage.setItem("logged", String(user.logged))
+    }
+
+    async function addSavedTitle(id: number, type: string) {
+        const docRef = doc(db, "users", user.id)
+        const docSnap = await getDoc(docRef)
+        const userSaved = docSnap.data()?.saved
+
+        if (!(id in userSaved)) {
+            userSaved[id] = type
+
+            await updateDoc(docRef, {
+                saved: userSaved
+            })
+
+            setUser(prev => ({
+                ...prev,
+                saved: userSaved
+            }))
+        }
+    }
+
+    async function removeSavedTitle(id: number) {
+        const docRef = doc(db, "users", user.id)
+        const docSnap = await getDoc(docRef)
+        const userSaved = docSnap.data()?.saved
+
+        if (id in userSaved) {
+            delete userSaved[id]
+
+            await updateDoc(docRef, {
+                saved: userSaved
+            })
+
+            setUser(prev => ({
+                ...prev,
+                saved: userSaved
+            }))
+        }
     }
 
     return (
@@ -176,25 +243,30 @@ export default function App() {
                 <div className="h-16"></div>
             </>}
             <SmoothScroll>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/film" element={<Film />} />
-                    <Route path="/series" element={<Series />} />
-                    <Route path="/:type/title/:id" element={<Title />} />
-                    <Route path="/:type/watch/:id" element={<Watch />} />
-                    <Route path="/search" element={<Search
-                        searchName = {searchName}
-                    />} />
-                    <Route path="/profile" element={<Profile
-                        changeProfilePicNumber = {changeProfilePicNumber}
-                    />} />
-                    <Route path="/login" element={<Login
-                        changeUser = {changeUser}
-                    />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/verification" element={<Verification />} />
-                    <Route path="/change-password" element={<ChangePassword />} />
-                </Routes>
+                <SavedTitlesContext.Provider value={{
+                    add: addSavedTitle,
+                    remove: removeSavedTitle
+                }}>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/film" element={<Film />} />
+                        <Route path="/series" element={<Series />} />
+                        <Route path="/:type/title/:id" element={<Title />} />
+                        <Route path="/:type/watch/:id" element={<Watch />} />
+                        <Route path="/search" element={<Search
+                            searchName = {searchName}
+                        />} />
+                        <Route path="/profile" element={<Profile
+                            changeProfilePicNumber = {changeProfilePicNumber}
+                        />} />
+                        <Route path="/login" element={<Login
+                            changeUser = {changeUser}
+                        />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/verification" element={<Verification />} />
+                        <Route path="/change-password" element={<ChangePassword />} />
+                    </Routes>
+                </SavedTitlesContext.Provider>
             </SmoothScroll>
         </UserContext.Provider>
     );

@@ -4,7 +4,7 @@ type Titles = {
     id: number,
     type: string,
     name: string,
-    genres: string,
+    genres: string[],
     coverPic: string
 }[]
 
@@ -44,7 +44,7 @@ function convertResponseToTitles(response: ResponseSuccess) {
             id: result.id,
             type: "film",
             name: result.title,
-            genres: result.genre_ids.map(n => genres[n]).join(","),
+            genres: result.genre_ids.map(n => genres[n]),
             coverPic: result.backdrop_path !== null ? "https://image.tmdb.org/t/p/w500" + result.backdrop_path : "https://www.kcpls.org/sites/default/files/2023-02/movienight-graphic_0.jpg",
         })
     })

@@ -100,9 +100,9 @@ export default function EpisodeSlider({ episodes }: Props) {
                     </div>}
                 </div>
                 <div className="slider-center w-[80vw] flex transition-transform duration-700 ease-[cubic-bezier(0.42,0,0.58,1)]" style={{transform: `translateX(${translate}vw)`}}>
-                    {episodes.map(e => (
+                    {episodes.map(episode => (
                         <EpisodesSliderCell
-                            episode = {e}
+                            episode = {episode}
                         />
                     ))}
                 </div>
