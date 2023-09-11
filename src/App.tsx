@@ -178,7 +178,6 @@ export default function App() {
 
     // funzione che imposta i dati dell'utente
     function changeUser(user: User) {
-        console.log(user.saved)
         setUser({
             logged: user.logged,
             id: user.id,

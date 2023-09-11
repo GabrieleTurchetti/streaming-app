@@ -57,16 +57,16 @@ export default function Profile({ changeProfilePicNumber }: Props) {
                                 <img src={pencil} className="w-20" />
                             </div>
                         </div>
-                        <div className="flex flex-col gap-6 text-lg">
+                        {user.id !== "" && <div className="flex flex-col gap-6 text-lg">
                             <div>
                                 <p className="profile-info-header">Nickname</p>
                                 <p>{user.nickname}</p>
                             </div>
                             <div>
                                 <p className="profile-info-header">Email</p>
-                                <div className="flex gap-3">
+                                <div className="flex gap-4">
                                     {!isMobile && <p>{user.email}</p>}
-                                    {isMobile && <div className="flex-col">
+                                    {isMobile && <div>
                                         {(user.email.match(/.{1,20}/g) ?? []).map(str => (<p>{str}</p>))}
                                     </div>}
                                     <img src={user.verified ? verified : notVerified} className="w-6 cursor-pointer" title={user.verified ? "verificata" : "non verificata"} onClick={() => {
@@ -77,12 +77,12 @@ export default function Profile({ changeProfilePicNumber }: Props) {
                                 </div>
                             </div>
                             <div>
-                                <p className="profile-info-header">Iscritto il:<span className="ml-3 text-white">{user.joined}</span></p>
+                                <p className="profile-info-header">Iscritto il:<span className="ml-4 text-white">{user.joined}</span></p>
                             </div>
                             <div>
                                 <p id="profile-info-change-password" className="cursor-pointer transition-[color] duration-150" onClick={() => navigate("/change-password")}>Cambia password</p>
                             </div>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </div>

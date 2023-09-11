@@ -241,7 +241,7 @@
 }
 
 #verification-wrapper {
-    min-height: calc(100vh - 4rem);
+    min-height: calc(100svh - 4rem);
 }
 
 #account-link-register, #send-email-resend, #profile-info-change-password {

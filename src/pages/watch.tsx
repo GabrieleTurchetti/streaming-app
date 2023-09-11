@@ -25,8 +25,8 @@ export default function Watch() {
 
     return (
         <>
-            {videoAvailable && <iframe className="h-screen w-screen" src={video} allowFullScreen></iframe>}
-            {!videoAvailable && <div className="flex justify-center h-screen items-center">
+            {videoAvailable && <iframe className="h-[100svh] w-screen" src={video} allowFullScreen></iframe>}
+            {!videoAvailable && <div className="flex justify-center h-[100svh] items-center">
                 <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white h-fit`}>
                     <p className="text-2xl px-10 h-16 flex items-center">Ci dispiace</p>
                     <div className="container-line-break w-full h-[1px]" />

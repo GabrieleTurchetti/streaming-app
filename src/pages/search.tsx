@@ -33,6 +33,7 @@ export default function Search({ searchName }: Props) {
     // aggiunge un event listener per l'evento "resize" alla quale associa la funzione "reset"
     useEffect(() => {
         window.addEventListener("resize", changeSliderItems)
+        changeSliderItems()
 
         return () => {
             window.removeEventListener("resize", changeSliderItems)
