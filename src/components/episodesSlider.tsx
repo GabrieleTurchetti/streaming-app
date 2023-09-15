@@ -14,16 +14,13 @@ interface Props {
 }
 
 export default function EpisodeSlider({ episodes }: Props) {
-    const [index, setIndex] = useState(0) // variabile di stato contenente il valore dell'indice dello slider
-    const [translate, setTranslate] = useState(5) // variabile di stato contenente il valore di quanto lo slider deve essere spostato
+    const [index, setIndex] = useState(0)
 
-    // variabile di stato contenente le proprietà "display" delle frecce dello slider
     const [sliderSideDisplay, setSliderSideDisplay] = useState({
         left: "none",
         right: "none"
     })
 
-    // aggiunge un event listener per l'evento "resize" alla quale associa la funzione "reset"
     useEffect(() => {
         window.addEventListener("resize", changeSliderSideDisplay)
 
@@ -32,19 +29,15 @@ export default function EpisodeSlider({ episodes }: Props) {
         }
     })
 
-    // muove lo slider quando il valore di "index" cambia e chiama la funzione di impostazione di visualizzazione delle frecce
     useEffect(() => {
-        setTranslate(5 - 87 * index)
         changeSliderSideDisplay()
     }, [index])
 
-    // muove lo slider fino all'inizio ogni volta che i dati degli episodi cambiano e chiama la funzione di impostazione di visualizzazione delle frecce
     useEffect(() => {
         setIndex(0)
         changeSliderSideDisplay()
     }, [episodes])
 
-    // funzione che incrementa il valore di "index" a meno che non abbia raggiunto il suo valore massimo
     function increaseIndex() {
         let sliderItems = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--slider-items"))
 
@@ -53,14 +46,12 @@ export default function EpisodeSlider({ episodes }: Props) {
         }
     }
 
-    // funzione che decrementa il valore di "index" a meno che non sia 0
     function decreaseIndex() {
         if (index > 0) {
             setIndex(index - 1)
         }
     }
 
-    // funzione che imposta quali frecce visualizzare in base al valore di "index"
     function changeSliderSideDisplay() {
         let sliderItems = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--slider-items"))
 
@@ -99,7 +90,7 @@ export default function EpisodeSlider({ episodes }: Props) {
                         <img src={sliderSideLeft} className="w-10" />
                     </div>}
                 </div>
-                <div className="slider-center w-[80vw] flex transition-transform duration-700 ease-[cubic-bezier(0.42,0,0.58,1)]" style={{transform: `translateX(${translate}vw)`}}>
+                <div className="slider-center w-[80vw] flex transition-transform duration-700 ease-[cubic-bezier(0.42,0,0.58,1)]" style={{transform: `translateX(${5 - 87 * index}vw)`}}>
                     {episodes.map(episode => (
                         <EpisodesSliderCell
                             episode = {episode}

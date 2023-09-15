@@ -9,11 +9,10 @@ import closedEye from '../images/closed-eye.svg'
 import sendNotification from '../functions/sendNotification'
 
 export default function Register() {
-    const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
-    const [showPassword, setShowPassword] = useState(false) // variabile di stato utilizzata per la visualizzazione del testo della password
-    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false) // variabile di stato tutlizzata per la visualizzazione del testo della conferma della password
+    const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(false)
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
 
-    // variabile di stato contenente i messaggi da inviare come errore
     const [errorDisplay, setErrorDisplay] = useState({
         nickname: "",
         email: "",
@@ -21,7 +20,6 @@ export default function Register() {
         passwordConfirm: ""
     })
 
-    // funzione che effettua la registrazione
     function signUp() {
         const nickname = document.getElementById("container-input-nickname") as HTMLInputElement
         const email = document.getElementById("container-input-email") as HTMLInputElement
@@ -37,7 +35,6 @@ export default function Register() {
 
         if (nickname.value.length > 0 && email.value.length > 0 && password.value.length > 0 && passwordConfirm.value.length > 0) {
             if (password.value === passwordConfirm.value) {
-                // se la registrazione va a buon fine viene creato il documento relativo all'utente nel database Firestore e viene inviata una notifica desktop
                 createUserWithEmailAndPassword(auth, email.value, password.value).then(userCredential => {
                     const date = new Date()
                     const currentDay = String(date.getDate()).padStart(1, "0")
@@ -48,7 +45,6 @@ export default function Register() {
                     sendNotification("Registrazione effettuata", `Benvenuto ${nickname.value}.`)
                     navigate("/verification")
                 }).catch(error => {
-                    // vengono impostati i messaggi di errore in base al codice dell'errore ritornato dalla funzione di Firebase
                     switch (error.code) {
                         case "auth/invalid-email":
                             setErrorDisplay(prev => ({
@@ -96,7 +92,6 @@ export default function Register() {
         }
     }
 
-    // funzione utilizzata per la creazione del documento associato all'utente nel database Firestore
     async function createUser(email: string, nickname: string, id: string, today: string) {
         await setDoc(doc(db, "users", id), {
             email: email,
@@ -112,7 +107,7 @@ export default function Register() {
             <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Registrati</p>
                 <div className="container-line-break w-full h-[1px]"></div>
-                <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
+                <div className={`${isMobile ? "px-10" : "px-16"} flex flex-col py-10 gap-5`}>
                     <div className="flex flex-col gap-1">
                         <p className="container-header">Nickname</p>
                         <input id="container-input-nickname" className="container-input h-9 px-3 w-full rounded-none" type="text" />

@@ -20,12 +20,11 @@ interface Title {
 }
 
 export default function Head({ page }: Props) {
-    const [title, setTitle] = useState<Title>() // variabile di stato contenente le informazioni del titolo in evidenza
-    const [loaded, setLoaded] = useState(false) // variabile di stato utilizzata per il rendering del titolo in evidenza solo quando le informazioni relative sono state acquisite
+    const [title, setTitle] = useState<Title>()
+    const [loaded, setLoaded] = useState(false)
     const savedTitle = useContext(SavedTitlesContext)
-    const user = useContext(UserContext) // oggetto contenente le informazioni dell'utente
+    const user = useContext(UserContext)
 
-    // acquisisce le informazioni del titolo in evidenza
     useEffect(() => {
         getHead(page).then((res) => {
             const title: Title = res as Title

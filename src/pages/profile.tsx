@@ -22,10 +22,10 @@ interface Props {
 }
 
 export default function Profile({ changeProfilePicNumber }: Props) {
-    const [profilePicsDisplay, setProfilePicsDisplay] = useState(false) // variabile di stato utilizzata per la visualizzazione del box di scelta della foto di profilo
-    const user = useContext(UserContext) // oggetto contenente le informazioni dell'utente
-    const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
-    const profilePics = [1, 2, 3, 4, 5, 6, 7, 8, 9] // array contenente i numeri correlati alle foto di profilo
+    const [profilePicsDisplay, setProfilePicsDisplay] = useState(false)
+    const user = useContext(UserContext)
+    const navigate = useNavigate()
+    const profilePics = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     const [savedTitles, setSavedTitles] = useState<Title[]>([])
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export default function Profile({ changeProfilePicNumber }: Props) {
     return (
         <>
             <div className="flex justify-center my-16">
-                <div  className={`container ${isMobile ? "w-[20rem]" : "w-[56rem]"} flex-col flex rounded-md text-white`}>
+                <div className={`container ${isMobile ? "w-[20rem]" : "w-[56rem]"} flex-col flex rounded-md text-white`}>
                     <p className="text-2xl px-10 h-16 flex items-center">Profilo</p>
                     <div className="container-line-break w-full h-[1px]"></div>
                     <div className={`${isMobile ? "flex-col gap-6" : "gap-14"} flex p-10`}>
@@ -92,15 +92,13 @@ export default function Profile({ changeProfilePicNumber }: Props) {
                     titles = {savedTitles}
                 />
             </div>}
-            <div className={`w-screen h-screen top-0 bg-black absolute transition-all duration-300 z-20 ${profilePicsDisplay ? "opacity-50" : "invisible opacity-0"}`} onClick={() => setProfilePicsDisplay(false)} />
-            <div className={`absolute left-[50vw] top-[50vh] flex justify-center items-center z-20 ${profilePicsDisplay ? "" : "invisible"}`}>
-                <div id="profile-pics-container" className={`p-4 rounded-md fixed ${isMobile ? "w-[20rem] h-[20rem]" : "w-[28rem] h-[28rem]"} transition-all duration-300 gap-4 ${profilePicsDisplay ? "translate-y-0" : "opacity-0 translate-y-[-5rem] "}`}>
-                    {profilePics.map(e => <ProfilePic
-                        number = {e}
-                        changeProfilePicNumber = {changeProfilePicNumber}
-                        changeProfilePicDisplay = {() => setProfilePicsDisplay(false)}
-                    />)}
-                </div>
+            <div className={`w-screen h-screen fixed top-0 bg-black transition-all duration-300 z-20 ${profilePicsDisplay ? "opacity-50" : "invisible opacity-0"}`} onClick={() => setProfilePicsDisplay(false)} />
+            <div id="profile-pics-container" className={`z-20 left-[50vw] top-[50vh] fixed p-4 rounded-md ${isMobile ? "w-[20rem] h-[20rem]" : "w-[28rem] h-[28rem]"} transition-all duration-300 gap-4 translate-x-[-50%] ${profilePicsDisplay ? "translate-y-[-50%]" : "opacity-0 translate-y-[-60%] invisible"}`}>
+                {profilePics.map(e => <ProfilePic
+                    number = {e}
+                    changeProfilePicNumber = {changeProfilePicNumber}
+                    changeProfilePicDisplay = {() => setProfilePicsDisplay(false)}
+                />)}
             </div>
         </>
     )

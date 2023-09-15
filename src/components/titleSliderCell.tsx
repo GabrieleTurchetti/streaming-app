@@ -17,11 +17,10 @@ interface Props {
 }
 
 export default function SliderCell({ title }: Props) {
-    const sliderCell = useRef<HTMLInputElement>(null) // riferimento all'elemento DOM dell'input della barra di ricerca
+    const sliderCell = useRef<HTMLInputElement>(null)
     const saveTitleButton = useRef<any>(null)
     const savedTitle = useContext(SavedTitlesContext)
-    const user = useContext(UserContext) // oggetto contenente le informazioni dell'utente
-
+    const user = useContext(UserContext)
     useEffect(() => {
         saveTitleButton.current?.addEventListener('click', function(event: any) {
             event.preventDefault();

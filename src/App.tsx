@@ -18,7 +18,6 @@ import Register from './pages/register'
 import Verification from './pages/verification'
 import ChangePassword from './pages/changePassword'
 
-// oggetto contenente i dati dell'utente da condividere tra diversi componenti
 export const UserContext = createContext({
     logged: false,
     id: "",
@@ -47,12 +46,11 @@ export interface User {
 }
 
 export default function App() {
-    const [navbarDisplay, setNavbarDisplay] = useState(true) // variabile di stato utilizzata per decidere se renderizzare la navabar o meno
-    const [searchName, setSearchName] = useState("") // variabile di stato contenente il nome del titolo da cercare
-    const location = useLocation() // oggetto contenente le informazioni dell'URL
-    const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
+    const [navbarDisplay, setNavbarDisplay] = useState(true)
+    const [searchName, setSearchName] = useState("")
+    const location = useLocation()
+    const navigate = useNavigate()
 
-    // variabile di stato contenente i dati effettivi dell'utente
     const [user, setUser] = useState({
         logged: localStorage.getItem("logged") !== null ? localStorage.getItem("logged") === "true" : false,
         id: "",
@@ -64,7 +62,6 @@ export default function App() {
         verified: false
     })
 
-    // variabile di stato utilizzata per decidere quale nome della pagina mettere in risalto
     const [navbarSection, setnavbarSection] = useState({
         home: false,
         film: false,
@@ -76,7 +73,6 @@ export default function App() {
             navigate("/")
         }
 
-        // funzione che imposta i dati dell'utente se precedentemente ha effettuato il login
         auth.onAuthStateChanged(async user => {
             const docRef = doc(db, "users", user?.uid || "")
             const docSnap = await getDoc(docRef)
@@ -102,19 +98,16 @@ export default function App() {
     }, [])
 
     useEffect(() => {
-        // reindirizza alla pagina "search" se il valore della search bar non è vuoto
         if (searchName !== "" && location.pathname !== "/search") {
             navigate("/search")
         }
 
-        // reindirizza alla pagina precedente di "search" se il valore della search bar è vuoto
         if (searchName === "" && location.pathname === "/search"){
             navigate(-1)
         }
     }, [searchName])
 
     useEffect(() => {
-        // gestisce la visualizzazione della navbar in base alla pagina corrente
         if (location.pathname.startsWith("/film/watch") || location.pathname.startsWith("/series/watch")) {
             setNavbarDisplay(false)
         }
@@ -122,7 +115,6 @@ export default function App() {
             setNavbarDisplay(true)
         }
 
-        // mette in evidenza il nome della pagina corrente
         switch (location.pathname) {
             case "/":
                 setnavbarSection({
@@ -160,7 +152,6 @@ export default function App() {
         }
     }, [location])
 
-    // funzione che aggiorna la foto di profilo dell'utente
     async function changeProfilePicNumber(profilePicNumber: number) {
         const docRef = doc(db, "users", user.id)
 
@@ -176,7 +167,6 @@ export default function App() {
         localStorage.setItem("pic", String(profilePicNumber))
     }
 
-    // funzione che imposta i dati dell'utente
     function changeUser(user: User) {
         setUser({
             logged: user.logged,

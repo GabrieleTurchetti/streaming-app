@@ -42,32 +42,29 @@ type Episodes = {
 }[]
 
 export default function Title() {
-    const [title, setTitle] = useState<Title>() // variabile di stato contenente le informazioni del titolo principale
-    const [seasonsEpisodes, setSeasonsEpisodes] = useState<Episodes[]>([]) // variabile di stato contenente le informazioni degli episodi per le serie TV
-    const [percentage, setPercentage] = useState(0) // variabile di stato che rappresenta il numero del voto del titolo in certo istante
-    const [season, setSeason] = useState(1) // variabile di stato contenente il numero della stagione attualmente selezionata per le serie TV
-    const [seasonOptionsDisplay, setSeasonOptionsDisplay] = useState(false) // variabile di stato utilizzata per la visualizzazione della lista delle stagioni per le serie TV
-    const [related, setRelated] = useState<Titles>([]) // variabile di stato contenente le informazioni dei titoli correlati
-    const { type, id } = useParams() // parametri contenuti nell'URL associati al titolo
-    const [reload, setReload] = useState(false) // variabile di stato utilizzata per ricaricare la pagina dopo aver selezionato un titolo correlato
+    const [title, setTitle] = useState<Title>()
+    const [seasonsEpisodes, setSeasonsEpisodes] = useState<Episodes[]>([])
+    const [percentage, setPercentage] = useState(0)
+    const [season, setSeason] = useState(1)
+    const [seasonOptionsDisplay, setSeasonOptionsDisplay] = useState(false)
+    const [related, setRelated] = useState<Titles>([])
+    const { type, id } = useParams()
+    const [reload, setReload] = useState(false)
     const [sectionUnderlinePosition, setSectionUnderlinePosition] = useState(0)
     const savedTitle = useContext(SavedTitlesContext)
-    const user = useContext(UserContext) // oggetto contenente le informazioni dell'utente
+    const user = useContext(UserContext)
 
-    // variabile di stato utilizzata per il rendering del titolo principale solo quando le informazioni relative sono state acquisite
     const [loaded, setLoaded] = useState({
         title: false,
         seasonsEpisodes: false,
     })
 
-    // variabile di stato utilizzata per il rendering delle sezioni della pagina
     const [sectionDisplay, setSectionDisplay] = useState({
         general: true,
         episodes: false,
         details:  false
     })
 
-    // acquisisce le informazioni del titolo principale e dei correlati
     useEffect(() => {
         if (id !== undefined && type !== undefined) {
             getTitle(parseInt(id), type).then(res => {
@@ -99,14 +96,12 @@ export default function Title() {
         }
     }, [])
 
-    // fa partire l'animazione della progress bar del voto del titolo
     useEffect(() => {
         if (title !== undefined) {
             startRatingAnimation(title.rating)
         }
     }, [sectionDisplay, title])
 
-    // ricarica la pagina una volta selezionato un titolo correlato
     useEffect(() => {
         if (reload) {
             window.location.reload()
@@ -116,7 +111,6 @@ export default function Title() {
         }
     }, [id])
 
-    // funzione che fa partire l'animazione della progress bar del voto del titolo
     function startRatingAnimation(rating: number) {
         let ratingCircle = document.getElementById("rating-circle")
         increasePercentage(rating)
@@ -131,7 +125,6 @@ export default function Title() {
         }
     }
 
-    // funzione che incrementa gradualmente il numero relativo al voto del titolo
     function increasePercentage(rating: number) {
         for (let i = 1; i <= rating; i++) {
             setTimeout(() => {
@@ -140,7 +133,6 @@ export default function Title() {
         }
     }
 
-    // funzione che imposta quale sezione mostrare
     function changeSectionDisplay(section: string) {
         switch (section) {
             case "general":
@@ -184,7 +176,6 @@ export default function Title() {
         }
     }
 
-    // funzione che restituisce un array di componenti relativi alle stagioni da selezionare
     function getSeasonOptions() {
         let result = []
 

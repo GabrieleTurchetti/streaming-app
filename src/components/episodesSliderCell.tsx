@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function EpisodeSliderCell({ episode }: Props) {
-    const { type, id } = useParams() // parametri contenuti nell'URL associati al titolo
+    const { type, id } = useParams()
 
     return (
         <Link to={type === "film" ? `/film/watch/${id}` : `/series/watch/${id}`}>

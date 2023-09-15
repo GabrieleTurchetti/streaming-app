@@ -8,17 +8,15 @@ import closedEye from '../images/closed-eye.svg'
 import sendNotification from '../functions/sendNotification'
 
 export default function ChangePassword() {
-    const [showPassword, setShowPassword] = useState(false) // variabile di stato utilizzata per la visualizzazione del testo della password
-    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false) // variabile di stato utilizzata per la visualizzazione del testo della conferma della password
-    const navigate = useNavigate() // funzione utilizzata per spostarsi da una pagina all'altra
+    const [showPassword, setShowPassword] = useState(false)
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
+    const navigate = useNavigate()
 
-    // variabile di stato contenente i messaggi da inviare come errore
     const [errorDisplay, setErrorDisplay] = useState({
         password: "",
         passwordConfirm: ""
     })
 
-    // funzione che effettua il cambio della password
     function changePassword() {
         const password = document.getElementById("container-input-password") as HTMLInputElement
         const passwordConfirm = document.getElementById("container-input-password-confirm") as HTMLInputElement
@@ -31,12 +29,10 @@ export default function ChangePassword() {
         if (password.value.length > 0 && passwordConfirm.value.length > 0) {
             if (password.value === passwordConfirm.value) {
                 if (auth.currentUser !== null) {
-                    // se il cambio della password va a buon fine viene inviata una notifica desktop
                     updatePassword(auth.currentUser, password.value).then(() => {
                         sendNotification("Cambio password", "Il cambio della password è avvenuto con successo.")
                         navigate("/profile")
                     }).catch(error => {
-                        // vengono impostati i messaggi di errore in base al codice dell'errore ritornato dalla funzione di Firebase
                         switch (error.code) {
                             case "auth/weak-password":
                                 setErrorDisplay(prev => ({
@@ -72,7 +68,7 @@ export default function ChangePassword() {
             <div className={`container ${isMobile ? "w-[20rem]" : "w-[32rem]"} flex flex-col rounded-md text-white`}>
                 <p className="text-2xl px-10 h-16 flex items-center">Cambio password</p>
                 <div className="container-line-break w-full h-[1px]" />
-                <div className={`${isMobile ? "px-12" : "px-16"} flex flex-col py-10 gap-5`}>
+                <div className={`${isMobile ? "px-10" : "px-16"} flex flex-col py-10 gap-5`}>
                     <div className="flex flex-col gap-1">
                         <p className="container-header">Inserisci la nuova password</p>
                         <div className="flex">

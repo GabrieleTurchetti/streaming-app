@@ -36,10 +36,10 @@ https://streamingapp-8662c.web.app
 
 ## Funzioni
 
+- Visione del titolo in evidenza
 - Navigazione tra i titoli più popolati, più votati e quelli in arrivo
-- Visione del titolo in evidenza tramite tasto *play*
-- Collegamento alla pagina principale del titolo in evidenza tramite tasto *info*
 - Filtraggio per film o serie TV
+- Possibilità di aggiungere un titolo alla lista dei salvati
 
 <img src="./assets/images/home.png" width="600">
 
@@ -55,6 +55,7 @@ https://streamingapp-8662c.web.app
 <img src="./assets/images/search.png" width="600">
 
 - Creazione di un account
+- Visione della lista dei titoli salvati
 - Personalizzazione della foto di profilo
 - Verifica dell'account tramite email
 - Cambio della password

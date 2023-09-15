@@ -244,11 +244,11 @@
     min-height: calc(100svh - 4rem);
 }
 
-#account-link-register, #send-email-resend, #profile-info-change-password {
+#account-link-register, #send-email-resend, #profile-info-change-password, .logout-choice {
     color: var(--gray-100);
 }
 
-#account-link-register:hover, #send-email-resend:hover, #profile-info-change-password:hover {
+#account-link-register:hover, #send-email-resend:hover, #profile-info-change-password:hover, .logout-choice:hover {
     color: white;
 }
 

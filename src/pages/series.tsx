@@ -13,16 +13,14 @@ type Titles = {
 }[]
 
 export default function Home() {
-    const [popular, setPopular] = useState<Titles>([]) // variabile di stato contenente le informazioni dei titoli più popolari
-    const [topRated, setTopRated] = useState<Titles>([]) // variabile di stato contenente le informazioni dei titoli con il voto più alto
+    const [popular, setPopular] = useState<Titles>([])
+    const [topRated, setTopRated] = useState<Titles>([])
 
-    // variabile di stato utilizzata per il rendering degli slider solo quando le informazioni relative sono state acquisite
     const [loaded, setLoaded] = useState({
         popular: false,
         topRated: false
     })
 
-    // acquisisce le informazioni dei titoli delle varie sezioni
     useEffect(() => {
         getPopular("series").then(res => {
             const titles: Titles = res as Titles
