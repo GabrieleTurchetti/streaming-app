@@ -158,14 +158,6 @@ https://streamingapp-8662c.web.app
 
 <img src="./assets/images/components-relations.png" width="600">
 
-## Custom Hooks
-
-- useTimeout(callback, delay): esegue *callback* dopo il lasso di tempo definito da *delay*
-    <br/>
-    Riferimenti:
-    - GitHub: https://github.com/WebDevSimplified/useful-custom-react-hooks.git
-    - Video: https://www.youtube.com/watch?v=0c6znExIqRw&t=232s&ab_channel=WebDevSimplified
-
 ## Gestione delle richieste all'API TMDB
 
 <img src="./assets/images/requests-managment.png" width="300">
