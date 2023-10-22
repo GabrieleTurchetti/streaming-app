@@ -24,7 +24,7 @@ export default function Head({ page }: Props) {
     const [loaded, setLoaded] = useState(false)
     const savedTitle = useContext(SavedTitlesContext)
     const user = useContext(UserContext)
-    const [plotExpanded, setPlotExpanded] = useState(false)
+    const [isPlotExpanded, setIsPlotExpanded] = useState(false)
 
     useEffect(() => {
         getHead(page).then((res) => {
@@ -40,9 +40,9 @@ export default function Head({ page }: Props) {
             {loaded && <div className={`${isMobile ? "w-full p-12" : "w-3/5 min-w-[40rem] p-28"} flex flex-col gap-6`}>
                 <p className="text-white text-3xl font-medium z-10">{title?.name}</p>
                 {title?.plot !== undefined ? title.plot.length <= 150 && <p className="head-plot text-xl z-10">{title.plot}</p> : <></>}
-                {title?.plot !== undefined ? title.plot.length > 150 && !plotExpanded && <p className="head-plot text-xl z-10 cursor-pointer" onClick={() => setPlotExpanded(true)}>{title.plot.substring(0, 150) + " ..."}</p> : <></>}
-                {title?.plot !== undefined ? title.plot.length > 150 && plotExpanded && <p className="head-plot text-xl z-10 cursor-pointer max-h-48 overflow-auto" onClick={() => setPlotExpanded(false)}>{title.plot}</p> : <></>}
-                {!plotExpanded && <div className="flex gap-10 z-10">
+                {title?.plot !== undefined ? title.plot.length > 150 && !isPlotExpanded && <p className="head-plot text-xl z-10 cursor-pointer" onClick={() => setIsPlotExpanded(true)}>{title.plot.substring(0, 150) + " ..."}</p> : <></>}
+                {title?.plot !== undefined ? title.plot.length > 150 && isPlotExpanded && <p className="head-plot text-xl z-10 cursor-pointer max-h-48 overflow-auto" onClick={() => setIsPlotExpanded(false)}>{title.plot}</p> : <></>}
+                {!isPlotExpanded && <div className="flex gap-10 z-10">
                     <Link to={title?.type === "film" ? `/film/watch/${title?.id}` : `/series/watch/${title?.id}`}>
                         <button className={`${isMobile ? "w-28" : "w-36"} bg-white rounded-sm font-medium text-lg flex items-center justify-center h-10 hover:brightness-[0.8] duration-150`}>
                             <img src={playRectangular} className="w-8" />

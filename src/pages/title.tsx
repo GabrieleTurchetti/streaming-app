@@ -51,7 +51,7 @@ export default function Title() {
     const { type, id } = useParams()
     const [reload, setReload] = useState(false)
     const [sectionUnderlinePosition, setSectionUnderlinePosition] = useState(0)
-    const [plotExpanded, setPlotExpanded] = useState(false)
+    const [isPlotExpanded, setIsPlotExpanded] = useState(false)
     const savedTitle = useContext(SavedTitlesContext)
     const user = useContext(UserContext)
 
@@ -195,27 +195,33 @@ export default function Title() {
             <div className="h-[32rem] flex flex-col justify-between bg-cover bg-top" style={{backgroundImage: `url(${title?.pic})`}}>
                 <div className="head-over absolute w-full h-[32rem] opacity-80" />
                 {loaded.title && <>
-                    {sectionDisplay.general && <div className={`${isMobile ? "w-full p-12" : "w-3/5 min-w-[40rem] px-28 py-20"} flex flex-col gap-3`}>
+                    {sectionDisplay.general && <div className={`${isMobile ? "w-full p-12" : "w-3/5 min-w-[40rem] px-28 pt-20"} flex flex-col gap-3`}>
                         <p className="text-white text-3xl font-medium z-10">{title?.name}</p>
                         <p className="text-white text-lg z-10">{title?.year} - {title?.time !== -1 ? title?.time + " min" : title?.seasons + (title?.seasons === 1 ? " stagione" : " stagioni")}</p>
                         {!isMobile && <>
                             {title?.plot !== undefined ? title.plot.length <= 150 && <p className="head-plot text-xl z-10">{title.plot}</p> : <></>}
-                            {title?.plot !== undefined ? title.plot.length > 150 && !plotExpanded && <p className="head-plot text-xl z-10 cursor-pointer" onClick={() => setPlotExpanded(true)}>{title.plot.substring(0, 150) + " ..."}</p> : <></>}
-                            {title?.plot !== undefined ? title.plot.length > 150 && plotExpanded && <p className="head-plot text-xl z-10 cursor-pointer max-h-48 overflow-auto" onClick={() => setPlotExpanded(false)}>{title.plot}</p> : <></>}
+                            {title?.plot !== undefined ? title.plot.length > 150 && !isPlotExpanded && <p className="head-plot text-xl z-10 cursor-pointer" onClick={() => setIsPlotExpanded(true)}>{title.plot.substring(0, 150) + " ..."}</p> : <></>}
+                            {title?.plot !== undefined ? title.plot.length > 150 && isPlotExpanded && <p className="head-plot text-xl z-10 cursor-pointer max-h-48 overflow-auto" onClick={() => {
+                                setIsPlotExpanded(false)
+                                increasePercentage(title.rating)
+                            }}>{title.plot}</p> : <></>}
                         </>}
                         {isMobile && <>
                             {title?.plot !== undefined ? title.plot.length <= 100 && <p className="head-plot text-xl z-10">{title.plot}</p> : <></>}
-                            {title?.plot !== undefined ? title.plot.length > 100 && !plotExpanded && <p className="head-plot text-xl z-10 cursor-pointer" onClick={() => setPlotExpanded(true)}>{title.plot.substring(0, 100) + " ..."}</p> : <></>}
-                            {title?.plot !== undefined ? title.plot.length > 100 && plotExpanded && <p className="head-plot text-xl z-10 cursor-pointer max-h-48 overflow-auto" onClick={() => setPlotExpanded(false)}>{title.plot}</p> : <></>}
+                            {title?.plot !== undefined ? title.plot.length > 100 && !isPlotExpanded && <p className="head-plot text-xl z-10 cursor-pointer" onClick={() => setIsPlotExpanded(true)}>{title.plot.substring(0, 100) + " ..."}</p> : <></>}
+                            {title?.plot !== undefined ? title.plot.length > 100 && isPlotExpanded && <p className="head-plot text-xl z-10 cursor-pointer max-h-48 overflow-auto" onClick={() => {
+                                setIsPlotExpanded(false)
+                                increasePercentage(title.rating)
+                            }}>{title.plot}</p> : <></>}
                         </>}
-                        <div className={`flex gap-6 z-10 items-center py-2 ${plotExpanded ? "invisible" : ""}`}>
+                        <div className={`flex gap-6 z-10 items-center py-2 ${isPlotExpanded ? "hidden" : ""}`}>
                             <svg viewBox="0 0 36 36" className="w-16">
-                                <path id="rating-circle" className="circle" strokeDasharray={`${title?.rating}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                {!plotExpanded && <text x="18" y="20.35" className="percentage">{percentage}%</text>}
+                                <path id="rating-circle" className="circle h-0" strokeDasharray={`${title?.rating}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <text x="18" y="20.35" className="percentage">{percentage}%</text>
                             </svg>
-                            {!plotExpanded && <Link to={type === "film" ? `/film/watch/${title?.id}` : `/series/watch/${title?.id}`}>
+                            <Link to={type === "film" ? `/film/watch/${title?.id}` : `/series/watch/${title?.id}`}>
                                 <img src={playCircle} className="w-14 opacity-80 duration-150 hover:opacity-100" />
-                            </Link>}
+                            </Link>
                             <img src={(title?.id || 0) in user.saved ? checkFilled : addFilled} className="w-10 opacity-80 hover:opacity-100 cursor-pointer" onClick={() => title !== undefined && (title.id in user.saved ? savedTitle.remove(title.id, title.type) : savedTitle.add(title.id, title.type))} />
                         </div>
                     </div>}
