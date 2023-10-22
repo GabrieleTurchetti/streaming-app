@@ -63,7 +63,7 @@ function convertResponseToTitle(response: ResponseSuccess, type: string) {
         coverPic: response.backdrop_path !== null ? "https://image.tmdb.org/t/p/original" + response.backdrop_path : "https://www.kcpls.org/sites/default/files/2023-02/movienight-graphic_0.jpg",
         name: response.name || response.title || "",
         year: parseInt(response.release_date?.substring(0, 4) || response.first_air_date?.substring(0, 4) || "0"),
-        plot: response.overview.length <= 150 ? response.overview : response.overview.substring(0, 150) + " ...",
+        plot: response.overview,
         rating: response.vote_average * 10,
         genres: response.genres.map(e => e.name),
         companies: response.production_companies.map(e => e.name),

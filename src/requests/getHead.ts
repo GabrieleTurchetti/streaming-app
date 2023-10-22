@@ -47,11 +47,7 @@ async function convertResponseToHead(response: ResponseSuccess) {
         type: response.results[0].media_type === "movie" ? "film" : "series",
         pic: response.results[0].backdrop_path !== null ? "https://image.tmdb.org/t/p/original" + response.results[0].backdrop_path : "https://www.kcpls.org/sites/default/files/2023-02/movienight-graphic_0.jpg",
         name: response.results[0].name || response.results[0].title || "",
-        plot: ""
-    }
-
-    if (headResponse.overview !== undefined) {
-        head.plot = headResponse.overview.length <= 150 ? headResponse.overview : headResponse.overview.substring(0, 150) + " ..."
+        plot: headResponse.overview
     }
 
     return head

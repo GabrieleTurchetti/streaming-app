@@ -2,11 +2,10 @@
 
 ## Descrizione
 
-L'applicazione consiste in una piattaforma online di streaming di film e serie TV, nella quale è possibile navigare attraverso una vasta gamma di titoli, vederne i dettagli e il contenuto video. Il progetto è stato realizzato con l'ausilio della libreria di sviluppo di applicazioni web *React*.
-
+L'applicazione consiste in un prototipo ad alto livello di una piattaforma online di streaming di film e serie TV, nella quale è possibile navigare attraverso una vasta gamma di titoli e vederne i dettagli.
 ## Premessa
 
-Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da copyright, l'app si limita a mostrare altri tipi di video, come ad esempio i trailer dei film e delle serie TV.
+Dato che la maggior parte dei contenuti multimediali dei titoli sono protetti da copyright, l'app si limita a mostrare i trailer dei film e delle serie TV.
 
 ## Link
 
@@ -73,21 +72,9 @@ https://streamingapp-8662c.web.app
     2. L'utente ha cambiato la propria password
     3. Si è verificato un errore durante il login
 
-## Struttura delle cartelle
+## Gerarchia dei componenti
 
-<img src="./assets/images/folder-structure.png" width="600">
-
-### pages:
-
-- Contiene i file dei componenti che rappresentano le pagine effettive visualizzabili nella piattaforma
-
-### components:
-
-- Contiene i file delle singole componenti che verranno utilizzate in *App.tsx*, nei file di *pages* e in altri file della cartella stessa *components*
-
-### requests
-
-- Qui vengono gestite tutte le richieste all'API TMDB, formattate nella corretta maniera ed esportate alle componenti che ne richiedono i dati
+<img src="./assets/images/components-relations.png" width="600">
 
 ## Componenti
 
@@ -153,10 +140,6 @@ https://streamingapp-8662c.web.app
 ### ChangePassword
 
 - Rappresenta la pagina dove viene rimandato l'utente in caso decida di cambiare la propria password
-
-## Gerarchia dei componenti
-
-<img src="./assets/images/components-relations.png" width="600">
 
 ## Gestione delle richieste all'API TMDB
 
